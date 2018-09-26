@@ -24,3 +24,33 @@ You have right decleared in the license, but I still need to repeat:
 2. Create IPAForce_yournamne branch
 3. Commit your code
 4. Create Pull Request
+
+
+
+-------------
+#### Submit issue:
+
+### What was the cause of the issue？
+Expect behavior:
+Unexpect behavior:
+Is this issue affecting you using the main function?: Y/N
+Is this issue a UI issue?: Y/N
+Is is necesscary to fix it imminently?: Y/N
+Notes:
+
+### Steps to reproduce
+1.
+2.
+3.
+
+### Error information
+System Version:
+iOS Version:
+iOS Device Model:
+System logs:
+(Optinal to all)
+
+
+IPAForce issue report! 
+App version:__
+Build version:__
