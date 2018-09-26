@@ -58,3 +58,8 @@ System logs:
 IPAForce issue report! 
 App version:__
 Build version:__
+
+
+
+-------------
+All in all, u can u up, no can no bb.
