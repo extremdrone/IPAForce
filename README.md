@@ -2,6 +2,10 @@
 
 #### Description
 A project for lazy man to reverse engineering
+This project was setup at 2018.9.25 and taking its develop by a students.
+If there are something wrong with the codes or the codes is not so beautifull, then, pr it.
+I promise to you I'm not an ijk developer or HanYuPinYin developer, but maybe a copy and paste developer.
+:..( I'll try my best.
 
 ![Preview](https://github.com/Co2333/coreBase/raw/master/IPAForcePreView.png "在这里输入图片标题")
 
