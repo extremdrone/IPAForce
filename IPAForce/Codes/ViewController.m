@@ -72,7 +72,7 @@
         // 如果执行前脚本存在
         BOOL havePreCommand = false;
         if (![script  isEqual: @""]) {
-            script = [NSString stringWithFormat:@"%@; ", script];
+            script = [NSString stringWithFormat:@"#!/bin/bash\n%@", script];
             havePreCommand = true;
 
         }
@@ -87,6 +87,11 @@
         NSData *urlData = [NSData dataWithContentsOfURL:url];
         if ( urlData )
         {
+            // 如果文件存在那么先删除
+            if ([[NSFileManager defaultManager] fileExistsAtPath:fileURL.path isDirectory:false]) {
+                NSLog(@"[!] Removing before download script.");
+                [[NSFileManager defaultManager] removeItemAtURL:fileURL error:NULL];
+            }
             [urlData writeToURL:fileURL atomically:YES];
         }
         
@@ -103,17 +108,18 @@
             // 重命名下载的脚本
             NSURL *oldCommand = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command.tmp")];
             [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:oldCommand error:NULL];
-            //将下载的脚本存入内存
+            // 将下载的脚本读入内存
             NSString *stringFromFileAtURL = [[NSString alloc]
                                              initWithContentsOfURL:oldCommand
                                              encoding:NSUTF8StringEncoding
                                              error:NULL];
             // 合并脚本
-            NSString *completedScript = [NSMutableString stringWithFormat:@"#!/bin/bash \n%@\n%@", script, stringFromFileAtURL];
+            NSString *completedScript = script;
+            completedScript = [completedScript stringByAppendingString:stringFromFileAtURL];
             // 写入执行前脚本
             [completedScript writeToURL:fileURL atomically:YES
-                                encoding:NSUnicodeStringEncoding error:NULL];
-            //删除临时脚本
+                               encoding:NSUTF8StringEncoding error:NULL];
+            // 删除临时脚本
             [[NSFileManager defaultManager] removeItemAtURL:oldCommand error:NULL];
             
         } // if (havePreCommand)

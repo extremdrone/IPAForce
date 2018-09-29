@@ -19,8 +19,9 @@ int execCommandFromURL(NSURL *where) {
     */
     // const char *Args = [[NSMutableString stringWithFormat:@"chmod u+x %@", where.path] UTF8String];
     // system(Args);
-    const char *Args = [[NSMutableString stringWithFormat:@"chmod 700 %@", where.path] UTF8String];
+    const char *Args = [[NSMutableString stringWithFormat:@"chmod 0777 %@", where.path] UTF8String];
     system(Args);
+    sleep(1);
     [[NSWorkspace sharedWorkspace] openURL:where];
     return 0;
 }
