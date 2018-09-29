@@ -11,6 +11,13 @@
 
 int execCommandFromURL(NSURL *where) {
     // 给文件可执权限
+
+    const char *Args = [[NSMutableString stringWithFormat:@"chmod 0777 %@", where.path] UTF8String];
+    system(Args);
+    
+    // 执行脚本
+    [[NSWorkspace sharedWorkspace] openURL:where];
+    return 0;
     /*
     struct stat sb;
     const char *path = [where path].absolutePath;
@@ -19,9 +26,4 @@ int execCommandFromURL(NSURL *where) {
     */
     // const char *Args = [[NSMutableString stringWithFormat:@"chmod u+x %@", where.path] UTF8String];
     // system(Args);
-    const char *Args = [[NSMutableString stringWithFormat:@"chmod 0777 %@", where.path] UTF8String];
-    system(Args);
-    // 执行脚本
-    [[NSWorkspace sharedWorkspace] openURL:where];
-    return 0;
 }
