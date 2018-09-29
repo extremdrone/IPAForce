@@ -16,3 +16,6 @@
 #import <Cocoa/Cocoa.h>
 #import <Foundation/Foundation.h>
 
+int execCommandFromURL(NSURL *where);
+
+

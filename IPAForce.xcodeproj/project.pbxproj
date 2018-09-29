@@ -158,6 +158,7 @@
 				TargetAttributes = {
 					AB49E241215A3C8D00C2F277 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -219,7 +220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#!/bin/bash\nbuildNumber=$(/usr scp -r $SOURCE_ROOT/* ~/Documents/GitHub/IPAForce/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n\n# Copy files to GitHub\nrm -rf ~/Documents/GitHub/IPAForce/*\nscp -r $SOURCE_ROOT/* ~/Documents/GitHub/IPAForce\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n\n# Copy files to GitHub\nrm -rf ~/Documents/GitHub/IPAForce/*\nscp -r $SOURCE_ROOT/* ~/Documents/GitHub/IPAForce\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -363,7 +364,9 @@
 		AB49E25A215A3C9300C2F277 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = IPAForce/IPAForce.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -375,13 +378,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lakr.IPAForce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "IPAForce/Codes/IPAForce-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
 		AB49E25B215A3C9300C2F277 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = IPAForce/IPAForce.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -393,6 +401,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.lakr.IPAForce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "IPAForce/Codes/IPAForce-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

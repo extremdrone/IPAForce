@@ -11,7 +11,6 @@
 
 
 
-
 @interface VCWindowController()
 @end
 
@@ -54,31 +53,75 @@
 
     // 开始设置macOS的环境
 - (IBAction)startSetupForMacOS:(id)sender {
-    
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:@"Any additional command before running the script?"];
-    [alert addButtonWithTitle:@"Yes"];
-    
-    NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 300, 24)];
-    [input setStringValue:@""];
-    
-    [alert setAccessoryView:input];
-    NSInteger button = [alert runModal];
-    NSString *script = @"";
-    if (button == NSAlertFirstButtonReturn) {
-        script = [input stringValue];
-    } else if (button == NSAlertSecondButtonReturn) {
+    @autoreleasepool {
+
+        // 询问执行前脚本
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Any additional command before running the script? eg: export proxy and select Xcode."];
+        [alert addButtonWithTitle:@"Yes"];
+        NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 600, 200)];
+        [input setStringValue:@""];
+        [alert setAccessoryView:input];
+        NSInteger button = [alert runModal];
+        NSString *script = @"";
+        if (button == NSAlertFirstButtonReturn) {
+            script = [input stringValue];
+        } else if (button == NSAlertSecondButtonReturn) {
+        }
+        
+        // 如果执行前脚本存在
+        BOOL havePreCommand = false;
+        if (![script  isEqual: @""]) {
+            script = [NSString stringWithFormat:@"%@; ", script];
+            havePreCommand = true;
+
+        }
+        
+        // 获取文件路径并设置准备写入
+        NSURL *tempDir = [[NSFileManager defaultManager] temporaryDirectory];
+        NSURL *fileURL = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command")];
+        
+        // 设置下载路径并写入文件
+        NSString *stringURL = @"https://raw.githubusercontent.com/Co2333/coreBase/master/OneMonkey.sh";
+        NSURL  *url = [NSURL URLWithString:stringURL];
+        NSData *urlData = [NSData dataWithContentsOfURL:url];
+        if ( urlData )
+        {
+            [urlData writeToURL:fileURL atomically:YES];
+        }
+        
+        // 检查文件是否可读取
+        NSError *error;
+        if ([fileURL checkResourceIsReachableAndReturnError:&error]) {
+            NSLog(@"[*] Download file at url completed. At path:%@", fileURL);
+        } else {
+            NSLog(@"[Error] Failed to download file at path:%@%@", fileURL, error);
+        }
+        
+        // 如果执行前脚本存在那么创建新的脚本 如果不存在那么重命名脚本
+        if (havePreCommand) {
+            // 重命名下载的脚本
+            NSURL *oldCommand = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command.tmp")];
+            [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:oldCommand error:NULL];
+            //将下载的脚本存入内存
+            NSString *stringFromFileAtURL = [[NSString alloc]
+                                             initWithContentsOfURL:oldCommand
+                                             encoding:NSUTF8StringEncoding
+                                             error:NULL];
+            // 合并脚本
+            NSString *completedScript = [NSMutableString stringWithFormat:@"#!/bin/bash \n%@\n%@", script, stringFromFileAtURL];
+            // 写入执行前脚本
+            [completedScript writeToURL:fileURL atomically:YES
+                                encoding:NSUnicodeStringEncoding error:NULL];
+            //删除临时脚本
+            [[NSFileManager defaultManager] removeItemAtURL:oldCommand error:NULL];
+            
+        } // if (havePreCommand)
+        
+        // 从fileURL执行脚本
+        int returnVal = execCommandFromURL(fileURL);
+        NSLog(@"[!] Exec command from URL returns:%d", returnVal);
     }
-    
-    if (![script  isEqual: @""]) {
-        script = [NSString stringWithFormat:@"%@; ", script];
-    }
-    
-    NSString *s = [NSString stringWithFormat:
-                   @"tell application \"Terminal\" to do script \""];
-    NSString *concat = [NSString stringWithFormat: @"%@%@ curl -o ~/Downloads/OneMonkey.sh 'https://raw.githubusercontent.com/Co2333/coreBase/master/OneMonkey.sh'; chmod +x ~/Downloads/OneMonkey.sh; ~/Downloads/OneMonkey.sh\"", s, script];
-    NSLog(@"[!] Running command : | %@", concat);
-    
 }
     // 开始设置iOS的环境
 - (IBAction)startSetupForiOS:(id)sender {
