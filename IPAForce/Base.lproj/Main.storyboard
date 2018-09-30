@@ -651,7 +651,7 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="jGA-0Y-lOj" customClass="VCWindowController" sceneMemberID="viewController">
+                <windowController id="jGA-0Y-lOj" customClass="initVCWindowController" sceneMemberID="viewController">
                     <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" releasedWhenClosed="NO" animationBehavior="default" id="Ckk-yw-fiv">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="1366" height="500"/>
@@ -670,10 +670,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="39"/>
         </scene>
-        <!--View Controller-->
+        <!--Setup View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="5gI-5U-AMq" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="5gI-5U-AMq" customClass="SetupViewController" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" appearanceType="aqua" id="ERx-hH-rdd">
                         <rect key="frame" x="0.0" y="0.0" width="1366" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -875,10 +875,10 @@
                                 <buttonCell key="cell" type="push" title="Setup macOS" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1nw-NZ-th0">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="startSetupForMacOS:" target="5gI-5U-AMq" id="7Kc-bA-YnI"/>
+                                    </connections>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="startSetupForMacOS:" target="5gI-5U-AMq" id="1ci-FA-J96"/>
-                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gxd-DW-aLv">
                                 <rect key="frame" x="322" y="203" width="132" height="32"/>
@@ -983,6 +983,13 @@
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="BuildIcon" id="qXv-6d-UmC"/>
                             </imageView>
+                            <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="CM7-nc-9FJ">
+                                <rect key="frame" x="181" y="212" width="16" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="A1a-8M-x9w"/>
+                                    <constraint firstAttribute="width" constant="16" id="W0J-xO-Icm"/>
+                                </constraints>
+                            </progressIndicator>
                         </subviews>
                         <constraints>
                             <constraint firstItem="feO-LQ-I2z" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="-52" id="3ga-BJ-HEX"/>
@@ -994,6 +1001,7 @@
                             <constraint firstItem="yhZ-0F-B25" firstAttribute="leading" secondItem="ITf-Ta-WeY" secondAttribute="trailing" constant="23" id="Cs9-hs-Gak"/>
                             <constraint firstItem="x8y-NI-4iv" firstAttribute="leading" secondItem="nAH-R2-HJE" secondAttribute="trailing" constant="150" id="E1e-SN-cEZ"/>
                             <constraint firstItem="nR3-85-zgT" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" constant="20" id="E26-nY-6ro"/>
+                            <constraint firstItem="CM7-nc-9FJ" firstAttribute="leading" secondItem="L0a-gl-PQK" secondAttribute="trailing" constant="8" id="E7B-rI-KwV"/>
                             <constraint firstItem="nAH-R2-HJE" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="28" id="Haf-HF-rjJ"/>
                             <constraint firstAttribute="bottom" secondItem="OOw-7A-Oae" secondAttribute="bottom" id="IVk-s1-Rtf"/>
                             <constraint firstItem="yhZ-0F-B25" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="141" id="LxL-s2-Orx"/>
@@ -1009,6 +1017,7 @@
                             <constraint firstItem="ITf-Ta-WeY" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="28" id="e5Y-ms-gpa"/>
                             <constraint firstItem="rnk-gY-Nfk" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="30" id="jhh-OX-dBo"/>
                             <constraint firstItem="6tq-oQ-yZP" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" constant="20" id="lXw-l8-KLL"/>
+                            <constraint firstItem="CM7-nc-9FJ" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="30" id="oto-L9-kHH"/>
                             <constraint firstItem="Gxd-DW-aLv" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="30" id="tce-My-kKv"/>
                             <constraint firstItem="yNM-Qe-uvU" firstAttribute="top" secondItem="6tq-oQ-yZP" secondAttribute="bottom" constant="2" id="uCW-v0-w0G"/>
                             <constraint firstItem="D8S-It-IJp" firstAttribute="leading" secondItem="yhZ-0F-B25" secondAttribute="trailing" constant="29" id="w2A-Lt-EXH"/>
@@ -1016,6 +1025,9 @@
                             <constraint firstItem="OOw-7A-Oae" firstAttribute="leading" secondItem="6tq-oQ-yZP" secondAttribute="trailing" constant="20" id="zp0-CY-Ovm"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="setupMacProgress" destination="CM7-nc-9FJ" id="RbU-20-qM5"/>
+                    </connections>
                 </viewController>
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

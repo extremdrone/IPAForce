@@ -9,9 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "Extension.h"
 
-@interface ViewController : NSViewController
+@interface initVCWindowController : NSWindowController<NSWindowDelegate>
 @end
 
-@interface VCWindowController : NSWindowController<NSWindowDelegate>
+@interface SetupViewController : NSViewController
+@property (weak) IBOutlet NSProgressIndicator *setupMacProgress;
+
 @end
+
 

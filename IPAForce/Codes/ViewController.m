@@ -11,10 +11,10 @@
 
 
 
-@interface VCWindowController()
+@interface initVCWindowController()
 @end
 
-@implementation VCWindowController
+@implementation initVCWindowController
 - (void)windowDidLoad {
     [super windowDidLoad];
     // Implement this method to handle any initialization after your window controller’s window has been loaded from its nib file.
@@ -28,7 +28,7 @@
 
 
 
-@implementation ViewController
+@implementation SetupViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,6 +49,7 @@
 
     // Update the view, if already loaded.
 }
+
 
 
     // 开始设置macOS的环境
@@ -77,56 +78,83 @@
 
         }
         
-        // 获取文件路径并设置准备写入
-        NSURL *tempDir = [[NSFileManager defaultManager] temporaryDirectory];
-        NSURL *fileURL = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command")];
+        // 更新 UI 进度条
+        [_setupMacProgress setHidden:NO];
+        [_setupMacProgress setDoubleValue:20];
         
-        // 设置下载路径并写入文件
-        NSString *stringURL = @"https://raw.githubusercontent.com/Co2333/coreBase/master/OneMonkey.sh";
-        NSURL  *url = [NSURL URLWithString:stringURL];
-        NSData *urlData = [NSData dataWithContentsOfURL:url];
-        if ( urlData )
-        {
-            // 如果文件存在那么先删除
-            if ([[NSFileManager defaultManager] fileExistsAtPath:fileURL.path isDirectory:false]) {
-                NSLog(@"[!] Removing before download script.");
-                [[NSFileManager defaultManager] removeItemAtURL:fileURL error:NULL];
-            }
-            [urlData writeToURL:fileURL atomically:YES];
-        }
-        
-        // 检查文件是否可读取
-        NSError *error;
-        if ([fileURL checkResourceIsReachableAndReturnError:&error]) {
-            NSLog(@"[*] Download file at url completed. At path:%@", fileURL);
-        } else {
-            NSLog(@"[Error] Failed to download file at path:%@%@", fileURL, error);
-        }
-        
-        // 如果执行前脚本存在那么创建新的脚本 如果不存在那么重命名脚本
-        if (havePreCommand) {
-            // 重命名下载的脚本
-            NSURL *oldCommand = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command.tmp")];
-            [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:oldCommand error:NULL];
-            // 将下载的脚本读入内存
-            NSString *stringFromFileAtURL = [[NSString alloc]
-                                             initWithContentsOfURL:oldCommand
-                                             encoding:NSUTF8StringEncoding
-                                             error:NULL];
-            // 合并脚本
-            NSString *completedScript = script;
-            completedScript = [completedScript stringByAppendingString:stringFromFileAtURL];
-            // 写入执行前脚本
-            [completedScript writeToURL:fileURL atomically:YES
-                               encoding:NSUTF8StringEncoding error:NULL];
-            // 删除临时脚本
-            [[NSFileManager defaultManager] removeItemAtURL:oldCommand error:NULL];
+        // 创建 GCD 队列 异步执行安装
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // 获取文件路径并设置准备写入
+            NSURL *tempDir = [[NSFileManager defaultManager] temporaryDirectory];
+            NSURL *fileURL = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command")];
             
-        } // if (havePreCommand)
+            // 设置下载路径并写入文件
+            NSString *stringURL = @"https://raw.githubusercontent.com/Co2333/coreBase/master/OneMonkey.sh";
+            NSURL  *url = [NSURL URLWithString:stringURL];
+            NSData *urlData = [NSData dataWithContentsOfURL:url];
+            if ( urlData )
+            {
+                // 如果文件存在那么先删除
+                if ([[NSFileManager defaultManager] fileExistsAtPath:fileURL.path isDirectory:false]) {
+                    NSLog(@"[!] Removing before download script.");
+                    [[NSFileManager defaultManager] removeItemAtURL:fileURL error:NULL];
+                }
+                [urlData writeToURL:fileURL atomically:YES];
+            }
+            
+            // 更新 UI 进度条
+            NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                dispatch_async(dispatch_get_main_queue(), ^{ // Correct
+                    [self->_setupMacProgress setDoubleValue:50];
+                });
+            }];
+            [task resume];
+
+            // 检查文件是否可读取
+            NSError *error;
+            if ([fileURL checkResourceIsReachableAndReturnError:&error]) {
+                NSLog(@"[*] Download file at url completed. At path:%@", fileURL);
+            } else {
+                NSLog(@"[Error] Failed to download file at path:%@%@", fileURL, error);
+            }
+            
+            // 如果执行前脚本存在那么创建新的脚本 如果不存在那么重命名脚本
+            if (havePreCommand) {
+                // 重命名下载的脚本
+                NSURL *oldCommand = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command.tmp")];
+                [[NSFileManager defaultManager] moveItemAtURL:fileURL toURL:oldCommand error:NULL];
+                // 将下载的脚本读入内存
+                NSString *stringFromFileAtURL = [[NSString alloc]
+                                                 initWithContentsOfURL:oldCommand
+                                                 encoding:NSUTF8StringEncoding
+                                                 error:NULL];
+                // 合并脚本
+                NSString *completedScript = script;
+                completedScript = [completedScript stringByAppendingString:stringFromFileAtURL];
+                // 写入执行前脚本
+                [completedScript writeToURL:fileURL atomically:YES
+                                   encoding:NSUTF8StringEncoding error:NULL];
+                // 删除临时脚本
+                [[NSFileManager defaultManager] removeItemAtURL:oldCommand error:NULL];
+                
+            } // if (havePreCommand)
+            
+            // 从fileURL执行脚本
+            int returnVal = execCommandFromURL(fileURL);
+            NSLog(@"[!] Exec command from URL returns:%d", returnVal);
+            
+            // 更新 UI 进度条
+            NSURLSessionTask *task2 = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                dispatch_async(dispatch_get_main_queue(), ^{ // Correct
+                    [self->_setupMacProgress setHidden:YES];
+                    [self->_setupMacProgress setDoubleValue:0];
+                });
+            }];
+            [task2 resume];
+
+        });
         
-        // 从fileURL执行脚本
-        int returnVal = execCommandFromURL(fileURL);
-        NSLog(@"[!] Exec command from URL returns:%d", returnVal);
+        
     }
 }
     // 开始设置iOS的环境
