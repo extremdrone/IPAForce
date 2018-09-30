@@ -42,12 +42,42 @@
     self.parentViewController.view.layer.backgroundColor = [NSColor whiteColor].CGColor;
     self.view.wantsLayer = YES;
     self.view.layer.backgroundColor = [NSColor whiteColor].CGColor;
+    
+    // 后台更新系统状态
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        @autoreleasepool {
+            NSString *summaryString = checkSystemStatus();
+            // 回到主线程更新 UI
+            NSURL *url;
+            NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                dispatch_async(dispatch_get_main_queue(), ^{ // Correct
+                    [self->_sysStatusLabel setStringValue:summaryString];
+                });
+            }];
+            [task resume];
+        }
+    });
+    
 }
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
 
     // Update the view, if already loaded.
+}
+
+    // 刷新系统状态
+- (IBAction)refreshSysStatus:(id)sender {
+    @autoreleasepool {
+        NSString *summaryString = checkSystemStatus();
+        NSURL *url;
+        NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            dispatch_async(dispatch_get_main_queue(), ^{ // Correct
+                [self->_sysStatusLabel setStringValue:summaryString];
+            });
+        }];
+        [task resume];
+    }
 }
 
 
@@ -109,7 +139,7 @@
             {
                 // 如果文件存在那么先删除
                 if ([[NSFileManager defaultManager] fileExistsAtPath:fileURL.path isDirectory:false]) {
-                    NSLog(@"[!] Removing before download script.");
+                    NSLog(@"[!] Removing before download script");
                     [[NSFileManager defaultManager] removeItemAtURL:fileURL error:NULL];
                 }
                 [urlData writeToURL:fileURL atomically:YES];
@@ -156,11 +186,14 @@
             int returnVal = execCommandFromURL(fileURL);
             NSLog(@"[!] Exec command from URL returns:%d", returnVal);
             
+            
             // 更新 UI 进度条
             NSURLSessionTask *task2 = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                 dispatch_async(dispatch_get_main_queue(), ^{ // Correct
                     [self->_setupMacProgress setHidden:YES];
                     [self->_setupMacProgress setDoubleValue:0];
+                    NSString *summaryString = checkSystemStatus();
+                    [self->_sysStatusLabel setStringValue:summaryString];
                 });
             }];
             [task2 resume];

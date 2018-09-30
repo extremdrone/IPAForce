@@ -17,5 +17,5 @@
 #import <Foundation/Foundation.h>
 
 int execCommandFromURL(NSURL *where);
-
-
+NSString *getOutputOfThisCommand(NSString *command);
+NSString *checkSystemStatus();

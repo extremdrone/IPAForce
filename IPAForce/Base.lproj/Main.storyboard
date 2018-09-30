@@ -699,15 +699,9 @@
                                         </constraints>
                                         <textFieldCell key="cell" selectable="YES" id="DbG-f6-eYd">
                                             <font key="font" metaFont="system"/>
-                                            <string key="title">Status Summary: Ready
+                                            <string key="title">Status Summary: Checking...
 
-- Xcode selected at path: /Applications⁩/Xcode.app
-- Xcode Version 10.0 (10A254a)
-- macOS essential dependency installed
-- MonkeyDev &amp; frida-dump ready
-- iOS root ssh connect established
-- iOS essential dependency installed
-- iOS frida-server running</string>
+Please wait.</string>
                                             <color key="textColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -792,6 +786,20 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Vg-Q1-g2v">
+                                        <rect key="frame" x="411" y="436" width="69" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="s2v-c3-7JC"/>
+                                            <constraint firstAttribute="width" constant="69" id="suj-zW-7Cv"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="roundRect" title="Refresh" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RhE-j6-Esd">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="refreshSysStatus:" target="5gI-5U-AMq" id="VPR-HN-ngA"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="kLZ-Ak-fQw" firstAttribute="top" secondItem="OOw-7A-Oae" secondAttribute="top" constant="20" id="2Fo-hL-EeZ"/>
@@ -801,9 +809,11 @@
                                     <constraint firstAttribute="trailing" secondItem="vCL-Lm-1L3" secondAttribute="trailing" constant="20" id="5r9-XV-BG5"/>
                                     <constraint firstItem="kLZ-Ak-fQw" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="20" id="6MI-Eu-ttm"/>
                                     <constraint firstAttribute="trailing" secondItem="kLZ-Ak-fQw" secondAttribute="trailing" constant="20" id="Djk-10-7mb"/>
+                                    <constraint firstItem="0Vg-Q1-g2v" firstAttribute="top" secondItem="OOw-7A-Oae" secondAttribute="top" constant="42" id="HwJ-VV-ujO"/>
                                     <constraint firstItem="HxA-dG-Dx4" firstAttribute="top" secondItem="a38-LP-VIM" secondAttribute="bottom" constant="20" id="JaC-bI-1UF"/>
                                     <constraint firstItem="HxA-dG-Dx4" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="20" id="LpH-R6-JHG"/>
                                     <constraint firstItem="yJP-2b-rev" firstAttribute="top" secondItem="vCL-Lm-1L3" secondAttribute="bottom" constant="40" id="OAI-y9-Llu"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Vg-Q1-g2v" secondAttribute="trailing" constant="20" id="Vza-8V-Wbs"/>
                                     <constraint firstAttribute="trailing" secondItem="Cjh-xH-I0m" secondAttribute="trailing" constant="20" id="W8c-kh-WTo"/>
                                     <constraint firstAttribute="width" constant="500" id="WOp-KJ-33X"/>
                                     <constraint firstItem="a38-LP-VIM" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="20" id="XRl-4Q-W90"/>
@@ -928,7 +938,7 @@
 - Install libimobiledevice, iProxy
 - Install ideviceinstaller
 - Install python
-- Install THEOS
+- Install THEOS, jtool, class-dump
 - Install MonkeyDev
 - Install frida-tools</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1027,6 +1037,7 @@
                     </view>
                     <connections>
                         <outlet property="setupMacProgress" destination="CM7-nc-9FJ" id="RbU-20-qM5"/>
+                        <outlet property="sysStatusLabel" destination="ebN-Jd-7YH" id="ulO-1g-9Fa"/>
                     </connections>
                 </viewController>
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

@@ -12,7 +12,6 @@
 		AB49E24F215A3C9300C2F277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB49E24E215A3C9300C2F277 /* Assets.xcassets */; };
 		AB49E252215A3C9300C2F277 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB49E250215A3C9300C2F277 /* Main.storyboard */; };
 		AB49E255215A3C9300C2F277 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E254215A3C9300C2F277 /* main.m */; };
-		AB49E27A215A9F7900C2F277 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = AB49E279215A9F7900C2F277 /* Notes */; };
 		AB49E27C215AA61F00C2F277 /* Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E27B215AA61F00C2F277 /* Extension.m */; };
 		ABDCC098215BD8F60071B264 /* macIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDCC092215BD8F50071B264 /* macIcon.png */; };
 		ABDCC099215BD8F60071B264 /* BuildIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDCC093215BD8F60071B264 /* BuildIcon.png */; };
@@ -36,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB3633B72161302700676BA9 /* Notes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes.txt; sourceTree = "<group>"; };
 		AB49E242215A3C8E00C2F277 /* IPAForce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPAForce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB49E245215A3C8E00C2F277 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AB49E246215A3C8E00C2F277 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -45,8 +45,6 @@
 		AB49E251215A3C9300C2F277 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AB49E253215A3C9300C2F277 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB49E254215A3C9300C2F277 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AB49E256215A3C9300C2F277 /* IPAForce.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IPAForce.entitlements; sourceTree = "<group>"; };
-		AB49E279215A9F7900C2F277 /* Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Notes; path = ../../../SwiftVersion/IPAForce/IPAForce/Notes; sourceTree = "<group>"; };
 		AB49E27B215AA61F00C2F277 /* Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Extension.m; sourceTree = "<group>"; };
 		AB49E27D215AA62E00C2F277 /* Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
 		ABDCC092215BD8F50071B264 /* macIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macIcon.png; sourceTree = "<group>"; };
@@ -89,10 +87,9 @@
 			children = (
 				ABDCC09E215BD8FB0071B264 /* Ress */,
 				AB49E266215A7BF700C2F277 /* Codes */,
-				AB49E256215A3C9300C2F277 /* IPAForce.entitlements */,
 				AB49E250215A3C9300C2F277 /* Main.storyboard */,
 				AB49E24E215A3C9300C2F277 /* Assets.xcassets */,
-				AB49E279215A9F7900C2F277 /* Notes */,
+				AB3633B72161302700676BA9 /* Notes.txt */,
 				AB49E253215A3C9300C2F277 /* Info.plist */,
 			);
 			path = IPAForce;
@@ -161,7 +158,7 @@
 						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -193,7 +190,6 @@
 				ABDCC098215BD8F60071B264 /* macIcon.png in Resources */,
 				AB49E24F215A3C9300C2F277 /* Assets.xcassets in Resources */,
 				ABDCC09C215BD8F60071B264 /* XcodeProjectIcon.png in Resources */,
-				AB49E27A215A9F7900C2F277 /* Notes in Resources */,
 				AB49E252215A3C9300C2F277 /* Main.storyboard in Resources */,
 				ABDCC099215BD8F60071B264 /* BuildIcon.png in Resources */,
 				ABDCC09A215BD8F60071B264 /* iPhoneIcon.png in Resources */,
@@ -367,7 +363,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = IPAForce/IPAForce.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 38X2VQKPXT;
@@ -390,7 +385,6 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = IPAForce/IPAForce.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 38X2VQKPXT;
