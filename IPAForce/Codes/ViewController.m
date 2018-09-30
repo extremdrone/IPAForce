@@ -55,27 +55,43 @@
     // 开始设置macOS的环境
 - (IBAction)startSetupForMacOS:(id)sender {
     @autoreleasepool {
+        
+        // 获取文件路径并设置准备写入
+        NSURL *tempDir = [[NSFileManager defaultManager] temporaryDirectory];
+        NSURL *fileURL = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command")];
+        NSURL *scriptURL = [tempDir URLByAppendingPathComponent:(@"Saves/setupScriptSavedForMac.txt")];
 
         // 询问执行前脚本
         NSAlert *alert = [[NSAlert alloc] init];
         [alert setMessageText:@"Any additional command before running the script? eg: export proxy and select Xcode."];
         [alert addButtonWithTitle:@"Yes"];
+        [alert addButtonWithTitle:@"Cancel"];
         NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 600, 200)];
-        [input setStringValue:@""];
+            //  读取保存的脚本
+            if ([[NSFileManager defaultManager] fileExistsAtPath:scriptURL.path isDirectory:false]) {
+                NSString *scriptStringFromFileAtURL = [[NSString alloc]
+                                                 initWithContentsOfURL:scriptURL
+                                                 encoding:NSUTF8StringEncoding
+                                                 error:NULL];
+                [input setStringValue:scriptStringFromFileAtURL];
+            }else{
+                [input setStringValue:@""];
+            }
+
         [alert setAccessoryView:input];
         NSInteger button = [alert runModal];
         NSString *script = @"";
         if (button == NSAlertFirstButtonReturn) {
             script = [input stringValue];
         } else if (button == NSAlertSecondButtonReturn) {
+            return;
         }
         
         // 如果执行前脚本存在
         BOOL havePreCommand = false;
-        if (![script  isEqual: @""]) {
-            script = [NSString stringWithFormat:@"#!/bin/bash\n%@", script];
-            havePreCommand = true;
-
+        if (![script  isEqual: @""]) { havePreCommand = true;
+            // 将脚本保存到本地
+            [script writeToURL:scriptURL atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         }
         
         // 更新 UI 进度条
@@ -84,9 +100,6 @@
         
         // 创建 GCD 队列 异步执行安装
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            // 获取文件路径并设置准备写入
-            NSURL *tempDir = [[NSFileManager defaultManager] temporaryDirectory];
-            NSURL *fileURL = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command")];
             
             // 设置下载路径并写入文件
             NSString *stringURL = @"https://raw.githubusercontent.com/Co2333/coreBase/master/OneMonkey.sh";
