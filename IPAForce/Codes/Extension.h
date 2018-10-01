@@ -15,6 +15,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Foundation/Foundation.h>
+#import <NMSSH/NMSSH.h>
 
 int execCommandFromURL(NSURL *where);
 NSString *getOutputOfThisCommand(NSString *command, int timeOut);

@@ -171,6 +171,34 @@ NSString *checkSystemStatus() {
         dependencyStatus = [dependencyStatus stringByAppendingString:@"\n- MonkeyDev & frida-dump is NOT ready"];
     }
     
+    // 检查ssh连接性
+    NSString *sshCheck = @"\n- iOS root ssh connect is not established";
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
+                                                            encoding:NSUTF8StringEncoding
+                                                               error:NULL];
+    NSString *inputStringPass = [[NSString alloc] initWithContentsOfFile:sshPassSave.path
+                                                                encoding:NSUTF8StringEncoding
+                                                                   error:NULL];
+    int ipQuads[5];
+    const char *ipAddress = [inputString cStringUsingEncoding:NSUTF8StringEncoding];
+    sscanf(ipAddress, "%d.%d.%d.%d:%d", &ipQuads[0], &ipQuads[1], &ipQuads[2], &ipQuads[3], &ipQuads[4]);
+    NSString *iPGrabed = [[NSString alloc] initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
+    int sshPortGrabed = ipQuads[4];
+    NMSSHSession *session = [NMSSHSession connectToHost:iPGrabed port:sshPortGrabed withUsername:@"root"];
+    BOOL sshConnectedFlag = false;
+    if (session.isConnected) {
+        [session authenticateByPassword:inputStringPass];
+        if (session.isAuthorized) {
+            sshCheck = @"\n- iOS root ssh connect established";
+            sshConnectedFlag = true;
+        }
+    }
+    if (!sshConnectedFlag) {
+        isReady = false;
+    }
+    [session disconnect];
     
     // 来看看是不是都装好了
     if (isReady) {
@@ -182,6 +210,7 @@ NSString *checkSystemStatus() {
     // 是时候把他们放到一起了
     summaryString = [summaryString stringByAppendingString:XcodeSelectedPath];
     summaryString = [summaryString stringByAppendingString:dependencyStatus];
+    summaryString = [summaryString stringByAppendingString:sshCheck];
     
     /* 标签结构
      Status Summary: Ready

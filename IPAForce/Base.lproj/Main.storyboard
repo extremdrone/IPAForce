@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="jGA-0Y-lOj">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -894,8 +895,6 @@ Please wait.</string>
                                 <rect key="frame" x="322" y="203" width="132" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="GhP-mD-2DT"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="XJN-D2-Sid"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="glz-u2-O7a"/>
                                     <constraint firstAttribute="height" constant="21" id="tbD-PO-cff"/>
                                 </constraints>
                                 <buttonCell key="cell" type="push" title="Setup iOS" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jZs-Ka-F3b">
@@ -1000,6 +999,20 @@ Please wait.</string>
                                     <constraint firstAttribute="width" constant="16" id="W0J-xO-Icm"/>
                                 </constraints>
                             </progressIndicator>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4hX-na-HlG">
+                                <rect key="frame" x="322" y="42" width="132" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="E5M-Ow-azd"/>
+                                    <constraint firstAttribute="width" constant="120" id="cCP-lF-d1D"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Setup SSH" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="33b-Fe-xZb">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="startSeupSSH:" target="5gI-5U-AMq" id="sgs-cA-opT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="feO-LQ-I2z" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="-52" id="3ga-BJ-HEX"/>
@@ -1030,7 +1043,9 @@ Please wait.</string>
                             <constraint firstItem="CM7-nc-9FJ" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="30" id="oto-L9-kHH"/>
                             <constraint firstItem="Gxd-DW-aLv" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="30" id="tce-My-kKv"/>
                             <constraint firstItem="yNM-Qe-uvU" firstAttribute="top" secondItem="6tq-oQ-yZP" secondAttribute="bottom" constant="2" id="uCW-v0-w0G"/>
+                            <constraint firstItem="4hX-na-HlG" firstAttribute="leading" secondItem="nAH-R2-HJE" secondAttribute="trailing" constant="140" id="vgx-q0-0CQ"/>
                             <constraint firstItem="D8S-It-IJp" firstAttribute="leading" secondItem="yhZ-0F-B25" secondAttribute="trailing" constant="29" id="w2A-Lt-EXH"/>
+                            <constraint firstItem="4hX-na-HlG" firstAttribute="top" secondItem="Gxd-DW-aLv" secondAttribute="bottom" constant="140" id="yMb-bQ-eKk"/>
                             <constraint firstAttribute="trailing" secondItem="OOw-7A-Oae" secondAttribute="trailing" id="yd8-Aw-Pc5"/>
                             <constraint firstItem="OOw-7A-Oae" firstAttribute="leading" secondItem="6tq-oQ-yZP" secondAttribute="trailing" constant="20" id="zp0-CY-Ovm"/>
                         </constraints>

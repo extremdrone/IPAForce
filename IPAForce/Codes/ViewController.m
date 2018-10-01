@@ -205,6 +205,12 @@
     // 开始设置iOS的环境
 - (IBAction)startSetupForiOS:(id)sender {
     
+    
+    
+}
+    // 保存 ssh 密码
+- (IBAction)startSeupSSH:(id)sender {
+
     // 先让 ssh 可以连接
     NSString *gradValue = [NSString alloc];
     NSString *iPGrabed = [NSString alloc];
@@ -302,9 +308,26 @@
         return;
     }
     
-    // 已经成功链接ssh
-    
+    // 已经成功链接 ssh 询问密码
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"Please tell me ssh password. !Notice that this is saved as the same as you input for now. Cancel it if you don't want to use this feature."];
+    [alert addButtonWithTitle:@"Yes"];
+    [alert addButtonWithTitle:@"Cancel"];
+    NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 150, 24)];
+    [alert setAccessoryView:input];
+    NSInteger button = [alert runModal];
+    NSString *inputString = @"";
+    if (button == NSAlertFirstButtonReturn) {
+        inputString = [input stringValue];
+    } else if (button == NSAlertSecondButtonReturn) {
+        return;
+    }
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    // 保存密码
+    [inputString writeToURL:sshPassSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
 }
+    
+    
     // 准备创建工程
 - (IBAction)startCreateProject:(id)sender {
 }
