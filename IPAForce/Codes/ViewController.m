@@ -199,8 +199,6 @@
                 dispatch_async(dispatch_get_main_queue(), ^{ // Correct
                     [self->_setupMacProgress setHidden:YES];
                     [self->_setupMacProgress setDoubleValue:0];
-                    NSString *summaryString = checkSystemStatus();
-                    [self->_sysStatusLabel setStringValue:summaryString];
                 });
             }];
             [task2 resume];
@@ -441,6 +439,145 @@
     
     // 准备创建工程
 - (IBAction)startCreateProject:(id)sender {
+    
+    // 选择工程类型
+    // - 创建 MonkeyDev App
+    // - 创建 IPAForce App
+    // - 从设备获取解密的 ipa
+    
+    NSAlert *selectorAlert = [[NSAlert alloc] init];
+    [selectorAlert setMessageText:@"Hey! What you want to do with me?"];
+    [selectorAlert addButtonWithTitle:@"Create MonkeyApp"];
+    [selectorAlert addButtonWithTitle:@"Create IPAForceApp"];
+    [selectorAlert addButtonWithTitle:@"Get app and headers from device"];
+    NSInteger button = [selectorAlert runModal];
+    
+    if (false) {
+        // No fucking bb I like it. QAQ
+    }else if (button == NSAlertFirstButtonReturn) {
+        NSAlert *selectorAlert = [[NSAlert alloc] init];
+        [selectorAlert setMessageText:@"Indeveloping!"];
+        [selectorAlert addButtonWithTitle:@"OK"];
+        [selectorAlert runModal];
+    }else if (button == NSAlertSecondButtonReturn) {
+        NSAlert *selectorAlert = [[NSAlert alloc] init];
+        [selectorAlert setMessageText:@"Indeveloping!"];
+        [selectorAlert addButtonWithTitle:@"OK"];
+        [selectorAlert runModal];
+    }else if (button == NSAlertThirdButtonReturn) {
+        
+        //启动 iproxy 2222 22
+        NSURL *iProxyShDir = [[NSBundle mainBundle] resourceURL];
+        iProxyShDir = [iProxyShDir URLByAppendingPathComponent:@"runiProxy.command"];
+        execCommandFromURL(iProxyShDir);
+        
+        //在创建用户配置前先备份
+        if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/local/bin/fridaDP.py.lakr"]) {
+            // 重新覆盖脚本
+            [[NSFileManager defaultManager] removeItemAtPath:@"/usr/local/bin/fridaDP.py" error:NULL];
+            [[NSFileManager defaultManager] copyItemAtPath:@"/usr/local/bin/fridaDP.py.lakr" toPath:@"/usr/local/bin/fridaDP.py" error:NULL];
+        }else{
+            // 创建备份
+            [[NSFileManager defaultManager] copyItemAtPath:@"/usr/local/bin/fridaDP.py" toPath:@"/usr/local/bin/fridaDP.py.lakr" error:NULL];
+        }
+        
+        // 替换 username 和 password
+        NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
+        NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+        NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
+                                                                encoding:NSUTF8StringEncoding
+                                                                   error:NULL];
+        NSString *inputStringPass = [[NSString alloc] initWithContentsOfFile:sshPassSave.path
+                                                                    encoding:NSUTF8StringEncoding
+                                                                       error:NULL];
+        int ipQuads[5];
+        const char *ipAddress = [inputString cStringUsingEncoding:NSUTF8StringEncoding];
+        sscanf(ipAddress, "%d.%d.%d.%d:%d", &ipQuads[0], &ipQuads[1], &ipQuads[2], &ipQuads[3], &ipQuads[4]);
+        NSString *iPGrabed = [[NSString alloc] initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
+        int sshPortGrabed = ipQuads[4];
+        NSString *runCmd1 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/alpine/%@/g /usr/local/bin/fridaDP.py", inputStringPass];
+        NSString *runCmd2 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/localhost/%@/g /usr/local/bin/fridaDP.py", iPGrabed];
+        NSString *runCmd3 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/2222/%d/g /usr/local/bin/fridaDP.py", sshPortGrabed];
+        //  export SEDTMP=s/localhost/$passvar/g alpine localhost 2222
+        //  sed -i '' -e $SEDTMP /usr/local/bin/fridaDP.py
+        getOutputOfThisCommand(runCmd1, 1);
+        getOutputOfThisCommand(runCmd2, 1);
+        getOutputOfThisCommand(runCmd3, 1);
+        
+        sleep(2);
+        
+        // 通知用户连接 USB 线缆来访问 App 列表
+        NSAlert *w = [[NSAlert alloc] init];
+        [w setMessageText:@"Please connect to your iOS device with USB cabe.\nOr my app will not respond."];
+        [w addButtonWithTitle:@"OK"];
+        [w addButtonWithTitle:@"Cancel"];
+        NSModalResponse ww = [w runModal];
+        if (ww == NSAlertSecondButtonReturn) {
+            return;
+        }
+        
+        // 准备使用 fridaDP.py -l 并展示
+        NSString *listOfApps = getOutputOfThisCommand(@"python /usr/local/bin/fridaDP.py -l", 6);
+        
+        NSAlert *selectorAlert = [[NSAlert alloc] init];
+        [selectorAlert setMessageText:@"Choice your app below and copy the name of it!"];
+        [selectorAlert addButtonWithTitle:@"OK"];
+        NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 400, 488)];
+        [input setStringValue:listOfApps];
+        [selectorAlert setAccessoryView:input];
+        [selectorAlert runModal];
+        
+        // 向用户询问 App 名字 "Kimono namayiwa!"
+        NSString *nameOfApp = [NSString alloc];
+        NSAlert *selectorAlert3 = [[NSAlert alloc] init];
+        [selectorAlert3 setMessageText:@"Tell me the app name!"];
+        [selectorAlert3 addButtonWithTitle:@"OK"];
+        NSTextField *inputName = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 24)];
+        [selectorAlert3 setAccessoryView:inputName];
+        [selectorAlert3 runModal];
+        
+        nameOfApp = [inputName stringValue];
+        
+        NSAlert *selectorAlert31 = [[NSAlert alloc] init];
+        [selectorAlert31 setMessageText:@"Make sure you have exit all the process on your iOS device.\nThis process may take up to 15 min.\nSo make sure your iOS device disabled screen saver."];
+        [selectorAlert31 addButtonWithTitle:@"OK"];
+        NSTextField *inputName2 = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 300, 24)];
+        [inputName2 setStringValue:nameOfApp];
+        [inputName2 setEditable:NO];
+        [selectorAlert31 setAccessoryView:inputName2];
+        [selectorAlert31 runModal];
+        
+        // 创建存档目录
+        getOutputOfThisCommand(@"mkdir ~/Documents/IPAForceDumped", 1);
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[[NSString alloc] initWithFormat:@"~/Documents/IPAForceDumped/%@/%@.ipa", nameOfApp, nameOfApp]]) {
+            getOutputOfThisCommand([[NSString alloc] initWithFormat:@"mkdir ~/Documents/IPAForceDumped/%@", nameOfApp], 1);
+        }else{
+            NSAlert *selectorAlert311 = [[NSAlert alloc] init];
+            [selectorAlert311 setMessageText:@"You already have it. Replace it?"];
+            [selectorAlert311 addButtonWithTitle:@"OK"];
+            [selectorAlert311 addButtonWithTitle:@"Cancel"];
+            NSModalResponse ret = [selectorAlert311 runModal];
+            if (ret == NSAlertSecondButtonReturn) {
+                return;
+            }
+            getOutputOfThisCommand([[NSString alloc] initWithFormat:@"rm -rf ~/Documents/IPAForceDumped/%@", nameOfApp], 1);
+        }
+        
+        // 开始创建解密脚本
+        NSString *script = [[NSString alloc] initWithFormat:@"cd ~/Documents/IPAForceDumped/%@/\npython /usr/local/bin/fridaDP.py %@ -o %@.ipa\n", nameOfApp, nameOfApp, nameOfApp];
+        NSString *tmpScript = [[NSString alloc] initWithFormat:@"%@/tmp.command", [[NSFileManager defaultManager] temporaryDirectory].path];
+        [script writeToFile:tmpScript atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        // 执行脚本
+        getOutputOfThisCommand([[NSString alloc] initWithFormat:@"chmod 777 %@", tmpScript], 1);
+        [[NSWorkspace sharedWorkspace] openFile:tmpScript];
+        
+        
+        
+        
+    }else{
+        NSLog(@"[Lakr NB 666] How can you been here?");
+    }
+    
 }
 
 

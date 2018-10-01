@@ -97,7 +97,6 @@ NSString *getOutputOfThisCommand(NSString *command, int timeOut) {
 }
 
 // 检查系统状态
-
 NSString *checkSystemStatus() {
     // init
     sleep(1);
@@ -175,7 +174,7 @@ NSString *checkSystemStatus() {
         tips = @"****** Orz You may want to run Setup macOS\n\n";
     }
     
-    // 检查ssh连接性
+    // 检查 ssh 连接性
     NSString *sshCheck = @"\n- iOS root ssh connect is not established";
     NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
     NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];

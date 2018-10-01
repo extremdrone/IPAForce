@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AB0DFA8021628B7C00E80F3D /* LakrBootstrap.tar in Resources */ = {isa = PBXBuildFile; fileRef = AB0DFA7F21628B7B00E80F3D /* LakrBootstrap.tar */; };
+		AB0DFA822162BEE800E80F3D /* runiProxy.command in Resources */ = {isa = PBXBuildFile; fileRef = AB0DFA812162BEE500E80F3D /* runiProxy.command */; };
 		AB49E247215A3C8E00C2F277 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E246215A3C8E00C2F277 /* AppDelegate.m */; };
 		AB49E24A215A3C8E00C2F277 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E249215A3C8E00C2F277 /* ViewController.m */; };
 		AB49E24F215A3C9300C2F277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB49E24E215A3C9300C2F277 /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 		8CF3B6C6E3B47495DDAB2EEB /* Pods-IPAForce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IPAForce.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IPAForce/Pods-IPAForce.debug.xcconfig"; sourceTree = "<group>"; };
 		91BC01B6E26DCB7C428F8FBB /* Pods_IPAForce.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IPAForce.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB0DFA7F21628B7B00E80F3D /* LakrBootstrap.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = LakrBootstrap.tar; sourceTree = "<group>"; };
+		AB0DFA812162BEE500E80F3D /* runiProxy.command */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = runiProxy.command; sourceTree = "<group>"; };
 		AB0EFF742161E8E4004A27D2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AB0EFF762161E8EC004A27D2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AB0EFF782161E8F8004A27D2 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
@@ -153,6 +155,7 @@
 				ABDCC094215BD8F60071B264 /* iPhoneIcon.png */,
 				ABDCC092215BD8F50071B264 /* macIcon.png */,
 				ABDCC096215BD8F60071B264 /* XcodeProjectIcon.png */,
+				AB0DFA812162BEE500E80F3D /* runiProxy.command */,
 			);
 			path = Ress;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				AB0DFA8021628B7C00E80F3D /* LakrBootstrap.tar in Resources */,
 				ABDCC099215BD8F60071B264 /* BuildIcon.png in Resources */,
 				ABDCC09A215BD8F60071B264 /* iPhoneIcon.png in Resources */,
+				AB0DFA822162BEE800E80F3D /* runiProxy.command in Resources */,
 				ABDCC09D215BD8F60071B264 /* IPAForceProjectIcon.png in Resources */,
 				AB61E6D92162527900EAC11B /* checkServerAvailable.sh in Resources */,
 				ABDCC09B215BD8F60071B264 /* ICON.png in Resources */,
