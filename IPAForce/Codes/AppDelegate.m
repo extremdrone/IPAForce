@@ -24,7 +24,17 @@
     if (![[NSFileManager defaultManager] fileExistsAtPath:savesDir.path isDirectory:&fuckThis]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:savesDir.path withIntermediateDirectories:YES attributes:NULL error:NULL];
     }
+    
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
+    NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
+                                                            encoding:NSUTF8StringEncoding
+                                                               error:NULL];
+    if (inputString == nil) {
+        inputString = @"0.0.0.0:22";
+    }
+    [inputString writeToURL:sshAddrSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
 }
+    
 
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

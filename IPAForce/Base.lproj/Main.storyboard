@@ -687,7 +687,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="N7U-Zb-KKs"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" title="Status Check Report" id="XJP-9d-cLy">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" title="Look At Me Here !" id="XJP-9d-cLy">
                                             <font key="font" metaFont="system" size="40"/>
                                             <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -788,17 +788,31 @@ Please wait.</string>
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Vg-Q1-g2v">
-                                        <rect key="frame" x="411" y="436" width="69" height="22"/>
+                                        <rect key="frame" x="352" y="458" width="128" height="22"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="s2v-c3-7JC"/>
-                                            <constraint firstAttribute="width" constant="69" id="suj-zW-7Cv"/>
+                                            <constraint firstAttribute="height" constant="21" id="Bs0-SQ-HiS"/>
+                                            <constraint firstAttribute="width" constant="128" id="kcq-AL-xDC"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="roundRect" title="Refresh" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RhE-j6-Esd">
+                                        <buttonCell key="cell" type="roundRect" title="Refresh Tips" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RhE-j6-Esd">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
                                         <connections>
                                             <action selector="refreshSysStatus:" target="5gI-5U-AMq" id="VPR-HN-ngA"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N9o-pe-OLq">
+                                        <rect key="frame" x="352" y="431" width="128" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="128" id="J0j-t8-1gV"/>
+                                            <constraint firstAttribute="height" constant="21" id="gsY-kf-QJg"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="roundRect" title="Clean Documents" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RKp-6r-USW">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="cleanDocuments:" target="5gI-5U-AMq" id="iLv-bO-Klo"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -810,11 +824,12 @@ Please wait.</string>
                                     <constraint firstAttribute="trailing" secondItem="vCL-Lm-1L3" secondAttribute="trailing" constant="20" id="5r9-XV-BG5"/>
                                     <constraint firstItem="kLZ-Ak-fQw" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="20" id="6MI-Eu-ttm"/>
                                     <constraint firstAttribute="trailing" secondItem="kLZ-Ak-fQw" secondAttribute="trailing" constant="20" id="Djk-10-7mb"/>
-                                    <constraint firstItem="0Vg-Q1-g2v" firstAttribute="top" secondItem="OOw-7A-Oae" secondAttribute="top" constant="42" id="HwJ-VV-ujO"/>
                                     <constraint firstItem="HxA-dG-Dx4" firstAttribute="top" secondItem="a38-LP-VIM" secondAttribute="bottom" constant="20" id="JaC-bI-1UF"/>
+                                    <constraint firstAttribute="trailing" secondItem="N9o-pe-OLq" secondAttribute="trailing" constant="20" id="LeV-VE-DP3"/>
                                     <constraint firstItem="HxA-dG-Dx4" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="20" id="LpH-R6-JHG"/>
                                     <constraint firstItem="yJP-2b-rev" firstAttribute="top" secondItem="vCL-Lm-1L3" secondAttribute="bottom" constant="40" id="OAI-y9-Llu"/>
-                                    <constraint firstAttribute="trailing" secondItem="0Vg-Q1-g2v" secondAttribute="trailing" constant="20" id="Vza-8V-Wbs"/>
+                                    <constraint firstItem="N9o-pe-OLq" firstAttribute="top" secondItem="0Vg-Q1-g2v" secondAttribute="bottom" constant="6" id="PkI-VS-PbH"/>
+                                    <constraint firstItem="0Vg-Q1-g2v" firstAttribute="top" secondItem="OOw-7A-Oae" secondAttribute="top" constant="20" id="SXi-uX-YdI"/>
                                     <constraint firstAttribute="trailing" secondItem="Cjh-xH-I0m" secondAttribute="trailing" constant="20" id="W8c-kh-WTo"/>
                                     <constraint firstAttribute="width" constant="500" id="WOp-KJ-33X"/>
                                     <constraint firstItem="a38-LP-VIM" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="20" id="XRl-4Q-W90"/>
@@ -826,6 +841,8 @@ Please wait.</string>
                                     <constraint firstItem="ebN-Jd-7YH" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="20" id="n2O-IH-aB9"/>
                                     <constraint firstAttribute="trailing" secondItem="Dip-7C-YRu" secondAttribute="trailing" constant="20" id="rcR-PZ-Xkd"/>
                                     <constraint firstAttribute="trailing" secondItem="yJP-2b-rev" secondAttribute="trailing" constant="20" id="sYy-Sm-MwC"/>
+                                    <constraint firstItem="ebN-Jd-7YH" firstAttribute="top" secondItem="N9o-pe-OLq" secondAttribute="bottom" constant="20" id="shD-xg-raD"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Vg-Q1-g2v" secondAttribute="trailing" constant="20" id="vPP-cB-4aH"/>
                                     <constraint firstItem="a38-LP-VIM" firstAttribute="top" secondItem="ebN-Jd-7YH" secondAttribute="bottom" constant="20" id="yVf-ZX-mtU"/>
                                 </constraints>
                             </visualEffectView>

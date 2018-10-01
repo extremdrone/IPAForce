@@ -287,7 +287,7 @@
     // 清理临时文件
     response = [session.channel execute:@"rm -rf /var/mobile/Media/debs/" error:&error timeout:timeout];
     response = [session.channel execute:@"rm -f /var/mobile/Media/LakrBootstrap.tar" error:&error timeout:timeout];
-    
+    response = [session.channel execute:@"uicache" error:&error timeout:timeout];
     // 准备注销
     NSAlert *errorAlert3 = [[NSAlert alloc] init];
     [errorAlert3 setMessageText:@"Job is done. Ready to restart SpringBoard.\nThis is will kill apps.\nSave your documents."];
@@ -311,7 +311,7 @@
 - (IBAction)startSeupSSH:(id)sender {
 
     // 先让 ssh 可以连接
-    NSString *gradValue = [NSString alloc];
+    NSString *grabedValue = [NSString alloc];
     NSString *iPGrabed = [NSString alloc];
     while (true) {
         // 检查 iP 是否有存档 准备数据
@@ -381,17 +381,18 @@
                 [errorAlert addButtonWithTitle:@"Retry"];
                 [errorAlert runModal];
             }else{
-                gradValue = inputString;
+                grabedValue = inputString;
                 break;
             }
         }
         
-        if (sshPortGrabed == 0) {
+        if (sshPortGrabed <= 0 || sshPortGrabed >= 65535) {
             sshPortGrabed = 22;
         }
         
         // 将数据写入存档
-        [gradValue writeToURL:sshAddrSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        grabedValue = [[NSString alloc] initWithFormat:@"%@:%d", grabedValue, sshPortGrabed];
+        [grabedValue writeToURL:sshAddrSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         
         // 准备检查服务器连接性
         BOOL isConnectAble = ifOpenShellWorking(iPGrabed, sshPortGrabed);
@@ -424,6 +425,17 @@
     NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
     // 保存密码
     [inputString writeToURL:sshPassSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+}
+    
+    // 删除本地存档
+- (IBAction)cleanDocuments:(id)sender {
+    NSURL *dir = [[NSFileManager defaultManager] temporaryDirectory];
+    [[NSFileManager defaultManager] removeItemAtURL:dir error:NULL];
+    NSAlert *errorAlert = [[NSAlert alloc] init];
+    [errorAlert setMessageText:@"Please rerun this app."];
+    [errorAlert addButtonWithTitle:@"OK"];
+    [errorAlert runModal];
+    exit(0);
 }
     
     

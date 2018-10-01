@@ -100,9 +100,11 @@ NSString *getOutputOfThisCommand(NSString *command, int timeOut) {
 
 NSString *checkSystemStatus() {
     // init
+    sleep(1);
     BOOL isReady = true;
     NSString *summaryString = @"Status Summary: ";
     NSString *summaryBody = @"";
+    NSString *tips = @"";
     
     // Xcode Path
     NSString *XcodePath = getOutputOfThisCommand(@"xcode-select -p", 1);
@@ -163,12 +165,14 @@ NSString *checkSystemStatus() {
         dependencyStatus = @"\n- macOS essential dependency [";
         dependencyStatus = [dependencyStatus stringByAppendingString:tmpSt];
         dependencyStatus = [dependencyStatus stringByAppendingString:@"] not installed."];
+        tips = @"****** Orz You may want to run Setup macOS\n\n";
         isReady = false;
     }
     if (isFridaedMonkeyReady) {
         dependencyStatus = [dependencyStatus stringByAppendingString:@"\n- MonkeyDev & frida-dump ready"];
     }else{
         dependencyStatus = [dependencyStatus stringByAppendingString:@"\n- MonkeyDev & frida-dump is NOT ready"];
+        tips = @"****** Orz You may want to run Setup macOS\n\n";
     }
     
     // 检查ssh连接性
@@ -197,17 +201,20 @@ NSString *checkSystemStatus() {
     }
     if (!sshConnectedFlag) {
         isReady = false;
+        tips = @"****** Orz You may want to run Setup SSH\n\n";
     }
     [session disconnect];
     
     // 来看看是不是都装好了
     if (isReady) {
-        summaryString = [summaryString stringByAppendingString:@"Ready\n"];
+        summaryString = [summaryString stringByAppendingString:@"Ready\n\n"];
+        tips = @"****** 666 You may want to begin with Start Coding\n";
     }else{
         summaryString = [summaryString stringByAppendingString:@"Not Ready. Setup now!\n"];
     }
     
     // 是时候把他们放到一起了
+    summaryString = [summaryString stringByAppendingString:tips];
     summaryString = [summaryString stringByAppendingString:XcodeSelectedPath];
     summaryString = [summaryString stringByAppendingString:dependencyStatus];
     summaryString = [summaryString stringByAppendingString:sshCheck];
