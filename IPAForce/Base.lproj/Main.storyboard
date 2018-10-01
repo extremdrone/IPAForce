@@ -1013,6 +1013,17 @@ Please wait.</string>
                                     <action selector="startSeupSSH:" target="5gI-5U-AMq" id="sgs-cA-opT"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8mL-iG-6yb">
+                                <rect key="frame" x="8" y="10" width="850" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="2kO-MR-hJf"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Lakr Sakura 2018.9 All Right Resvered For This Application" id="PcP-yy-CSt">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="feO-LQ-I2z" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="-52" id="3ga-BJ-HEX"/>
@@ -1027,12 +1038,14 @@ Please wait.</string>
                             <constraint firstItem="CM7-nc-9FJ" firstAttribute="leading" secondItem="L0a-gl-PQK" secondAttribute="trailing" constant="8" id="E7B-rI-KwV"/>
                             <constraint firstItem="nAH-R2-HJE" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="28" id="Haf-HF-rjJ"/>
                             <constraint firstAttribute="bottom" secondItem="OOw-7A-Oae" secondAttribute="bottom" id="IVk-s1-Rtf"/>
+                            <constraint firstItem="8mL-iG-6yb" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="10" id="LUe-aF-aWj"/>
                             <constraint firstItem="yhZ-0F-B25" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="141" id="LxL-s2-Orx"/>
                             <constraint firstItem="rnk-gY-Nfk" firstAttribute="leading" secondItem="Gxd-DW-aLv" secondAttribute="trailing" constant="140" id="MKu-bf-Ind"/>
                             <constraint firstItem="nAH-R2-HJE" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="-50" id="No0-vI-UJ0"/>
                             <constraint firstItem="L0a-gl-PQK" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="30" id="Oe8-fj-tes"/>
                             <constraint firstItem="OOw-7A-Oae" firstAttribute="leading" secondItem="yNM-Qe-uvU" secondAttribute="trailing" constant="20" id="RBW-Fv-AKj"/>
                             <constraint firstItem="x8y-NI-4iv" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="-50" id="TUF-Ex-YA2"/>
+                            <constraint firstAttribute="bottom" secondItem="8mL-iG-6yb" secondAttribute="bottom" constant="10" id="YJl-Kj-agW"/>
                             <constraint firstItem="OOw-7A-Oae" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="aLR-vj-ddA"/>
                             <constraint firstItem="L0a-gl-PQK" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="53" id="bCQ-Yh-v99"/>
                             <constraint firstItem="6tq-oQ-yZP" firstAttribute="leading" secondItem="nR3-85-zgT" secondAttribute="trailing" constant="20" id="cDC-aY-PFa"/>
@@ -1047,10 +1060,12 @@ Please wait.</string>
                             <constraint firstItem="D8S-It-IJp" firstAttribute="leading" secondItem="yhZ-0F-B25" secondAttribute="trailing" constant="29" id="w2A-Lt-EXH"/>
                             <constraint firstItem="4hX-na-HlG" firstAttribute="top" secondItem="Gxd-DW-aLv" secondAttribute="bottom" constant="140" id="yMb-bQ-eKk"/>
                             <constraint firstAttribute="trailing" secondItem="OOw-7A-Oae" secondAttribute="trailing" id="yd8-Aw-Pc5"/>
+                            <constraint firstItem="OOw-7A-Oae" firstAttribute="leading" secondItem="8mL-iG-6yb" secondAttribute="trailing" constant="10" id="yns-2P-Ryb"/>
                             <constraint firstItem="OOw-7A-Oae" firstAttribute="leading" secondItem="6tq-oQ-yZP" secondAttribute="trailing" constant="20" id="zp0-CY-Ovm"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="rightsLabel" destination="8mL-iG-6yb" id="xq0-ps-ll2"/>
                         <outlet property="setupMacProgress" destination="CM7-nc-9FJ" id="RbU-20-qM5"/>
                         <outlet property="sysStatusLabel" destination="ebN-Jd-7YH" id="ulO-1g-9Fa"/>
                     </connections>

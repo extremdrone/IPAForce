@@ -38,6 +38,14 @@
 
 - (void)viewDidAppear {
     [super viewDidAppear];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth fromDate:[NSDate date]];
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    
+    if (day == 2 && month == 10){
+        [_rightsLabel setStringValue:@"Happy Birthday to Lakr Sakura!"];
+    }
+    
     self.parentViewController.view.wantsLayer = YES;
     self.parentViewController.view.layer.backgroundColor = [NSColor whiteColor].CGColor;
     self.view.wantsLayer = YES;
