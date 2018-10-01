@@ -9,6 +9,7 @@
 #import "Extension.h"
 #include <sys/stat.h>
 
+
 int execCommandFromURL(NSURL *where) {
     
     // 给文件可执权限
@@ -29,8 +30,51 @@ int execCommandFromURL(NSURL *where) {
     // system(Args);
 }
 
+
+
+// 检查 ssh 地址和端口是否正确
+BOOL ifOpenShellWorking(NSString *whereToCheck, int portNumber) {
+    // export $SSHADDR=com.lakr.IPAForce.PRESET.sshaddr
+    // export $SSHPORT=com.lakr.IPAForce.PRESET.sshport
+    NSString *sshAddr = [[NSString alloc] initWithFormat:@"export SSHADDR=%@", whereToCheck];
+    NSString *sshPort = [[NSString alloc] initWithFormat:@"export SSHPORT=%d", portNumber];
+    // 获取脚本文件
+    NSString *bashScriptPathFromApp = [[[NSBundle mainBundle] resourcePath]
+                                     stringByAppendingPathComponent:@"checkServerAvailable.sh"];
+    // 读取文件
+    NSError *error;
+    NSURL *fileTmp = [[NSURL alloc] initFileURLWithPath:bashScriptPathFromApp];
+    NSString *readFromScriptFile = [[NSString alloc]
+                                    initWithContentsOfURL:fileTmp
+                                    encoding:NSUTF8StringEncoding
+                                    error:&error];
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    // 创建脚本放到 App 文档目录
+    NSString *script = [[NSString alloc] initWithFormat:@"#!/bin/sh\n%@\n%@\n%@\n", sshAddr, sshPort, readFromScriptFile];
+    
+    // 检测脚本是否存在
+    NSURL *scriptInDocPath = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"checkServerAvailable.sh"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:scriptInDocPath.path]) {
+        [[NSFileManager defaultManager] removeItemAtPath:scriptInDocPath.path error:NULL];
+    }
+    [script writeToURL:scriptInDocPath atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+    
+    // 创建命令行脚本并执行
+    NSString *readyToRunTask = [[NSString alloc] initWithFormat:@"sh %@", scriptInDocPath.path];
+    NSString *retVal = getOutputOfThisCommand(readyToRunTask, 5);
+    // retVal    __NSCFString *    @"[*] Servers available.\n"    0x0000600000c80450
+    // retVal    __NSCFString *    @"[Error] Servers not available.\n"    0x00006000017c4f00
+    if ([retVal  isEqual: @"[*] Servers available.\n"]) {
+        return YES;
+    }
+    return NO;
+}
+
+
 // 获取命令行输出
-NSString *getOutputOfThisCommand(NSString *command) {
+NSString *getOutputOfThisCommand(NSString *command, int timeOut) {
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/bin/sh"];
     [task setArguments:[NSArray arrayWithObjects:@"-c", command,nil]];
@@ -38,8 +82,17 @@ NSString *getOutputOfThisCommand(NSString *command) {
     [task setStandardOutput:pipe];
     [task launch];
     NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
-    [task waitUntilExit];
     NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    // 1 minute timeout
+    NSDate *terminateDate = [[NSDate date] dateByAddingTimeInterval:timeOut];
+    while ((task != nil) && ([task isRunning]))   {
+        if ([[NSDate date] compare:(id)terminateDate] == NSOrderedDescending)   {
+            NSLog(@"Error: terminating task, timeout was reached.");
+            [task terminate];
+        }
+        [NSThread sleepForTimeInterval:1.0];
+    }
+
     return result;
 }
 
@@ -52,7 +105,7 @@ NSString *checkSystemStatus() {
     NSString *summaryBody = @"";
     
     // Xcode Path
-    NSString *XcodePath = getOutputOfThisCommand(@"xcode-select -p");
+    NSString *XcodePath = getOutputOfThisCommand(@"xcode-select -p", 1);
     XcodePath = [XcodePath substringToIndex:[XcodePath length] - 20];
     NSString *XcodeSelectedPath = @"\n- Xcode selected at path: ";
     XcodeSelectedPath = [XcodeSelectedPath stringByAppendingString:XcodePath];

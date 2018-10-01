@@ -20,6 +20,10 @@ This is my first OC project so I have read a lot. Here is some of the links:
 Read from terminal:https://gist.github.com/xaviervia/6087296
 Read from plist:https://stackoverflow.com/questions/7631261/reading-a-plist-file-in-cocoa
 Run shit as root:https://www.stevestreeting.com/2011/11/25/escalating-privileges-on-mac-os-x-securely-and-without-using-deprecated-methods/
+Ping only once:https://stackoverflow.com/questions/25107406/how-to-ping-a-server-only-once-from-within-a-batch-file
+Check if it is a iP address:https://stackoverflow.com/questions/1679152/how-to-validate-an-ip-address-with-regular-expression-in-objective-c
 
 Used framework form:
 https://bitbucket.org/sinbad/privilegedhelperexample
+http://thebsdbox.co.uk/cocoa-libssh2-wrapper/
+

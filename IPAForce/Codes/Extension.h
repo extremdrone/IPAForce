@@ -17,5 +17,6 @@
 #import <Foundation/Foundation.h>
 
 int execCommandFromURL(NSURL *where);
-NSString *getOutputOfThisCommand(NSString *command);
+NSString *getOutputOfThisCommand(NSString *command, int timeOut);
 NSString *checkSystemStatus(void);
+BOOL ifOpenShellWorking(NSString *whereToCheck, int portNumber);

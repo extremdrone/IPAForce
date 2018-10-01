@@ -90,6 +90,11 @@
         NSURL *tempDir = [[NSFileManager defaultManager] temporaryDirectory];
         NSURL *fileURL = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command")];
         NSURL *scriptURL = [tempDir URLByAppendingPathComponent:(@"Saves/setupScriptSavedForMac.txt")];
+        
+        // 检查文件是否存在 不存在创建 存在检查是否为空 空则写入默认代理
+        if (![[NSFileManager defaultManager] fileExistsAtPath:scriptURL.path]) {
+            [@"export https_proxy=http://127.0.0.1:6152;\nexport http_proxy=http://127.0.0.1:6152;\nexport all_proxy=socks5://127.0.0.1:6153" writeToURL:scriptURL atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        }
 
         // 询问执行前脚本
         NSAlert *alert = [[NSAlert alloc] init];
@@ -97,32 +102,26 @@
         [alert addButtonWithTitle:@"Yes"];
         [alert addButtonWithTitle:@"Cancel"];
         NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 600, 200)];
-            //  读取保存的脚本
-            if ([[NSFileManager defaultManager] fileExistsAtPath:scriptURL.path isDirectory:false]) {
-                NSString *scriptStringFromFileAtURL = [[NSString alloc]
+        //  读取保存的脚本
+        NSString *scriptStringFromFileAtURL = [[NSString alloc]
                                                  initWithContentsOfURL:scriptURL
                                                  encoding:NSUTF8StringEncoding
                                                  error:NULL];
-                [input setStringValue:scriptStringFromFileAtURL];
-            }else{
-                [input setStringValue:@""];
-            }
-
+        [input setStringValue:scriptStringFromFileAtURL];
         [alert setAccessoryView:input];
         NSInteger button = [alert runModal];
         NSString *script = @"";
         if (button == NSAlertFirstButtonReturn) {
             script = [input stringValue];
+            // 将脚本保存到本地
+            [script writeToURL:scriptURL atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         } else if (button == NSAlertSecondButtonReturn) {
             return;
         }
         
-        // 如果执行前脚本存在
+        // 判断执行前脚本是否存在
         BOOL havePreCommand = false;
-        if (![script  isEqual: @""]) { havePreCommand = true;
-            // 将脚本保存到本地
-            [script writeToURL:scriptURL atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-        }
+        if (![script  isEqual: @""]) { havePreCommand = true; }
         
         // 更新 UI 进度条
         [_setupMacProgress setHidden:NO];
@@ -205,6 +204,106 @@
 }
     // 开始设置iOS的环境
 - (IBAction)startSetupForiOS:(id)sender {
+    
+    // 先让 ssh 可以连接
+    NSString *gradValue = [NSString alloc];
+    NSString *iPGrabed = [NSString alloc];
+    while (true) {
+        // 检查 iP 是否有存档 准备数据
+        NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
+        NSString *sshAddrString = [NSString alloc];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:sshAddrSave.path]) {
+            sshAddrString = [[NSString alloc] initWithFormat:@"192.168.6.121:22"];
+            [sshAddrString writeToURL:sshAddrSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        }else{
+            sshAddrString = [[NSString alloc] initWithContentsOfURL:sshAddrSave
+                                                           encoding:NSUTF8StringEncoding
+                                                              error:NULL];
+        }
+        int sshPortGrabed = 0;
+        while (true) {
+            // 获取用户输入 ssh 地址和端口
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setMessageText:@"Please tell me ssh address and port. No port means -p 22."];
+            [alert addButtonWithTitle:@"Yes"];
+            [alert addButtonWithTitle:@"Cancel"];
+            NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 150, 24)];
+            [input setStringValue:sshAddrString];
+            [alert setAccessoryView:input];
+            NSInteger button = [alert runModal];
+            NSString *inputString = @"";
+            if (button == NSAlertFirstButtonReturn) {
+                inputString = [input stringValue];
+            } else if (button == NSAlertSecondButtonReturn) {
+                return;
+            }
+            
+            BOOL hasError = false;
+            
+            // 检查有没有屎在这数字里
+            NSCharacterSet * set = [[NSCharacterSet characterSetWithCharactersInString:@":.0123456789"] invertedSet];
+            if ([inputString rangeOfCharacterFromSet:set].location != NSNotFound) {
+                NSLog(@"[Error] This string contains illegal characters");
+                hasError = true;
+            }
+            
+            // 检查是不是 iP 地址
+            int ipQuads[5];
+            const char *ipAddress = [inputString cStringUsingEncoding:NSUTF8StringEncoding];
+            sscanf(ipAddress, "%d.%d.%d.%d:%d", &ipQuads[0], &ipQuads[1], &ipQuads[2], &ipQuads[3], &ipQuads[4]);
+            iPGrabed = [iPGrabed initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
+            sshPortGrabed = ipQuads[4];
+            @try {
+                for (int quad = 0; quad < 4; quad++) {
+                    if ((ipQuads[quad] < 0) || (ipQuads[quad] > 255)) {
+                        NSException *ipException = [NSException
+                                                    exceptionWithName:@"IPNotFormattedCorrectly"
+                                                    reason:@"IP range is invalid"
+                                                    userInfo:nil];
+                        @throw ipException;
+                    }
+                }
+            }
+            @catch (NSException *exc) {
+                NSLog(@"[ERROR] %@", [exc reason]);
+                hasError = true;
+            }
+            
+            // 判断有没有错误
+            if (hasError) {
+                NSAlert *errorAlert = [[NSAlert alloc] init];
+                [errorAlert setMessageText:@"Not a iP address. Retry!"];
+                [errorAlert addButtonWithTitle:@"Retry"];
+                [errorAlert runModal];
+            }else{
+                gradValue = inputString;
+                break;
+            }
+        }
+        
+        if (sshPortGrabed == 0) {
+            sshPortGrabed = 22;
+        }
+        
+        // 将数据写入存档
+        [gradValue writeToURL:sshAddrSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        
+        // 准备检查服务器连接性
+        BOOL isConnectAble = ifOpenShellWorking(iPGrabed, sshPortGrabed);
+        if (isConnectAble) {
+            break;
+        }
+        NSAlert *errorAlert2 = [[NSAlert alloc] init];
+        [errorAlert2 setMessageText:@"I can't connect to your iPhone. Retry!"];
+        [errorAlert2 addButtonWithTitle:@"Retry"];
+        [errorAlert2 runModal];
+        // 暂时解决应用崩溃
+        // [General] *** initialization method -initWithFormat:locale:arguments: cannot be sent to an abstract object of class __NSCFString: Create a concrete instance!
+        return;
+    }
+    
+    // 已经成功链接ssh
+    
 }
     // 准备创建工程
 - (IBAction)startCreateProject:(id)sender {
