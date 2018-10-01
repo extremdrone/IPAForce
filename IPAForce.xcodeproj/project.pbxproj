@@ -7,18 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB0EFF632161E757004A27D2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0EFF622161E757004A27D2 /* main.m */; };
-		AB0EFF672161E764004A27D2 /* rootHandler in Resources */ = {isa = PBXBuildFile; fileRef = AB0EFF602161E757004A27D2 /* rootHandler */; };
-		AB0EFF692161E799004A27D2 /* rootHandler in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB0EFF602161E757004A27D2 /* rootHandler */; };
-		AB0EFF6C2161E827004A27D2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0EFF6B2161E827004A27D2 /* Cocoa.framework */; };
-		AB0EFF6E2161E82E004A27D2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0EFF6D2161E82E004A27D2 /* Security.framework */; };
-		AB0EFF702161E837004A27D2 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0EFF6F2161E837004A27D2 /* ServiceManagement.framework */; };
+		AB0EFF752161E8E4004A27D2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0EFF742161E8E4004A27D2 /* Cocoa.framework */; };
+		AB0EFF772161E8ED004A27D2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0EFF762161E8EC004A27D2 /* Security.framework */; };
+		AB0EFF792161E8F8004A27D2 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0EFF782161E8F8004A27D2 /* ServiceManagement.framework */; };
+		AB0EFF8B2161E9BB004A27D2 /* rootHandler-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB0EFF892161E9BA004A27D2 /* rootHandler-Info.plist */; };
+		AB0EFF8C2161E9BB004A27D2 /* rootHandler-Launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB0EFF8A2161E9BB004A27D2 /* rootHandler-Launchd.plist */; };
 		AB49E247215A3C8E00C2F277 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E246215A3C8E00C2F277 /* AppDelegate.m */; };
 		AB49E24A215A3C8E00C2F277 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E249215A3C8E00C2F277 /* ViewController.m */; };
 		AB49E24F215A3C9300C2F277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB49E24E215A3C9300C2F277 /* Assets.xcassets */; };
 		AB49E252215A3C9300C2F277 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB49E250215A3C9300C2F277 /* Main.storyboard */; };
 		AB49E255215A3C9300C2F277 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E254215A3C9300C2F277 /* main.m */; };
 		AB49E27C215AA61F00C2F277 /* Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E27B215AA61F00C2F277 /* Extension.m */; };
+		AB73A2702161F692005FC64B /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = AB73A26F2161F691005FC64B /* main.c */; };
+		AB73A2732161F716005FC64B /* com.lakr.IPAForce.rootHandler in CopyFiles */ = {isa = PBXBuildFile; fileRef = AB73A2682161F679005FC64B /* com.lakr.IPAForce.rootHandler */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		ABDCC098215BD8F60071B264 /* macIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDCC092215BD8F50071B264 /* macIcon.png */; };
 		ABDCC099215BD8F60071B264 /* BuildIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDCC093215BD8F60071B264 /* BuildIcon.png */; };
 		ABDCC09A215BD8F60071B264 /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDCC094215BD8F60071B264 /* iPhoneIcon.png */; };
@@ -28,17 +29,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AB0EFF712161E851004A27D2 /* PBXContainerItemProxy */ = {
+		AB73A2712161F70F005FC64B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AB49E23A215A3C8D00C2F277 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = AB0EFF5F2161E757004A27D2;
+			remoteGlobalIDString = AB73A2672161F679005FC64B;
 			remoteInfo = rootHandler;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		AB0EFF5E2161E757004A27D2 /* CopyFiles */ = {
+		AB0EFF872161E960004A27D2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LaunchServices;
+			dstSubfolderSpec = 1;
+			files = (
+				AB73A2732161F716005FC64B /* com.lakr.IPAForce.rootHandler in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB73A2662161F679005FC64B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -47,24 +58,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
-		AB0EFF682161E789004A27D2 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Contents/Library/LaunchServices;
-			dstSubfolderSpec = 1;
-			files = (
-				AB0EFF692161E799004A27D2 /* rootHandler in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AB0EFF602161E757004A27D2 /* rootHandler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = rootHandler; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB0EFF622161E757004A27D2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AB0EFF6B2161E827004A27D2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		AB0EFF6D2161E82E004A27D2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		AB0EFF6F2161E837004A27D2 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		AB0EFF742161E8E4004A27D2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		AB0EFF762161E8EC004A27D2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		AB0EFF782161E8F8004A27D2 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		AB0EFF892161E9BA004A27D2 /* rootHandler-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "rootHandler-Info.plist"; sourceTree = "<group>"; };
+		AB0EFF8A2161E9BB004A27D2 /* rootHandler-Launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "rootHandler-Launchd.plist"; sourceTree = "<group>"; };
+		AB0EFF8D2161EB77004A27D2 /* SMJobBlessUtil.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = SMJobBlessUtil.py; sourceTree = "<group>"; };
+		AB0EFF8E2161EC44004A27D2 /* checkMyAss.sh */ = {isa = PBXFileReference; explicitFileType = text.script.sh; path = checkMyAss.sh; sourceTree = "<group>"; };
 		AB3633B72161302700676BA9 /* Notes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes.txt; sourceTree = "<group>"; };
 		AB49E242215A3C8E00C2F277 /* IPAForce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPAForce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB49E245215A3C8E00C2F277 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 		AB49E254215A3C9300C2F277 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB49E27B215AA61F00C2F277 /* Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Extension.m; sourceTree = "<group>"; };
 		AB49E27D215AA62E00C2F277 /* Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
+		AB73A2682161F679005FC64B /* com.lakr.IPAForce.rootHandler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.lakr.IPAForce.rootHandler; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB73A26F2161F691005FC64B /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		ABDCC092215BD8F50071B264 /* macIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macIcon.png; sourceTree = "<group>"; };
 		ABDCC093215BD8F60071B264 /* BuildIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BuildIcon.png; sourceTree = "<group>"; };
 		ABDCC094215BD8F60071B264 /* iPhoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneIcon.png; sourceTree = "<group>"; };
@@ -86,40 +91,32 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		AB0EFF5D2161E757004A27D2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		AB49E23F215A3C8D00C2F277 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB0EFF702161E837004A27D2 /* ServiceManagement.framework in Frameworks */,
-				AB0EFF6E2161E82E004A27D2 /* Security.framework in Frameworks */,
-				AB0EFF6C2161E827004A27D2 /* Cocoa.framework in Frameworks */,
+				AB0EFF792161E8F8004A27D2 /* ServiceManagement.framework in Frameworks */,
+				AB0EFF772161E8ED004A27D2 /* Security.framework in Frameworks */,
+				AB0EFF752161E8E4004A27D2 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB73A2652161F679005FC64B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AB0EFF612161E757004A27D2 /* rootHandler */ = {
+		AB0EFF732161E8E4004A27D2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AB0EFF622161E757004A27D2 /* main.m */,
-			);
-			path = rootHandler;
-			sourceTree = "<group>";
-		};
-		AB0EFF6A2161E827004A27D2 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AB0EFF6F2161E837004A27D2 /* ServiceManagement.framework */,
-				AB0EFF6D2161E82E004A27D2 /* Security.framework */,
-				AB0EFF6B2161E827004A27D2 /* Cocoa.framework */,
+				AB0EFF782161E8F8004A27D2 /* ServiceManagement.framework */,
+				AB0EFF762161E8EC004A27D2 /* Security.framework */,
+				AB0EFF742161E8E4004A27D2 /* Cocoa.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -128,9 +125,9 @@
 			isa = PBXGroup;
 			children = (
 				AB49E244215A3C8E00C2F277 /* IPAForce */,
-				AB0EFF612161E757004A27D2 /* rootHandler */,
+				AB73A2692161F679005FC64B /* rootHandler */,
 				AB49E243215A3C8E00C2F277 /* Products */,
-				AB0EFF6A2161E827004A27D2 /* Frameworks */,
+				AB0EFF732161E8E4004A27D2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -138,7 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				AB49E242215A3C8E00C2F277 /* IPAForce.app */,
-				AB0EFF602161E757004A27D2 /* rootHandler */,
+				AB73A2682161F679005FC64B /* com.lakr.IPAForce.rootHandler */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -170,6 +167,18 @@
 			path = Codes;
 			sourceTree = "<group>";
 		};
+		AB73A2692161F679005FC64B /* rootHandler */ = {
+			isa = PBXGroup;
+			children = (
+				AB0EFF8E2161EC44004A27D2 /* checkMyAss.sh */,
+				AB0EFF8D2161EB77004A27D2 /* SMJobBlessUtil.py */,
+				AB0EFF892161E9BA004A27D2 /* rootHandler-Info.plist */,
+				AB0EFF8A2161E9BB004A27D2 /* rootHandler-Launchd.plist */,
+				AB73A26F2161F691005FC64B /* main.c */,
+			);
+			path = rootHandler;
+			sourceTree = "<group>";
+		};
 		ABDCC09E215BD8FB0071B264 /* Ress */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,23 +195,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AB0EFF5F2161E757004A27D2 /* rootHandler */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AB0EFF662161E757004A27D2 /* Build configuration list for PBXNativeTarget "rootHandler" */;
-			buildPhases = (
-				AB0EFF5C2161E757004A27D2 /* Sources */,
-				AB0EFF5D2161E757004A27D2 /* Frameworks */,
-				AB0EFF5E2161E757004A27D2 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = rootHandler;
-			productName = rootHandler;
-			productReference = AB0EFF602161E757004A27D2 /* rootHandler */;
-			productType = "com.apple.product-type.tool";
-		};
 		AB49E241215A3C8D00C2F277 /* IPAForce */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AB49E259215A3C9300C2F277 /* Build configuration list for PBXNativeTarget "IPAForce" */;
@@ -211,17 +203,34 @@
 				AB49E23F215A3C8D00C2F277 /* Frameworks */,
 				AB49E240215A3C8D00C2F277 /* Resources */,
 				AB49E262215A3DFF00C2F277 /* ShellScript */,
-				AB0EFF682161E789004A27D2 /* CopyFiles */,
+				AB0EFF872161E960004A27D2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AB0EFF722161E851004A27D2 /* PBXTargetDependency */,
+				AB73A2722161F70F005FC64B /* PBXTargetDependency */,
 			);
 			name = IPAForce;
 			productName = IPAForce;
 			productReference = AB49E242215A3C8E00C2F277 /* IPAForce.app */;
 			productType = "com.apple.product-type.application";
+		};
+		AB73A2672161F679005FC64B /* rootHandler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB73A26C2161F679005FC64B /* Build configuration list for PBXNativeTarget "rootHandler" */;
+			buildPhases = (
+				AB73A2642161F679005FC64B /* Sources */,
+				AB73A2652161F679005FC64B /* Frameworks */,
+				AB73A2662161F679005FC64B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rootHandler;
+			productName = rootHandler;
+			productReference = AB73A2682161F679005FC64B /* com.lakr.IPAForce.rootHandler */;
+			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -232,9 +241,6 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Lakr Sakura";
 				TargetAttributes = {
-					AB0EFF5F2161E757004A27D2 = {
-						CreatedOnToolsVersion = 10.0;
-					};
 					AB49E241215A3C8D00C2F277 = {
 						CreatedOnToolsVersion = 10.0;
 						LastSwiftMigration = 1000;
@@ -243,6 +249,9 @@
 								enabled = 0;
 							};
 						};
+					};
+					AB73A2672161F679005FC64B = {
+						CreatedOnToolsVersion = 10.0;
 					};
 				};
 			};
@@ -260,7 +269,7 @@
 			projectRoot = "";
 			targets = (
 				AB49E241215A3C8D00C2F277 /* IPAForce */,
-				AB0EFF5F2161E757004A27D2 /* rootHandler */,
+				AB73A2672161F679005FC64B /* rootHandler */,
 			);
 		};
 /* End PBXProject section */
@@ -273,11 +282,12 @@
 				ABDCC098215BD8F60071B264 /* macIcon.png in Resources */,
 				AB49E24F215A3C9300C2F277 /* Assets.xcassets in Resources */,
 				ABDCC09C215BD8F60071B264 /* XcodeProjectIcon.png in Resources */,
-				AB0EFF672161E764004A27D2 /* rootHandler in Resources */,
 				AB49E252215A3C9300C2F277 /* Main.storyboard in Resources */,
 				ABDCC099215BD8F60071B264 /* BuildIcon.png in Resources */,
+				AB0EFF8B2161E9BB004A27D2 /* rootHandler-Info.plist in Resources */,
 				ABDCC09A215BD8F60071B264 /* iPhoneIcon.png in Resources */,
 				ABDCC09D215BD8F60071B264 /* IPAForceProjectIcon.png in Resources */,
+				AB0EFF8C2161E9BB004A27D2 /* rootHandler-Launchd.plist in Resources */,
 				ABDCC09B215BD8F60071B264 /* ICON.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,19 +310,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n\n# Copy files to GitHub\nrm -rf ~/Documents/GitHub/IPAForce/*\nscp -r $SOURCE_ROOT/* ~/Documents/GitHub/IPAForce\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#!/bin/bash\necho \"[*] Running first shell\"\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\");\nbuildNumber=$(($buildNumber + 1));\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\";\n\n# Copy files to GitHub\nrm -rf ~/Documents/GitHub/IPAForce/*;\nscp -r $SOURCE_ROOT/* ~/Documents/GitHub/IPAForce;\n\necho \"[*] Running second shell\";\n\nrm -rf $SRCROOT/Build/;\nmkdir $SRCROOT/Build;\n\n# 拷贝一份 build 来备份\n# rm -rf $SRCROOT/Builds/LasetSuccessBuild\n# cp -r $BUILD_DIR $SRCROOT/Builds/LasetSuccessBuild\n\n# 创建生成的 App 软连接到 Builds 文件夹\n# echo \"$BUILD_DIR/Products\"\n# echo \"$SRCROOT/Build/Products\"\nln -s $BUILD_DIR $SRCROOT/Build/Products;\n\n# 检查一下签名\ncd $SRCROOT/rootHandler;\nchmod +x ./checkMyAss.sh;\n./checkMyAss.sh;\n\n# 操他妈强制成功 Build 日你*\n# exit 0;\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		AB0EFF5C2161E757004A27D2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AB0EFF632161E757004A27D2 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		AB49E23E215A3C8D00C2F277 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -324,13 +326,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AB73A2642161F679005FC64B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB73A2702161F692005FC64B /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AB0EFF722161E851004A27D2 /* PBXTargetDependency */ = {
+		AB73A2722161F70F005FC64B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AB0EFF5F2161E757004A27D2 /* rootHandler */;
-			targetProxy = AB0EFF712161E851004A27D2 /* PBXContainerItemProxy */;
+			target = AB73A2672161F679005FC64B /* rootHandler */;
+			targetProxy = AB73A2712161F70F005FC64B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -346,24 +356,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		AB0EFF642161E757004A27D2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 38X2VQKPXT;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		AB0EFF652161E757004A27D2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 38X2VQKPXT;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		AB49E257215A3C9300C2F277 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -481,7 +473,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 38X2VQKPXT;
 				INFOPLIST_FILE = IPAForce/Info.plist;
@@ -489,8 +482,10 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lakr.IPAForce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "IPAForce/Codes/IPAForce-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -503,7 +498,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 38X2VQKPXT;
 				INFOPLIST_FILE = IPAForce/Info.plist;
@@ -511,25 +507,48 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lakr.IPAForce;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "IPAForce/Codes/IPAForce-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		AB73A26D2161F679005FC64B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 38X2VQKPXT;
+				INFOPLIST_FILE = "$(SRCROOT)/rootHandler/rootHandler-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_MODULE_NAME = com.lakr.IPAForce.rootHandler;
+				PRODUCT_NAME = com.lakr.IPAForce.rootHandler;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = Debug;
+		};
+		AB73A26E2161F679005FC64B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 38X2VQKPXT;
+				INFOPLIST_FILE = "$(SRCROOT)/rootHandler/rootHandler-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_MODULE_NAME = com.lakr.IPAForce.rootHandler;
+				PRODUCT_NAME = com.lakr.IPAForce.rootHandler;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AB0EFF662161E757004A27D2 /* Build configuration list for PBXNativeTarget "rootHandler" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AB0EFF642161E757004A27D2 /* Debug */,
-				AB0EFF652161E757004A27D2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		AB49E23D215A3C8D00C2F277 /* Build configuration list for PBXProject "IPAForce" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -544,6 +563,15 @@
 			buildConfigurations = (
 				AB49E25A215A3C9300C2F277 /* Debug */,
 				AB49E25B215A3C9300C2F277 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB73A26C2161F679005FC64B /* Build configuration list for PBXNativeTarget "rootHandler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB73A26D2161F679005FC64B /* Debug */,
+				AB73A26E2161F679005FC64B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
