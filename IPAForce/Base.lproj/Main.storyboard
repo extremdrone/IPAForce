@@ -1000,14 +1000,14 @@ Please wait.</string>
                                 </constraints>
                             </progressIndicator>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4hX-na-HlG">
-                                <rect key="frame" x="322" y="42" width="132" height="32"/>
+                                <rect key="frame" x="328" y="48" width="120" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="E5M-Ow-azd"/>
                                     <constraint firstAttribute="width" constant="120" id="cCP-lF-d1D"/>
                                 </constraints>
-                                <buttonCell key="cell" type="push" title="Setup SSH" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="33b-Fe-xZb">
+                                <buttonCell key="cell" type="roundRect" title="Setup SSH" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="33b-Fe-xZb">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="cellTitle"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="startSeupSSH:" target="5gI-5U-AMq" id="sgs-cA-opT"/>
@@ -1024,10 +1024,18 @@ Please wait.</string>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Sip-dc-9cA">
+                                <rect key="frame" x="456" y="212" width="16" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="FIO-1E-Av0"/>
+                                    <constraint firstAttribute="width" constant="16" id="xns-J4-rd1"/>
+                                </constraints>
+                            </progressIndicator>
                         </subviews>
                         <constraints>
                             <constraint firstItem="feO-LQ-I2z" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="-52" id="3ga-BJ-HEX"/>
                             <constraint firstItem="Gxd-DW-aLv" firstAttribute="leading" secondItem="nAH-R2-HJE" secondAttribute="trailing" constant="140" id="4n6-LU-EB9"/>
+                            <constraint firstItem="Sip-dc-9cA" firstAttribute="leading" secondItem="Gxd-DW-aLv" secondAttribute="trailing" constant="8" id="7Zk-Gw-URy"/>
                             <constraint firstItem="feO-LQ-I2z" firstAttribute="leading" secondItem="Gxd-DW-aLv" secondAttribute="trailing" constant="92" id="Bfj-fD-onA"/>
                             <constraint firstItem="D8S-It-IJp" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="141" id="Bpd-e1-QPh"/>
                             <constraint firstItem="nR3-85-zgT" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="20" id="Bws-1S-DT1"/>
@@ -1046,6 +1054,7 @@ Please wait.</string>
                             <constraint firstItem="OOw-7A-Oae" firstAttribute="leading" secondItem="yNM-Qe-uvU" secondAttribute="trailing" constant="20" id="RBW-Fv-AKj"/>
                             <constraint firstItem="x8y-NI-4iv" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="-50" id="TUF-Ex-YA2"/>
                             <constraint firstAttribute="bottom" secondItem="8mL-iG-6yb" secondAttribute="bottom" constant="10" id="YJl-Kj-agW"/>
+                            <constraint firstItem="Sip-dc-9cA" firstAttribute="centerY" secondItem="ERx-hH-rdd" secondAttribute="centerY" constant="30" id="ZhG-YX-Dk9"/>
                             <constraint firstItem="OOw-7A-Oae" firstAttribute="top" secondItem="ERx-hH-rdd" secondAttribute="top" id="aLR-vj-ddA"/>
                             <constraint firstItem="L0a-gl-PQK" firstAttribute="leading" secondItem="ERx-hH-rdd" secondAttribute="leading" constant="53" id="bCQ-Yh-v99"/>
                             <constraint firstItem="6tq-oQ-yZP" firstAttribute="leading" secondItem="nR3-85-zgT" secondAttribute="trailing" constant="20" id="cDC-aY-PFa"/>
@@ -1067,6 +1076,7 @@ Please wait.</string>
                     <connections>
                         <outlet property="rightsLabel" destination="8mL-iG-6yb" id="xq0-ps-ll2"/>
                         <outlet property="setupMacProgress" destination="CM7-nc-9FJ" id="RbU-20-qM5"/>
+                        <outlet property="setupiOSProgress" destination="Sip-dc-9cA" id="0jm-Di-BiB"/>
                         <outlet property="sysStatusLabel" destination="ebN-Jd-7YH" id="ulO-1g-9Fa"/>
                     </connections>
                 </viewController>

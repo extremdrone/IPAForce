@@ -14,8 +14,9 @@
 
 @interface SetupViewController : NSViewController
 
-@property (weak) IBOutlet NSTextField *sysStatusLabel;
-@property (weak) IBOutlet NSProgressIndicator *setupMacProgress;
+    @property (weak) IBOutlet NSTextField *sysStatusLabel;
+    @property (weak) IBOutlet NSProgressIndicator *setupMacProgress;
+    @property (weak) IBOutlet NSProgressIndicator *setupiOSProgress;
     @property (weak) IBOutlet NSTextField *rightsLabel;
     
 @end

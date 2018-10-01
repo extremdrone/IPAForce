@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB0DFA8021628B7C00E80F3D /* LakrBootstrap.tar in Resources */ = {isa = PBXBuildFile; fileRef = AB0DFA7F21628B7B00E80F3D /* LakrBootstrap.tar */; };
 		AB49E247215A3C8E00C2F277 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E246215A3C8E00C2F277 /* AppDelegate.m */; };
 		AB49E24A215A3C8E00C2F277 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E249215A3C8E00C2F277 /* ViewController.m */; };
 		AB49E24F215A3C9300C2F277 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB49E24E215A3C9300C2F277 /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 		0C04AEC537065F7E7E2AC6DE /* Pods-IPAForce.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IPAForce.release.xcconfig"; path = "Pods/Target Support Files/Pods-IPAForce/Pods-IPAForce.release.xcconfig"; sourceTree = "<group>"; };
 		8CF3B6C6E3B47495DDAB2EEB /* Pods-IPAForce.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IPAForce.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IPAForce/Pods-IPAForce.debug.xcconfig"; sourceTree = "<group>"; };
 		91BC01B6E26DCB7C428F8FBB /* Pods_IPAForce.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IPAForce.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB0DFA7F21628B7B00E80F3D /* LakrBootstrap.tar */ = {isa = PBXFileReference; lastKnownFileType = archive.tar; path = LakrBootstrap.tar; sourceTree = "<group>"; };
 		AB0EFF742161E8E4004A27D2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AB0EFF762161E8EC004A27D2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AB0EFF782161E8F8004A27D2 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
@@ -144,6 +146,7 @@
 		ABDCC09E215BD8FB0071B264 /* Ress */ = {
 			isa = PBXGroup;
 			children = (
+				AB0DFA7F21628B7B00E80F3D /* LakrBootstrap.tar */,
 				ABDCC093215BD8F60071B264 /* BuildIcon.png */,
 				ABDCC095215BD8F60071B264 /* ICON.png */,
 				ABDCC097215BD8F60071B264 /* IPAForceProjectIcon.png */,
@@ -234,6 +237,7 @@
 				AB49E24F215A3C9300C2F277 /* Assets.xcassets in Resources */,
 				ABDCC09C215BD8F60071B264 /* XcodeProjectIcon.png in Resources */,
 				AB49E252215A3C9300C2F277 /* Main.storyboard in Resources */,
+				AB0DFA8021628B7C00E80F3D /* LakrBootstrap.tar in Resources */,
 				ABDCC099215BD8F60071B264 /* BuildIcon.png in Resources */,
 				ABDCC09A215BD8F60071B264 /* iPhoneIcon.png in Resources */,
 				ABDCC09D215BD8F60071B264 /* IPAForceProjectIcon.png in Resources */,

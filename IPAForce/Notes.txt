@@ -27,3 +27,10 @@ Used framework form:
 https://bitbucket.org/sinbad/privilegedhelperexample
 http://thebsdbox.co.uk/cocoa-libssh2-wrapper/
 
+iOS Tweaks list:
+    frida-server, IPAPatcher, bfdecrypt, Filza, NewTerm 2, App Sync, AFC2
+Depends---
+    mobilesubstrate com.rpetrich.rocketbootstrap preferenceloader
+    zip unzip gzip unrar p7zip ldid
+    grep jp.ashikase.libcrashreport jp.ashikase.libpackageinfo jp.ashikase.techsupport
+    com.modmyi.libswift4 ws.hbang.common ncurses com.linusyang.localeutf8

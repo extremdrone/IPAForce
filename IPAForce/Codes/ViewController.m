@@ -213,8 +213,99 @@
     // 开始设置iOS的环境
 - (IBAction)startSetupForiOS:(id)sender {
     
+    [_setupiOSProgress setHidden:NO];
+    [_setupiOSProgress setDoubleValue:10];
     
+    // 检查ssh连接性
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
+                                                            encoding:NSUTF8StringEncoding
+                                                               error:NULL];
+    NSString *inputStringPass = [[NSString alloc] initWithContentsOfFile:sshPassSave.path
+                                                                encoding:NSUTF8StringEncoding
+                                                                   error:NULL];
+    int ipQuads[5];
+    const char *ipAddress = [inputString cStringUsingEncoding:NSUTF8StringEncoding];
+    sscanf(ipAddress, "%d.%d.%d.%d:%d", &ipQuads[0], &ipQuads[1], &ipQuads[2], &ipQuads[3], &ipQuads[4]);
+    NSString *iPGrabed = [[NSString alloc] initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
+    int sshPortGrabed = ipQuads[4];
     
+    // 创建 ssh 隧道
+    NMSSHSession *session = [NMSSHSession connectToHost:iPGrabed port:sshPortGrabed withUsername:@"root"];
+    BOOL sshConnectedFlag = false;
+    if (session.isConnected) {
+        [session authenticateByPassword:inputStringPass];
+        if (session.isAuthorized) {
+            sshConnectedFlag = true;
+        }
+    }
+    if (!sshConnectedFlag) {
+        NSAlert *errorAlert2 = [[NSAlert alloc] init];
+        [errorAlert2 setMessageText:@"Connect to iOS device failed."];
+        [errorAlert2 addButtonWithTitle:@"OK"];
+        [errorAlert2 runModal];
+        [session disconnect];
+        [_setupiOSProgress setHidden:YES];
+        return;
+    }
+    NSAlert *errorAlert = [[NSAlert alloc] init];
+    [errorAlert setMessageText:@"Doing this operation may looks like app is dead.\nPlease wait until it finished.\nThis may takes 3-5 minutes."];
+    [errorAlert addButtonWithTitle:@"I understand."];
+    [errorAlert addButtonWithTitle:@"Cancel"];
+    NSModalResponse responseTag1 = [errorAlert runModal];
+    if (responseTag1 == NSAlertSecondButtonReturn) {
+        [_setupiOSProgress setHidden:YES];
+        [session disconnect];
+        return;
+    }
+    NSAlert *errorAlert2 = [[NSAlert alloc] init];
+    [errorAlert2 setMessageText:@"This operation was designed for iOS 11.2-11.3.1\nBut should work on other iOS.\nTake it as your own risks."];
+    [errorAlert2 addButtonWithTitle:@"I understand."];
+    [errorAlert2 addButtonWithTitle:@"Cancel"];
+    NSModalResponse responseTag2 = [errorAlert2 runModal];
+    if (responseTag2 == NSAlertSecondButtonReturn) {
+        [_setupiOSProgress setHidden:YES];
+        [session disconnect];
+        return;
+    }
+    // 准备上传 BootStrap 文件
+    NSString *lakrBootstrap = [[[NSBundle mainBundle] resourcePath]
+                               stringByAppendingPathComponent:@"LakrBootstrap.tar"];
+    // lakrBootstrap    NSPathStore2 *    @"/Users/lakr/Library/Developer/Xcode/DerivedData/IPAForce-fwsmflhtjerzfhcjgtaizvbzhxst/Build/Products/Debug/IPAForce.app/Contents/Resources/LakrBootstrap.tar"    0x000000010180c4c0
+    BOOL isBootStrapSuccessedUpload = [session.channel uploadFile:lakrBootstrap to:@"/var/mobile/Media/"];
+    isBootStrapSuccessedUpload = !isBootStrapSuccessedUpload;
+    NSLog(@"[*] Upload lakrBootstrap to device returns value:%d", isBootStrapSuccessedUpload);
+    // 准备解包并安装
+    NSError *error = nil; NSNumber *timeout = [[NSNumber alloc] initWithInt:60];
+    NSString *response = [NSString alloc];
+    response = [session.channel execute:@"tar -xvf /var/mobile/Media/LakrBootstrap.tar -C /var/mobile/Media/" error:&error timeout:timeout];
+    NSLog(@"[*] tar -xvf at device returns message:\n%@\n",response);
+    NSNumber *timeout2 = [[NSNumber alloc] initWithInt:180];
+    response = [session.channel execute:@"dpkg -i /var/mobile/Media/debs/*" error:&error timeout:timeout2];
+    NSLog(@"[*] dpkg -i at device returns message:\n%@\n",response);
+    // 清理临时文件
+    response = [session.channel execute:@"rm -rf /var/mobile/Media/debs/" error:&error timeout:timeout];
+    response = [session.channel execute:@"rm -f /var/mobile/Media/LakrBootstrap.tar" error:&error timeout:timeout];
+    
+    // 准备注销
+    NSAlert *errorAlert3 = [[NSAlert alloc] init];
+    [errorAlert3 setMessageText:@"Job is done. Ready to restart SpringBoard.\nThis is will kill apps.\nSave your documents."];
+    [errorAlert3 addButtonWithTitle:@"I understand."];
+    [errorAlert3 addButtonWithTitle:@"Cancel"];
+    NSModalResponse responseTag3 = [errorAlert3 runModal];
+    if (responseTag3 == NSAlertSecondButtonReturn) {
+        [_setupiOSProgress setHidden:YES];
+        [session disconnect];
+        return;
+    }
+    
+    response = [session.channel execute:@"killall backboardd" error:&error timeout:timeout];
+    
+    // 断开连接
+    [session disconnect];
+    [_setupiOSProgress setHidden:YES];
+
 }
     // 保存 ssh 密码
 - (IBAction)startSeupSSH:(id)sender {
@@ -238,10 +329,10 @@
         while (true) {
             // 获取用户输入 ssh 地址和端口
             NSAlert *alert = [[NSAlert alloc] init];
-            [alert setMessageText:@"Please tell me ssh address and port. No port means -p 22."];
+            [alert setMessageText:@"Please tell me ssh address and port.\nNo port means -p 22."];
             [alert addButtonWithTitle:@"Yes"];
             [alert addButtonWithTitle:@"Cancel"];
-            NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 150, 24)];
+            NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 400, 24)];
             [input setStringValue:sshAddrString];
             [alert setAccessoryView:input];
             NSInteger button = [alert runModal];
@@ -318,10 +409,10 @@
     
     // 已经成功链接 ssh 询问密码
     NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:@"Please tell me ssh password. !Notice that this is saved as the same as you input for now. Cancel it if you don't want to use this feature."];
+    [alert setMessageText:@"Please tell me ssh password. \n!Notice that this is saved as the same as you input for now. \nCancel it if you don't want to use this feature."];
     [alert addButtonWithTitle:@"Yes"];
     [alert addButtonWithTitle:@"Cancel"];
-    NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 150, 24)];
+    NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 400, 24)];
     [alert setAccessoryView:input];
     NSInteger button = [alert runModal];
     NSString *inputString = @"";
