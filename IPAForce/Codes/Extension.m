@@ -53,7 +53,7 @@ NSString *checkSystemStatus() {
     
     // Xcode Path
     NSString *XcodePath = getOutputOfThisCommand(@"xcode-select -p");
-    XcodePath = [XcodePath substringToIndex:[XcodePath length] - 2];
+    XcodePath = [XcodePath substringToIndex:[XcodePath length] - 20];
     NSString *XcodeSelectedPath = @"\n- Xcode selected at path: ";
     XcodeSelectedPath = [XcodeSelectedPath stringByAppendingString:XcodePath];
     summaryBody = [summaryBody stringByAppendingString:XcodeSelectedPath];
@@ -62,6 +62,7 @@ NSString *checkSystemStatus() {
     // Help wanted. Orz....
     
     // 检查依赖文件
+    BOOL isFridaedMonkeyReady= true;
     NSString *unInstalledDependenciesData = @"";
     // 顺序检查 brew wget ldid ldid2 dpkg libimobiledevice class-dump jtool jtool2 joker
     if (![[NSFileManager defaultManager] fileExistsAtPath:[NSURL URLWithString:@"/usr/local/bin/brew"].path isDirectory:false]) {
@@ -84,9 +85,11 @@ NSString *checkSystemStatus() {
     }
     if (![[NSFileManager defaultManager] fileExistsAtPath:[NSURL URLWithString:@"/usr/local/bin/frida-ps"].path isDirectory:false]) {
         unInstalledDependenciesData = [unInstalledDependenciesData stringByAppendingString:@"frida-server, "];
+        isFridaedMonkeyReady = false;
     }
     if (![[NSFileManager defaultManager] fileExistsAtPath:[NSURL URLWithString:@"/opt/MonkeyDev"].path isDirectory:false]) {
         unInstalledDependenciesData = [unInstalledDependenciesData stringByAppendingString:@"MonkeyDev, "];
+        isFridaedMonkeyReady = false;
     }
     if (![[NSFileManager defaultManager] fileExistsAtPath:[NSURL URLWithString:@"/usr/local/bin/class-dump"].path isDirectory:false]) {
         unInstalledDependenciesData = [unInstalledDependenciesData stringByAppendingString:@"class-dump, "];
@@ -101,13 +104,18 @@ NSString *checkSystemStatus() {
         unInstalledDependenciesData = [unInstalledDependenciesData stringByAppendingString:@"joker, "];
     }
     
-    NSString *dependencyStatus = @"\n- macOS essential dependency installed\n- MonkeyDev & frida-dump ready";
+    NSString *dependencyStatus = @"\n- macOS essential dependency installed";
     if (![unInstalledDependenciesData isEqualToString:@""]) {
         NSString *tmpSt = [unInstalledDependenciesData substringToIndex:[unInstalledDependenciesData length] - 2];
         dependencyStatus = @"\n- macOS essential dependency [";
         dependencyStatus = [dependencyStatus stringByAppendingString:tmpSt];
         dependencyStatus = [dependencyStatus stringByAppendingString:@"] not installed."];
         isReady = false;
+    }
+    if (isFridaedMonkeyReady) {
+        dependencyStatus = [dependencyStatus stringByAppendingString:@"\n- MonkeyDev & frida-dump ready"];
+    }else{
+        dependencyStatus = [dependencyStatus stringByAppendingString:@"\n- MonkeyDev & frida-dump is NOT ready"];
     }
     
     

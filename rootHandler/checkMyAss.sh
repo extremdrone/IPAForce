@@ -23,4 +23,4 @@ fi
 # 检查一下
 # ./SMJobBlessUtil.py check   ./../Build/Products/Debug/IPAForce.app
 
-# exit 0
+exit 0
