@@ -18,4 +18,4 @@
 
 int execCommandFromURL(NSURL *where);
 NSString *getOutputOfThisCommand(NSString *command);
-NSString *checkSystemStatus();
+NSString *checkSystemStatus(void);
