@@ -667,7 +667,7 @@
                 </windowController>
                 <customObject id="6f7-a7-6o1" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="39"/>
+            <point key="canvasLocation" x="95" y="117"/>
         </scene>
         <!--Setup View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -962,7 +962,7 @@ Please wait.</string>
                                             <constraint firstAttribute="height" constant="57" id="XzU-uF-FJf"/>
                                             <constraint firstAttribute="width" constant="360" id="jVp-eC-hw7"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" alignment="right" title="App List On iOS" id="WUe-v6-LL3">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" alignment="right" title="Logs" id="WUe-v6-LL3">
                                             <font key="font" metaFont="system" size="48"/>
                                             <color key="textColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -993,6 +993,7 @@ Please wait.</string>
                     <connections>
                         <outlet property="appListField" destination="al3-3l-FXZ" id="22u-Vk-WcX"/>
                         <outlet property="rightsLabel" destination="8mL-iG-6yb" id="xq0-ps-ll2"/>
+                        <outlet property="secondLabel" destination="8Vh-Wm-Ai2" id="asB-B9-GGX"/>
                         <outlet property="setupMacProgress" destination="CM7-nc-9FJ" id="RbU-20-qM5"/>
                         <outlet property="setupiOSProgress" destination="Sip-dc-9cA" id="0jm-Di-BiB"/>
                         <outlet property="sysStatusLabel" destination="ebN-Jd-7YH" id="ulO-1g-9Fa"/>
@@ -1000,7 +1001,7 @@ Please wait.</string>
                 </viewController>
                 <customObject id="2Tp-Fl-jBw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="856.5"/>
+            <point key="canvasLocation" x="95" y="867"/>
         </scene>
     </scenes>
     <resources>

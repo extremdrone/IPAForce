@@ -34,6 +34,7 @@
     [super viewDidLoad];
     startiProxy();
     NSString *list = [NSString alloc];
+    [_secondLabel setStringValue:@"App List On iOS"];
     list = getListOfApps();
     [_appListField setAlignment:atLeft];
     [_appListField setStringValue:list];
@@ -250,22 +251,22 @@
         [_setupiOSProgress setHidden:YES];
         return;
     }
-    NSAlert *errorAlert = [[NSAlert alloc] init];
-    [errorAlert setMessageText:@"Doing this operation may looks like app is dead.\nPlease wait until it finished.\nThis may takes 3-5 minutes."];
-    [errorAlert addButtonWithTitle:@"I understand."];
-    [errorAlert addButtonWithTitle:@"Cancel"];
-    NSModalResponse responseTag1 = [errorAlert runModal];
-    if (responseTag1 == NSAlertSecondButtonReturn) {
-        [_setupiOSProgress setHidden:YES];
-        [session disconnect];
-        return;
-    }
     NSAlert *errorAlert2 = [[NSAlert alloc] init];
     [errorAlert2 setMessageText:@"This operation was designed for iOS 11.2-11.3.1\nBut should work on other iOS.\nTake it as your own risks."];
     [errorAlert2 addButtonWithTitle:@"I understand."];
     [errorAlert2 addButtonWithTitle:@"Cancel"];
     NSModalResponse responseTag2 = [errorAlert2 runModal];
     if (responseTag2 == NSAlertSecondButtonReturn) {
+        [_setupiOSProgress setHidden:YES];
+        [session disconnect];
+        return;
+    }
+    NSAlert *errorAlert = [[NSAlert alloc] init];
+    [errorAlert setMessageText:@"Doing this operation may looks like app is dead.\nPlease wait until it finished.\nThis may takes 3-5 minutes."];
+    [errorAlert addButtonWithTitle:@"I understand."];
+    [errorAlert addButtonWithTitle:@"Cancel"];
+    NSModalResponse responseTag1 = [errorAlert runModal];
+    if (responseTag1 == NSAlertSecondButtonReturn) {
         [_setupiOSProgress setHidden:YES];
         [session disconnect];
         return;
@@ -285,6 +286,8 @@
     NSNumber *timeout2 = [[NSNumber alloc] initWithInt:180];
     response = [session.channel execute:@"dpkg -i /var/mobile/Media/debs/*" error:&error timeout:timeout2];
     NSLog(@"[*] dpkg -i at device returns message:\n%@\n",response);
+    [_secondLabel setStringValue:@"Logs From 'dpkg'"];
+    [_appListField setStringValue:response];
     // 清理临时文件
     response = [session.channel execute:@"rm -rf /var/mobile/Media/debs/" error:&error timeout:timeout];
     response = [session.channel execute:@"rm -f /var/mobile/Media/LakrBootstrap.tar" error:&error timeout:timeout];
@@ -545,6 +548,7 @@
 - (IBAction)refreshAppLists:(id)sender {
     NSString *list = [NSString alloc];
     list = getListOfApps();
+    [_secondLabel setStringValue:@"App List On iOS"];
     [_appListField setAlignment:atLeft];
     [_appListField setStringValue:list];
 }
