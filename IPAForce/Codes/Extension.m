@@ -166,18 +166,18 @@ NSString *checkSystemStatus() {
         dependencyStatus = @"\n- macOS essential dependency [";
         dependencyStatus = [dependencyStatus stringByAppendingString:tmpSt];
         dependencyStatus = [dependencyStatus stringByAppendingString:@"] not installed."];
-        tips = @"****** Orz You may want to run Setup macOS\n\n";
+        tips = @"****** Orz You may want to run Setup macOS\n";
         isReady = false;
     }
     if (isFridaedMonkeyReady) {
         dependencyStatus = [dependencyStatus stringByAppendingString:@"\n- MonkeyDev & frida-dump ready"];
     }else{
         dependencyStatus = [dependencyStatus stringByAppendingString:@"\n- MonkeyDev & frida-dump is NOT ready"];
-        tips = @"****** Orz You may want to run Setup macOS\n\n";
+        tips = @"****** Orz You may want to run Setup macOS\n";
     }
     
     // 检查 ssh 连接性
-    NSString *sshCheck = @"\n- iOS root ssh connect is not established";
+    NSString *sshCheck = @"\n- iOS root ssh connect is NOT established";
     NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
     NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
     NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
@@ -202,7 +202,7 @@ NSString *checkSystemStatus() {
     }
     if (!sshConnectedFlag) {
         isReady = false;
-        tips = @"****** Orz You may want to run Setup SSH\n\n";
+        tips = @"****** Orz You may want to run Setup SSH\n";
     }
     [session disconnect];
     
@@ -211,7 +211,7 @@ NSString *checkSystemStatus() {
         summaryString = [summaryString stringByAppendingString:@"Ready\n\n"];
         tips = @"****** 666 You may want to begin with Start Coding\n";
     }else{
-        summaryString = [summaryString stringByAppendingString:@"Not Ready. Setup now!\n"];
+        summaryString = [summaryString stringByAppendingString:@"Not Ready. Setup now!\n\n"];
     }
     
     // 是时候把他们放到一起了

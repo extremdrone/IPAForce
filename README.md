@@ -19,7 +19,7 @@ You have right decleared in the license, but I still need to repeat:
 
 #### Installation
 
-1. Clone
+1. Clone, pod install
 2. Build (Change the bundle ID in your local machine)
 3. Build twice before run to make helper tool signed
 4. Run

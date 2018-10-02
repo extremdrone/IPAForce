@@ -308,10 +308,10 @@
     // 保存 ssh 密码
 - (IBAction)startSeupSSH:(id)sender {
 
-    // 先让 ssh 可以连接
     NSString *grabedValue = [NSString alloc];
     NSString *iPGrabed = [NSString alloc];
     while (true) {
+        
         // 检查 iP 是否有存档 准备数据
         NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
         NSString *sshAddrString = [NSString alloc];
@@ -323,7 +323,16 @@
                                                            encoding:NSUTF8StringEncoding
                                                               error:NULL];
         }
+        
+        // 执行 ip 地址重新读区 解决链接l重复读取
+        int ipQuads[5];
         int sshPortGrabed = 0;
+        const char *ipAddress = [sshAddrString cStringUsingEncoding:NSUTF8StringEncoding];
+        sscanf(ipAddress, "%d.%d.%d.%d:%d", &ipQuads[0], &ipQuads[1], &ipQuads[2], &ipQuads[3], &ipQuads[4]);
+        iPGrabed = [[NSString alloc] initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
+        sshPortGrabed = ipQuads[4];
+        sshAddrString = [[NSString alloc] initWithFormat:@"%@:%d", iPGrabed, sshPortGrabed];
+        
         while (true) {
             // 获取用户输入 ssh 地址和端口
             NSAlert *alert = [[NSAlert alloc] init];
@@ -351,10 +360,9 @@
             }
             
             // 检查是不是 iP 地址
-            int ipQuads[5];
             const char *ipAddress = [inputString cStringUsingEncoding:NSUTF8StringEncoding];
             sscanf(ipAddress, "%d.%d.%d.%d:%d", &ipQuads[0], &ipQuads[1], &ipQuads[2], &ipQuads[3], &ipQuads[4]);
-            iPGrabed = [iPGrabed initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
+            iPGrabed = [[NSString alloc] initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
             sshPortGrabed = ipQuads[4];
             @try {
                 for (int quad = 0; quad < 4; quad++) {
