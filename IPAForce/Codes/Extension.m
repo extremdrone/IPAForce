@@ -87,14 +87,15 @@ NSString *getOutputOfThisCommand(NSString *command, double timeOut) {
     NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     // 1 minute timeout
     NSDate *terminateDate = [[NSDate date] dateByAddingTimeInterval:timeOut];
+    int i = 0;
     while ((task != nil) && ([task isRunning]))   {
-        if ([[NSDate date] compare:(id)terminateDate] == NSOrderedDescending)   {
+        [NSThread sleepForTimeInterval:0.001];
+        if ([[NSDate date] compare:(id)terminateDate] == NSOrderedDescending || i >= 6000000)   {
             NSLog(@"Error: terminating task, timeout was reached.");
             [task terminate];
         }
-        [NSThread sleepForTimeInterval:1.0];
+        i ++;
     }
-
     return result;
 }
 
@@ -234,3 +235,61 @@ NSString *checkSystemStatus() {
     
     return summaryString;
 }
+
+
+void startiProxy() {
+    getOutputOfThisCommand(@"killall iProxy", 0.1);
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/bin/sh"];
+    [task setArguments:[NSArray arrayWithObjects:@"-c", @"/usr/local/bin/iproxy 2222 22",nil]];
+    NSPipe *pipe = [NSPipe pipe];
+    [task setStandardOutput:pipe];
+    [task launch];
+    return;
+}
+
+NSString *getListOfApps() {
+    
+    NSLog(@"[*] Starting get app list!");
+    
+    //在创建用户配置前先备份
+    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/local/bin/fridaDP.py.lakr"]) {
+        // 重新覆盖脚本
+        [[NSFileManager defaultManager] removeItemAtPath:@"/usr/local/bin/fridaDP.py" error:NULL];
+        [[NSFileManager defaultManager] copyItemAtPath:@"/usr/local/bin/fridaDP.py.lakr" toPath:@"/usr/local/bin/fridaDP.py" error:NULL];
+    }else{
+        // 创建备份
+        [[NSFileManager defaultManager] copyItemAtPath:@"/usr/local/bin/fridaDP.py" toPath:@"/usr/local/bin/fridaDP.py.lakr" error:NULL];
+    }
+    
+    // 替换 username 和 password
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
+                                                            encoding:NSUTF8StringEncoding
+                                                               error:NULL];
+    NSString *inputStringPass = [[NSString alloc] initWithContentsOfFile:sshPassSave.path
+                                                                encoding:NSUTF8StringEncoding
+                                                                   error:NULL];
+    int ipQuads[5];
+    const char *ipAddress = [inputString cStringUsingEncoding:NSUTF8StringEncoding];
+    sscanf(ipAddress, "%d.%d.%d.%d:%d", &ipQuads[0], &ipQuads[1], &ipQuads[2], &ipQuads[3], &ipQuads[4]);
+    NSString *iPGrabed = [[NSString alloc] initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
+    int sshPortGrabed = ipQuads[4];
+    NSString *runCmd1 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/alpine/%@/g /usr/local/bin/fridaDP.py", inputStringPass];
+    NSString *runCmd2 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/localhost/%@/g /usr/local/bin/fridaDP.py", iPGrabed];
+    NSString *runCmd3 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/2222/%d/g /usr/local/bin/fridaDP.py", sshPortGrabed];
+    //  export SEDTMP=s/localhost/$passvar/g alpine localhost 2222
+    //  sed -i '' -e $SEDTMP /usr/local/bin/fridaDP.py
+    getOutputOfThisCommand(runCmd1, 0.3);
+    getOutputOfThisCommand(runCmd2, 0.3);
+    getOutputOfThisCommand(runCmd3, 0.3);
+    
+    NSLog(@"[*] Ready to launch fridaDP.py -l");
+    // 准备使用 fridaDP.py -l 并展示
+    NSString *listOfApps = getOutputOfThisCommand(@"python /usr/local/bin/fridaDP.py -l", 5);
+    
+    NSLog(@"[!] Returning applist...");
+    return listOfApps;
+}
+

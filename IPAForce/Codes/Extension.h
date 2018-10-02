@@ -17,8 +17,10 @@
 #import <Foundation/Foundation.h>
 #import <NMSSH/NMSSH.h>
 
+void startiProxy(void);
+NSString *getListOfApps(void);
+NSString *checkSystemStatus(void);
 int execCommandFromURL(NSURL *where);
 BOOL ifOpenShellWorking(NSString *whereToCheck, int portNumber);
-NSString *checkSystemStatus(void);
 NSString *getOutputOfThisCommand(NSString *command, double timeOut);
 NSString *replaceCharacterAtInextWithLenthAndWhat(NSString* whoTo, int whereToHave, int howlong, NSString* wahtTo);

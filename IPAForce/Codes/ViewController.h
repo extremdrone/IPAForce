@@ -18,7 +18,8 @@
     @property (weak) IBOutlet NSProgressIndicator *setupMacProgress;
     @property (weak) IBOutlet NSProgressIndicator *setupiOSProgress;
     @property (weak) IBOutlet NSTextField *rightsLabel;
-    
+    @property (weak) IBOutlet NSTextField *appListField;
+
 @end
 
 

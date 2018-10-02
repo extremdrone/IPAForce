@@ -474,43 +474,7 @@
         [selectorAlert runModal];
     }else if (button == NSAlertThirdButtonReturn) {
         
-        //启动 iproxy 2222 22
-        NSURL *iProxyShDir = [[NSBundle mainBundle] resourceURL];
-        iProxyShDir = [iProxyShDir URLByAppendingPathComponent:@"runiProxy.command"];
-        execCommandFromURL(iProxyShDir);
         
-        //在创建用户配置前先备份
-        if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/local/bin/fridaDP.py.lakr"]) {
-            // 重新覆盖脚本
-            [[NSFileManager defaultManager] removeItemAtPath:@"/usr/local/bin/fridaDP.py" error:NULL];
-            [[NSFileManager defaultManager] copyItemAtPath:@"/usr/local/bin/fridaDP.py.lakr" toPath:@"/usr/local/bin/fridaDP.py" error:NULL];
-        }else{
-            // 创建备份
-            [[NSFileManager defaultManager] copyItemAtPath:@"/usr/local/bin/fridaDP.py" toPath:@"/usr/local/bin/fridaDP.py.lakr" error:NULL];
-        }
-        
-        // 替换 username 和 password
-        NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
-        NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
-        NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
-                                                                encoding:NSUTF8StringEncoding
-                                                                   error:NULL];
-        NSString *inputStringPass = [[NSString alloc] initWithContentsOfFile:sshPassSave.path
-                                                                    encoding:NSUTF8StringEncoding
-                                                                       error:NULL];
-        int ipQuads[5];
-        const char *ipAddress = [inputString cStringUsingEncoding:NSUTF8StringEncoding];
-        sscanf(ipAddress, "%d.%d.%d.%d:%d", &ipQuads[0], &ipQuads[1], &ipQuads[2], &ipQuads[3], &ipQuads[4]);
-        NSString *iPGrabed = [[NSString alloc] initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
-        int sshPortGrabed = ipQuads[4];
-        NSString *runCmd1 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/alpine/%@/g /usr/local/bin/fridaDP.py", inputStringPass];
-        NSString *runCmd2 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/localhost/%@/g /usr/local/bin/fridaDP.py", iPGrabed];
-        NSString *runCmd3 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/2222/%d/g /usr/local/bin/fridaDP.py", sshPortGrabed];
-        //  export SEDTMP=s/localhost/$passvar/g alpine localhost 2222
-        //  sed -i '' -e $SEDTMP /usr/local/bin/fridaDP.py
-        getOutputOfThisCommand(runCmd1, 0.3);
-        getOutputOfThisCommand(runCmd2, 0.3);
-        getOutputOfThisCommand(runCmd3, 0.3);
         
         // 通知用户连接 USB 线缆来访问 App 列表
         NSAlert *w = [[NSAlert alloc] init];
@@ -522,8 +486,7 @@
             return;
         }
         
-        // 准备使用 fridaDP.py -l 并展示
-        NSString *listOfApps = getOutputOfThisCommand(@"python /usr/local/bin/fridaDP.py -l", 6);
+        NSString *listOfApps = getListOfApps();
         
         NSAlert *selectorAlert = [[NSAlert alloc] init];
         [selectorAlert setMessageText:@"Choice your app below and copy the name of it!"];
@@ -574,8 +537,7 @@
         }
         
         // 如果存在空格那么在他前面前加上 "\"
-
-        
+        // Help Wanted!
         
         // 开始创建解密脚本
         NSString *script = [[NSString alloc] initWithFormat:@"export LAKRNB=%@\ncd ~/Documents/IPAForceDumped/$LAKRNB/\npython /usr/local/bin/fridaDP.py $LAKRNB -o $LAKRNB.ipa\n", nameOfApp];
@@ -590,6 +552,16 @@
     }
     
 }
+
+
+- (IBAction)refreshAppLists:(id)sender {
+    NSString *list = [NSString alloc];
+    list = getListOfApps();
+    [_appListField setAlignment:atLeft];
+    [_appListField setStringValue:list];
+}
+
+
 
 - (IBAction)exitAllTerminal:(id)sender {
     getOutputOfThisCommand(@"killall Terminal", 1);
