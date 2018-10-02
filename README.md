@@ -7,7 +7,9 @@ If there are something wrong with the codes or the codes is not so beautifull, t
 I promise to you I'm not an ijk developer or HanYuPinYin developer, but maybe a copy and paste developer.  
 :..( I'll try my best.  
 
-![Preview](https://github.com/Co2333/coreBase/raw/master/IPAForcePreView.png "在这里输入图片标题")
+![Preview](https://github.com/Co2333/coreBase/raw/master/IPAForcePreView.png "This is how/what/which/**** it looks.")
+Demo video for decrypt an ipa from jailbroken device: https://www.youtube.com/watch?v=dTFsSNlORFI&feature=youtu.be
+Please setup environment first. (If you do it twice, overwrite.)
 
 #### License
 You have right decleared in the license, but I still need to repeat:
