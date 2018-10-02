@@ -33,8 +33,6 @@
         inputString = @"0.0.0.0:22";
     }
     [inputString writeToURL:sshAddrSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-    
-    startiProxy();
 }
     
 

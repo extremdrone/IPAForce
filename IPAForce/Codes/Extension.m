@@ -83,19 +83,10 @@ NSString *getOutputOfThisCommand(NSString *command, double timeOut) {
     NSPipe *pipe = [NSPipe pipe];
     [task setStandardOutput:pipe];
     [task launch];
+    [NSThread sleepForTimeInterval:timeOut];
+    [task terminate];
     NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
     NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    // 1 minute timeout
-    NSDate *terminateDate = [[NSDate date] dateByAddingTimeInterval:timeOut];
-    int i = 0;
-    while ((task != nil) && ([task isRunning]))   {
-        [NSThread sleepForTimeInterval:0.001];
-        if ([[NSDate date] compare:(id)terminateDate] == NSOrderedDescending || i >= 6000000)   {
-            NSLog(@"Error: terminating task, timeout was reached.");
-            [task terminate];
-        }
-        i ++;
-    }
     return result;
 }
 
@@ -286,10 +277,14 @@ NSString *getListOfApps() {
     getOutputOfThisCommand(runCmd3, 0.3);
     
     NSLog(@"[*] Ready to launch fridaDP.py -l");
+    
     // 准备使用 fridaDP.py -l 并展示
-    NSString *listOfApps = getOutputOfThisCommand(@"python /usr/local/bin/fridaDP.py -l", 5);
+    NSString *listOfApps = getOutputOfThisCommand(@"python /usr/local/bin/fridaDP.py -l", 4);
     
     NSLog(@"[!] Returning applist...");
+    if ([listOfApps isEqualToString:@""]) {
+        listOfApps = @"Waiting for USB device...\n";
+    }
     return listOfApps;
 }
 

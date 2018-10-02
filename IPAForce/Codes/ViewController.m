@@ -32,8 +32,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    // Do any additional setup after loading the view.
+    startiProxy();
+    NSString *list = [NSString alloc];
+    list = getListOfApps();
+    [_appListField setAlignment:atLeft];
+    [_appListField setStringValue:list];
 }
 
 - (void)viewDidAppear {
@@ -456,17 +459,16 @@
     NSAlert *selectorAlert = [[NSAlert alloc] init];
     [selectorAlert setMessageText:@"Hey! What you want to do with me?"];
     [selectorAlert addButtonWithTitle:@"Create MonkeyApp"];
-    [selectorAlert addButtonWithTitle:@"Create IPAForceApp"];
-    [selectorAlert addButtonWithTitle:@"Get app and headers from device"];
+    [selectorAlert addButtonWithTitle:@"Dump Header"];
+    [selectorAlert addButtonWithTitle:@"Decrypted App From iDevice"];
     NSInteger button = [selectorAlert runModal];
     
     if (false) {
         // No fucking bb I like it. QAQ
     }else if (button == NSAlertFirstButtonReturn) {
-        NSAlert *selectorAlert = [[NSAlert alloc] init];
-        [selectorAlert setMessageText:@"Indeveloping!"];
-        [selectorAlert addButtonWithTitle:@"OK"];
-        [selectorAlert runModal];
+        NSString *XcodePath = getOutputOfThisCommand(@"xcode-select -p", 1);
+        XcodePath = [XcodePath substringToIndex:[XcodePath length] - 20];
+        [[NSWorkspace sharedWorkspace] launchApplication:XcodePath];
     }else if (button == NSAlertSecondButtonReturn) {
         NSAlert *selectorAlert = [[NSAlert alloc] init];
         [selectorAlert setMessageText:@"Indeveloping!"];
@@ -474,36 +476,18 @@
         [selectorAlert runModal];
     }else if (button == NSAlertThirdButtonReturn) {
         
-        
-        
-        // 通知用户连接 USB 线缆来访问 App 列表
-        NSAlert *w = [[NSAlert alloc] init];
-        [w setMessageText:@"Please connect to your iOS device with USB cabe.\nOr my app will not respond."];
-        [w addButtonWithTitle:@"OK"];
-        [w addButtonWithTitle:@"Cancel"];
-        NSModalResponse ww = [w runModal];
-        if (ww == NSAlertSecondButtonReturn) {
-            return;
-        }
-        
-        NSString *listOfApps = getListOfApps();
-        
-        NSAlert *selectorAlert = [[NSAlert alloc] init];
-        [selectorAlert setMessageText:@"Choice your app below and copy the name of it!"];
-        [selectorAlert addButtonWithTitle:@"OK"];
-        NSTextField *input = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 400, 488)];
-        [input setStringValue:listOfApps];
-        [selectorAlert setAccessoryView:input];
-        [selectorAlert runModal];
-        
         // 向用户询问 App 名字 "Kimono namayiwa!"
         NSString *nameOfApp = [NSString alloc];
         NSAlert *selectorAlert3 = [[NSAlert alloc] init];
         [selectorAlert3 setMessageText:@"Tell me the app name!"];
         [selectorAlert3 addButtonWithTitle:@"OK"];
+        [selectorAlert3 addButtonWithTitle:@"Cancel"];
         NSTextField *inputName = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 24)];
         [selectorAlert3 setAccessoryView:inputName];
-        [selectorAlert3 runModal];
+        NSModalResponse ret = [selectorAlert3 runModal];
+        if (ret == NSAlertSecondButtonReturn) {
+            return;
+        }
         
         nameOfApp = [inputName stringValue];
         
@@ -514,11 +498,15 @@
         NSAlert *selectorAlert31 = [[NSAlert alloc] init];
         [selectorAlert31 setMessageText:@"Make sure you have exit all the process on your iOS device.\nThis process may take up to 15 min.\nSo make sure your iOS device disabled screen saver."];
         [selectorAlert31 addButtonWithTitle:@"OK"];
+        [selectorAlert31 addButtonWithTitle:@"Cancel"];
         NSTextField *inputName2 = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 300, 24)];
         [inputName2 setStringValue:nameOfApp];
         [inputName2 setEditable:NO];
         [selectorAlert31 setAccessoryView:inputName2];
-        [selectorAlert31 runModal];
+        NSModalResponse ret2 = [selectorAlert31 runModal];
+        if (ret2 == NSAlertSecondButtonReturn) {
+            return;
+        }
         
         // 创建存档目录
         getOutputOfThisCommand(@"mkdir ~/Documents/IPAForceDumped", 1);
