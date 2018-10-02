@@ -18,6 +18,7 @@
 #import <NMSSH/NMSSH.h>
 
 int execCommandFromURL(NSURL *where);
-NSString *getOutputOfThisCommand(NSString *command, int timeOut);
-NSString *checkSystemStatus(void);
 BOOL ifOpenShellWorking(NSString *whereToCheck, int portNumber);
+NSString *checkSystemStatus(void);
+NSString *getOutputOfThisCommand(NSString *command, double timeOut);
+NSString *replaceCharacterAtInextWithLenthAndWhat(NSString* whoTo, int whereToHave, int howlong, NSString* wahtTo);

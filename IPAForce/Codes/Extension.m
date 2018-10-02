@@ -10,6 +10,10 @@
 #include <sys/stat.h>
 
 
+NSString *replaceCharacterAtInextWithLenthAndWhat(NSString* whoTo, int whereToHave, int howlong, NSString* wahtTo){
+    return [whoTo stringByReplacingCharactersInRange:NSMakeRange(whereToHave, howlong) withString:wahtTo];
+}
+
 int execCommandFromURL(NSURL *where) {
     
     // 给文件可执权限
@@ -29,8 +33,6 @@ int execCommandFromURL(NSURL *where) {
     // const char *Args = [[NSMutableString stringWithFormat:@"chmod u+x %@", where.path] UTF8String];
     // system(Args);
 }
-
-
 
 // 检查 ssh 地址和端口是否正确
 BOOL ifOpenShellWorking(NSString *whereToCheck, int portNumber) {
@@ -74,7 +76,7 @@ BOOL ifOpenShellWorking(NSString *whereToCheck, int portNumber) {
 
 
 // 获取命令行输出
-NSString *getOutputOfThisCommand(NSString *command, int timeOut) {
+NSString *getOutputOfThisCommand(NSString *command, double timeOut) {
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/bin/sh"];
     [task setArguments:[NSArray arrayWithObjects:@"-c", command,nil]];

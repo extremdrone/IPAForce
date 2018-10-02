@@ -500,9 +500,9 @@
         NSString *runCmd3 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/2222/%d/g /usr/local/bin/fridaDP.py", sshPortGrabed];
         //  export SEDTMP=s/localhost/$passvar/g alpine localhost 2222
         //  sed -i '' -e $SEDTMP /usr/local/bin/fridaDP.py
-        getOutputOfThisCommand(runCmd1, 1);
-        getOutputOfThisCommand(runCmd2, 1);
-        getOutputOfThisCommand(runCmd3, 1);
+        getOutputOfThisCommand(runCmd1, 0.3);
+        getOutputOfThisCommand(runCmd2, 0.3);
+        getOutputOfThisCommand(runCmd3, 0.3);
         
         // 通知用户连接 USB 线缆来访问 App 列表
         NSAlert *w = [[NSAlert alloc] init];
@@ -536,6 +536,10 @@
         
         nameOfApp = [inputName stringValue];
         
+        // 删除字符串前后空格
+        nameOfApp =  [nameOfApp stringByTrimmingCharactersInSet:
+                      [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
         NSAlert *selectorAlert31 = [[NSAlert alloc] init];
         [selectorAlert31 setMessageText:@"Make sure you have exit all the process on your iOS device.\nThis process may take up to 15 min.\nSo make sure your iOS device disabled screen saver."];
         [selectorAlert31 addButtonWithTitle:@"OK"];
@@ -561,8 +565,12 @@
             getOutputOfThisCommand([[NSString alloc] initWithFormat:@"rm -rf ~/Documents/IPAForceDumped/%@", nameOfApp], 1);
         }
         
+        // 如果存在空格那么在他前面前加上 "\"
+
+        
+        
         // 开始创建解密脚本
-        NSString *script = [[NSString alloc] initWithFormat:@"cd ~/Documents/IPAForceDumped/%@/\npython /usr/local/bin/fridaDP.py %@ -o %@.ipa\n", nameOfApp, nameOfApp, nameOfApp];
+        NSString *script = [[NSString alloc] initWithFormat:@"export LAKRNB=%@\ncd ~/Documents/IPAForceDumped/$LAKRNB/\npython /usr/local/bin/fridaDP.py $LAKRNB -o $LAKRNB.ipa\n", nameOfApp];
         NSString *tmpScript = [[NSString alloc] initWithFormat:@"%@/tmp.command", [[NSFileManager defaultManager] temporaryDirectory].path];
         [script writeToFile:tmpScript atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         // 执行脚本
