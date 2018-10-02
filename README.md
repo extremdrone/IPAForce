@@ -36,12 +36,12 @@ You have right decleared in the license, but I still need to repeat:
 #### Submit issue:
 
 ### What was the cause of the issue？
-Expect behavior:
-Unexpect behavior:
-Is this issue affecting you using the main function?: Y/N
-Is this issue a UI issue?: Y/N
-Is is necesscary to fix it imminently?: Y/N
-Notes:
+Expect behavior:  
+Unexpect behavior:  
+Is this issue affecting you using the main function?: Y/N  
+Is this issue a UI issue?: Y/N  
+Is is necesscary to fix it imminently?: Y/N  
+Notes:  
 
 ### Steps to reproduce
 1.
@@ -49,18 +49,18 @@ Notes:
 3.
 
 ### Error information
-System Version:
-iOS Version:
-iOS Device Model:
-System logs:
-(Optinal to all)
+System Version:  
+iOS Version:  
+iOS Device Model:  
+System logs:  
+(Optinal to all)  
 
 
-IPAForce issue report! 
-App version:__
-Build version:__
+IPAForce issue report!   
+App version:__  
+Build version:__  
 
 
-
+  
 -------------
 All in all, u can u up, no can no bb.

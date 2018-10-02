@@ -815,6 +815,20 @@ Please wait.</string>
                                             <action selector="cleanDocuments:" target="5gI-5U-AMq" id="iLv-bO-Klo"/>
                                         </connections>
                                     </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vTY-9i-OMy">
+                                        <rect key="frame" x="352" y="404" width="128" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="CBc-8z-Awt"/>
+                                            <constraint firstAttribute="width" constant="128" id="kR6-cI-4E1"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="roundRect" title="Exit All Terminal" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="w74-YH-Oz1">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="exitAllTerminal:" target="5gI-5U-AMq" id="9Or-Ry-Tqd"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="kLZ-Ak-fQw" firstAttribute="top" secondItem="OOw-7A-Oae" secondAttribute="top" constant="20" id="2Fo-hL-EeZ"/>
@@ -836,6 +850,7 @@ Please wait.</string>
                                     <constraint firstItem="Dip-7C-YRu" firstAttribute="top" secondItem="yJP-2b-rev" secondAttribute="bottom" constant="8" id="XuK-vR-Xcy"/>
                                     <constraint firstAttribute="trailing" secondItem="ebN-Jd-7YH" secondAttribute="trailing" constant="20" id="boF-S1-9iV"/>
                                     <constraint firstAttribute="trailing" secondItem="a38-LP-VIM" secondAttribute="trailing" constant="20" id="dde-Ll-XIZ"/>
+                                    <constraint firstItem="vTY-9i-OMy" firstAttribute="top" secondItem="kLZ-Ak-fQw" secondAttribute="bottom" constant="6" id="go1-rf-KFP"/>
                                     <constraint firstItem="vCL-Lm-1L3" firstAttribute="top" secondItem="Cjh-xH-I0m" secondAttribute="bottom" constant="8" id="ire-p3-6vd"/>
                                     <constraint firstItem="Cjh-xH-I0m" firstAttribute="top" secondItem="a38-LP-VIM" secondAttribute="bottom" constant="25" id="kkc-4f-5Kk"/>
                                     <constraint firstItem="ebN-Jd-7YH" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="20" id="n2O-IH-aB9"/>
@@ -843,6 +858,7 @@ Please wait.</string>
                                     <constraint firstAttribute="trailing" secondItem="yJP-2b-rev" secondAttribute="trailing" constant="20" id="sYy-Sm-MwC"/>
                                     <constraint firstItem="ebN-Jd-7YH" firstAttribute="top" secondItem="N9o-pe-OLq" secondAttribute="bottom" constant="20" id="shD-xg-raD"/>
                                     <constraint firstAttribute="trailing" secondItem="0Vg-Q1-g2v" secondAttribute="trailing" constant="20" id="vPP-cB-4aH"/>
+                                    <constraint firstAttribute="trailing" secondItem="vTY-9i-OMy" secondAttribute="trailing" constant="20" id="xhv-7j-Ain"/>
                                     <constraint firstItem="a38-LP-VIM" firstAttribute="top" secondItem="ebN-Jd-7YH" secondAttribute="bottom" constant="20" id="yVf-ZX-mtU"/>
                                 </constraints>
                             </visualEffectView>

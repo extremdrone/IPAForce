@@ -504,8 +504,6 @@
         getOutputOfThisCommand(runCmd2, 1);
         getOutputOfThisCommand(runCmd3, 1);
         
-        sleep(2);
-        
         // 通知用户连接 USB 线缆来访问 App 列表
         NSAlert *w = [[NSAlert alloc] init];
         [w setMessageText:@"Please connect to your iOS device with USB cabe.\nOr my app will not respond."];
@@ -571,15 +569,16 @@
         getOutputOfThisCommand([[NSString alloc] initWithFormat:@"chmod 777 %@", tmpScript], 1);
         [[NSWorkspace sharedWorkspace] openFile:tmpScript];
         
-        
-        
-        
     }else{
         NSLog(@"[Lakr NB 666] How can you been here?");
     }
     
 }
 
-
+- (IBAction)exitAllTerminal:(id)sender {
+    getOutputOfThisCommand(@"killall Terminal", 1);
+}
+    
+    
 
 @end
