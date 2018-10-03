@@ -502,10 +502,10 @@
         // 向用户询问 App 名字 "Kimono namayiwa!"
         NSString *nameOfApp = [NSString alloc];
         NSAlert *selectorAlert3 = [[NSAlert alloc] init];
-        [selectorAlert3 setMessageText:@"Tell me the app name!"];
+        [selectorAlert3 setMessageText:@"Tell me the app name!\nMake sure there is a  \\  befroe each space.\nExample: DJI\\  Go\\  4"];
         [selectorAlert3 addButtonWithTitle:@"OK"];
         [selectorAlert3 addButtonWithTitle:@"Cancel"];
-        NSTextField *inputName = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 200, 24)];
+        NSTextField *inputName = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 350, 24)];
         [selectorAlert3 setAccessoryView:inputName];
         NSModalResponse ret = [selectorAlert3 runModal];
         if (ret == NSAlertSecondButtonReturn) {

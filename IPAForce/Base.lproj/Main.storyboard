@@ -945,7 +945,7 @@ Please wait.</string>
                                 <rect key="frame" x="610" y="0.0" width="442" height="555"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="al3-3l-FXZ">
-                                        <rect key="frame" x="20" y="20" width="402" height="390"/>
+                                        <rect key="frame" x="20" y="40" width="402" height="390"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="390" id="JuY-mY-p9N"/>
                                         </constraints>
@@ -968,12 +968,26 @@ Please wait.</string>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2CD-yb-tX0">
+                                        <rect key="frame" x="265" y="12" width="159" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="155" id="7qa-rg-Epa"/>
+                                            <constraint firstAttribute="height" constant="17" id="bGB-3c-1GL"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Select and drag for more." id="Rct-OE-euA">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="8Vh-Wm-Ai2" secondAttribute="trailing" constant="41" id="9bB-xD-7Q6"/>
+                                    <constraint firstAttribute="bottom" secondItem="2CD-yb-tX0" secondAttribute="bottom" constant="12" id="APq-HK-hHB"/>
                                     <constraint firstItem="al3-3l-FXZ" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="20" id="Qhw-Wq-0i0"/>
+                                    <constraint firstAttribute="trailing" secondItem="2CD-yb-tX0" secondAttribute="trailing" constant="20" id="WXj-MB-2FX"/>
                                     <constraint firstItem="8Vh-Wm-Ai2" firstAttribute="top" secondItem="OOw-7A-Oae" secondAttribute="top" constant="52" id="WaG-Vd-WRr"/>
-                                    <constraint firstAttribute="bottom" secondItem="al3-3l-FXZ" secondAttribute="bottom" constant="20" id="jic-7u-oqe"/>
+                                    <constraint firstAttribute="bottom" secondItem="al3-3l-FXZ" secondAttribute="bottom" constant="40" id="jic-7u-oqe"/>
                                     <constraint firstAttribute="width" constant="442" id="lAy-il-VTe"/>
                                     <constraint firstItem="8Vh-Wm-Ai2" firstAttribute="leading" secondItem="OOw-7A-Oae" secondAttribute="leading" constant="41" id="sxC-aG-GYl"/>
                                     <constraint firstAttribute="trailing" secondItem="al3-3l-FXZ" secondAttribute="trailing" constant="20" id="xFT-j5-eMl"/>
