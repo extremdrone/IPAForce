@@ -457,27 +457,10 @@
     NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
     // 保存密码
     [inputString writeToURL:sshPassSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-    
-    NSString *list = [NSString alloc];
-    list = getListOfApps();
-    [_secondLabel setStringValue:@"App List On iOS"];
-    [_appListField setAlignment:atLeft];
-    [_appListField setStringValue:list];
-    
-    
-
 }
     
     // 删除本地存档
-- (IBAction)resetThisApp:(id)sender {
-    NSAlert *errorAlert1 = [[NSAlert alloc] init];
-    [errorAlert1 setMessageText:@"Do you wish to clean dumped saves?\nrm -rf ~/Documents/IPAForceDumped"];
-    [errorAlert1 addButtonWithTitle:@"NO."];
-    [errorAlert1 addButtonWithTitle:@"Yes!"];
-    NSModalResponse ret = [errorAlert1 runModal];
-    if (ret == NSAlertSecondButtonReturn) {
-        getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForceDumped", 0.2);
-    }
+- (IBAction)cleanDocuments:(id)sender {
     NSURL *dir = [[NSFileManager defaultManager] temporaryDirectory];
     [[NSFileManager defaultManager] removeItemAtURL:dir error:NULL];
     NSAlert *errorAlert = [[NSAlert alloc] init];
@@ -499,10 +482,8 @@
     NSAlert *selectorAlert = [[NSAlert alloc] init];
     [selectorAlert setMessageText:@"Hey! What you want to do with me?"];
     [selectorAlert addButtonWithTitle:@"Create MonkeyApp"];
-    /*
     [selectorAlert addButtonWithTitle:@"Dump Header"];
-     */
-    [selectorAlert addButtonWithTitle:@"Decrypted App & Get Headers"];
+    [selectorAlert addButtonWithTitle:@"Decrypted App From iDevice"];
     NSInteger button = [selectorAlert runModal];
     
     if (false) {
@@ -512,14 +493,11 @@
         XcodePath = [XcodePath substringToIndex:[XcodePath length] - 20];
         [[NSWorkspace sharedWorkspace] launchApplication:XcodePath];
     }else if (button == NSAlertSecondButtonReturn) {
-        
-        /*
         NSAlert *selectorAlert = [[NSAlert alloc] init];
         [selectorAlert setMessageText:@"Indeveloping!"];
         [selectorAlert addButtonWithTitle:@"OK"];
         [selectorAlert runModal];
     }else if (button == NSAlertThirdButtonReturn) {
-        */
         
         // 向用户询问 App 名字 "Kimono namayiwa!"
         NSString *nameOfApp = [NSString alloc];
@@ -541,7 +519,7 @@
                       [NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         NSAlert *selectorAlert31 = [[NSAlert alloc] init];
-        [selectorAlert31 setMessageText:@"Make sure you have exit all the process on your iOS device and unlocked it.\nThis process may take up to 15 min.\nSo make sure your iOS device disabled screen saver."];
+        [selectorAlert31 setMessageText:@"Make sure you have exit all the process on your iOS device.\nThis process may take up to 15 min.\nSo make sure your iOS device disabled screen saver."];
         [selectorAlert31 addButtonWithTitle:@"OK"];
         [selectorAlert31 addButtonWithTitle:@"Cancel"];
         NSTextField *inputName2 = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 300, 24)];
@@ -573,16 +551,7 @@
         // Help Wanted!
         
         // 开始创建解密脚本
-        NSString *script = [[NSString alloc] initWithFormat:@"export LAKRNB=%@\ncd ~/Documents/IPAForceDumped/$LAKRNB/\npython /usr/local/bin/fridaDP.py $LAKRNB -o $LAKRNB.ipa;\n", nameOfApp];
-        // 加入 App 解密脚本
-        /*
-         cp ./$LAKRNB.ipa ./$LAKRNB.zip
-         unzip ./$LAKRNB.zip -d ./
-         mkdir ./Headers
-         class-dump ./Payload/ *.app -H -o ./Headers
-        */
-        // "cp ./$LAKRNB.ipa ./$LAKRNB.zip;\nunzip ./$LAKRNB.zip -d ./;\nclass-dump ./Payload/*.app -H -o ./Headers;"
-        script = [[NSString alloc] initWithFormat:@"%@cp ./$LAKRNB.ipa ./$LAKRNB.zip;\nunzip ./$LAKRNB.zip -d ./;\nclass-dump ./Payload/*.app -H -o ./Headers;\nrm -f $LAKRNB.zip;", script];
+        NSString *script = [[NSString alloc] initWithFormat:@"export LAKRNB=%@\ncd ~/Documents/IPAForceDumped/$LAKRNB/\npython /usr/local/bin/fridaDP.py $LAKRNB -o $LAKRNB.ipa\n", nameOfApp];
         NSString *tmpScript = [[NSString alloc] initWithFormat:@"%@/tmp.command", [[NSFileManager defaultManager] temporaryDirectory].path];
         [script writeToFile:tmpScript atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         // 执行脚本

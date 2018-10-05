@@ -749,12 +749,12 @@ Please wait.</string>
                                             <constraint firstAttribute="width" constant="128" id="7Fw-Iw-lhH"/>
                                             <constraint firstAttribute="height" constant="22" id="mTL-BE-YUH"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="roundRect" title="Clean Documents" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RKp-6r-USW">
+                                        <buttonCell key="cell" type="roundRect" title="Reset App" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RKp-6r-USW">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="cleanDocuments:" target="5gI-5U-AMq" id="iLv-bO-Klo"/>
+                                            <action selector="resetThisApp:" target="5gI-5U-AMq" id="Cso-il-IqY"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vTY-9i-OMy">
