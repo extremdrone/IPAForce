@@ -613,6 +613,8 @@
     [selectorAlert3 setAccessoryView:inputName];
     NSModalResponse ret = [selectorAlert3 runModal];
     if (ret == NSAlertSecondButtonReturn) {
+        [_injectRevealProgress setHidden:YES];
+        [_injectRevealProgress setDoubleValue:0];
         return;
     }
     
@@ -632,6 +634,8 @@
     [selectorAlert31 setAccessoryView:inputName2];
     NSModalResponse ret2 = [selectorAlert31 runModal];
     if (ret2 == NSAlertSecondButtonReturn) {
+        [_injectRevealProgress setHidden:YES];
+        [_injectRevealProgress setDoubleValue:0];
         return;
     }
     
