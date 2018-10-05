@@ -16,6 +16,7 @@
 		AB49E255215A3C9300C2F277 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E254215A3C9300C2F277 /* main.m */; };
 		AB49E27C215AA61F00C2F277 /* Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = AB49E27B215AA61F00C2F277 /* Extension.m */; };
 		AB61E6D92162527900EAC11B /* checkServerAvailable.sh in Resources */ = {isa = PBXBuildFile; fileRef = AB61E6D82162527900EAC11B /* checkServerAvailable.sh */; };
+		ABD896D02167827C00D2EFFE /* RevealRes.zip in Resources */ = {isa = PBXBuildFile; fileRef = ABD896CF2167827C00D2EFFE /* RevealRes.zip */; };
 		ABDCC098215BD8F60071B264 /* macIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDCC092215BD8F50071B264 /* macIcon.png */; };
 		ABDCC099215BD8F60071B264 /* BuildIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDCC093215BD8F60071B264 /* BuildIcon.png */; };
 		ABDCC09A215BD8F60071B264 /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDCC094215BD8F60071B264 /* iPhoneIcon.png */; };
@@ -59,6 +60,7 @@
 		AB49E27B215AA61F00C2F277 /* Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Extension.m; sourceTree = "<group>"; };
 		AB49E27D215AA62E00C2F277 /* Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
 		AB61E6D82162527900EAC11B /* checkServerAvailable.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = checkServerAvailable.sh; sourceTree = "<group>"; };
+		ABD896CF2167827C00D2EFFE /* RevealRes.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = RevealRes.zip; sourceTree = "<group>"; };
 		ABDCC092215BD8F50071B264 /* macIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macIcon.png; sourceTree = "<group>"; };
 		ABDCC093215BD8F60071B264 /* BuildIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BuildIcon.png; sourceTree = "<group>"; };
 		ABDCC094215BD8F60071B264 /* iPhoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneIcon.png; sourceTree = "<group>"; };
@@ -148,14 +150,15 @@
 		ABDCC09E215BD8FB0071B264 /* Ress */ = {
 			isa = PBXGroup;
 			children = (
+				ABD896CF2167827C00D2EFFE /* RevealRes.zip */,
 				AB0DFA7F21628B7B00E80F3D /* LakrBootstrap.tar */,
-				ABDCC093215BD8F60071B264 /* BuildIcon.png */,
-				ABDCC095215BD8F60071B264 /* ICON.png */,
-				ABDCC097215BD8F60071B264 /* IPAForceProjectIcon.png */,
-				ABDCC094215BD8F60071B264 /* iPhoneIcon.png */,
-				ABDCC092215BD8F50071B264 /* macIcon.png */,
-				ABDCC096215BD8F60071B264 /* XcodeProjectIcon.png */,
 				AB0DFA812162BEE500E80F3D /* runiProxy.command */,
+				ABDCC095215BD8F60071B264 /* ICON.png */,
+				ABDCC092215BD8F50071B264 /* macIcon.png */,
+				ABDCC093215BD8F60071B264 /* BuildIcon.png */,
+				ABDCC094215BD8F60071B264 /* iPhoneIcon.png */,
+				ABDCC096215BD8F60071B264 /* XcodeProjectIcon.png */,
+				ABDCC097215BD8F60071B264 /* IPAForceProjectIcon.png */,
 			);
 			path = Ress;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				ABDCC098215BD8F60071B264 /* macIcon.png in Resources */,
 				AB49E24F215A3C9300C2F277 /* Assets.xcassets in Resources */,
 				ABDCC09C215BD8F60071B264 /* XcodeProjectIcon.png in Resources */,
+				ABD896D02167827C00D2EFFE /* RevealRes.zip in Resources */,
 				AB49E252215A3C9300C2F277 /* Main.storyboard in Resources */,
 				AB0DFA8021628B7C00E80F3D /* LakrBootstrap.tar in Resources */,
 				ABDCC099215BD8F60071B264 /* BuildIcon.png in Resources */,
@@ -464,10 +468,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 38X2VQKPXT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/IPAForce/Ress",
+				);
 				INFOPLIST_FILE = IPAForce/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/IPAForce/Ress",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lakr.IPAForce;
@@ -490,10 +502,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 38X2VQKPXT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/IPAForce/Ress",
+				);
 				INFOPLIST_FILE = IPAForce/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/IPAForce/Ress",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lakr.IPAForce;

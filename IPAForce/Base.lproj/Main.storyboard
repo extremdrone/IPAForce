@@ -730,7 +730,7 @@ Please wait.</string>
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Vg-Q1-g2v">
-                                        <rect key="frame" x="452" y="128" width="128" height="23"/>
+                                        <rect key="frame" x="452" y="98" width="128" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="v1c-Ky-Set"/>
                                             <constraint firstAttribute="width" constant="128" id="zud-7F-00e"/>
@@ -743,27 +743,13 @@ Please wait.</string>
                                             <action selector="refreshSysStatus:" target="5gI-5U-AMq" id="VPR-HN-ngA"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N9o-pe-OLq">
-                                        <rect key="frame" x="452" y="98" width="128" height="23"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="128" id="7Fw-Iw-lhH"/>
-                                            <constraint firstAttribute="height" constant="22" id="mTL-BE-YUH"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="roundRect" title="Reset App" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RKp-6r-USW">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="cellTitle"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="resetThisApp:" target="5gI-5U-AMq" id="Cso-il-IqY"/>
-                                        </connections>
-                                    </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vTY-9i-OMy">
                                         <rect key="frame" x="452" y="38" width="128" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="128" id="Z7U-Qk-glb"/>
                                             <constraint firstAttribute="height" constant="22" id="dl1-wN-ZcU"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="roundRect" title="Exit All Terminal" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="w74-YH-Oz1">
+                                        <buttonCell key="cell" type="roundRect" title="Exits All Terminal" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="w74-YH-Oz1">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
@@ -891,6 +877,41 @@ Please wait.</string>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e9U-8N-z2U">
+                                        <rect key="frame" x="406" y="218" width="132" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="9A7-VG-hr7"/>
+                                            <constraint firstAttribute="height" constant="21" id="T5A-vR-1lW"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="Inject Reveal" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dyd-Ao-ta9">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="startInjectReveal:" target="5gI-5U-AMq" id="dSL-bW-hWR"/>
+                                        </connections>
+                                    </button>
+                                    <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="CBQ-Wj-OOJ">
+                                        <rect key="frame" x="464" y="283" width="16" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="FZm-FR-HtF"/>
+                                            <constraint firstAttribute="width" constant="16" id="bwN-Az-t3a"/>
+                                        </constraints>
+                                    </progressIndicator>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N9o-pe-OLq">
+                                        <rect key="frame" x="452" y="128" width="128" height="23"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="128" id="7Fw-Iw-lhH"/>
+                                            <constraint firstAttribute="height" constant="22" id="mTL-BE-YUH"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="roundRect" title="Reset App" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RKp-6r-USW">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="resetThisApp:" target="5gI-5U-AMq" id="Cso-il-IqY"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="yNM-Qe-uvU" firstAttribute="top" secondItem="6tq-oQ-yZP" secondAttribute="bottom" constant="8" id="1PM-UR-BRd"/>
@@ -899,20 +920,22 @@ Please wait.</string>
                                     <constraint firstItem="8mL-iG-6yb" firstAttribute="top" secondItem="vTY-9i-OMy" secondAttribute="bottom" constant="10" id="4hK-Y9-dxw"/>
                                     <constraint firstItem="Z8L-Wu-VPo" firstAttribute="leading" secondItem="ebN-Jd-7YH" secondAttribute="trailing" constant="30" id="7bh-iR-qHA"/>
                                     <constraint firstItem="yNM-Qe-uvU" firstAttribute="leading" secondItem="nR3-85-zgT" secondAttribute="trailing" constant="8" id="9Td-Qg-g29"/>
+                                    <constraint firstItem="ebN-Jd-7YH" firstAttribute="top" secondItem="e9U-8N-z2U" secondAttribute="bottom" constant="28" id="9Zi-0g-kKD"/>
                                     <constraint firstItem="4hX-na-HlG" firstAttribute="top" secondItem="Gxd-DW-aLv" secondAttribute="bottom" constant="8" id="Btw-tQ-Vdn"/>
                                     <constraint firstItem="Gxd-DW-aLv" firstAttribute="top" secondItem="Sip-dc-9cA" secondAttribute="bottom" constant="8" id="CPw-nP-4sS"/>
                                     <constraint firstItem="rnk-gY-Nfk" firstAttribute="top" secondItem="feO-LQ-I2z" secondAttribute="bottom" constant="10" id="Cvd-QY-sf3"/>
                                     <constraint firstItem="nR3-85-zgT" firstAttribute="leading" secondItem="ecS-Af-a4h" secondAttribute="leading" constant="30" id="HbZ-cU-NQ5"/>
+                                    <constraint firstItem="CBQ-Wj-OOJ" firstAttribute="leading" secondItem="Sip-dc-9cA" secondAttribute="trailing" constant="151" id="Ht1-LQ-T3L"/>
                                     <constraint firstItem="feO-LQ-I2z" firstAttribute="leading" secondItem="x8y-NI-4iv" secondAttribute="trailing" constant="72" id="IrU-p1-HGQ"/>
                                     <constraint firstItem="6tq-oQ-yZP" firstAttribute="top" secondItem="ecS-Af-a4h" secondAttribute="top" constant="36" id="LBl-aj-2Yx"/>
                                     <constraint firstItem="ebN-Jd-7YH" firstAttribute="leading" secondItem="ecS-Af-a4h" secondAttribute="leading" constant="22" id="LFr-G1-CBM"/>
                                     <constraint firstAttribute="trailing" secondItem="N9o-pe-OLq" secondAttribute="trailing" constant="30" id="M2R-CT-P67"/>
                                     <constraint firstItem="Gxd-DW-aLv" firstAttribute="centerX" secondItem="ecS-Af-a4h" secondAttribute="centerX" id="NEU-xI-luZ"/>
+                                    <constraint firstItem="e9U-8N-z2U" firstAttribute="leading" secondItem="4hX-na-HlG" secondAttribute="trailing" constant="47" id="NSY-Lj-Sbg"/>
                                     <constraint firstItem="ebN-Jd-7YH" firstAttribute="top" secondItem="4hX-na-HlG" secondAttribute="bottom" constant="28" id="Ndn-Hd-AQc"/>
                                     <constraint firstItem="nR3-85-zgT" firstAttribute="top" secondItem="ecS-Af-a4h" secondAttribute="top" constant="30" id="OE8-zg-Wbo"/>
                                     <constraint firstItem="rnk-gY-Nfk" firstAttribute="leading" secondItem="Gxd-DW-aLv" secondAttribute="trailing" constant="47" id="QlY-PK-Zeb"/>
                                     <constraint firstAttribute="trailing" secondItem="8mL-iG-6yb" secondAttribute="trailing" constant="120" id="Quc-qt-pZp"/>
-                                    <constraint firstItem="N9o-pe-OLq" firstAttribute="top" secondItem="0Vg-Q1-g2v" secondAttribute="bottom" constant="8" id="R1a-vX-xZc"/>
                                     <constraint firstItem="Gxd-DW-aLv" firstAttribute="leading" secondItem="ecS-Af-a4h" secondAttribute="leading" constant="245" id="URt-A6-NMH"/>
                                     <constraint firstItem="ebN-Jd-7YH" firstAttribute="top" secondItem="L0a-gl-PQK" secondAttribute="bottom" constant="57" id="VYb-8h-Fu4"/>
                                     <constraint firstItem="4hX-na-HlG" firstAttribute="leading" secondItem="ecS-Af-a4h" secondAttribute="leading" constant="245" id="VmT-XV-z1l"/>
@@ -922,7 +945,6 @@ Please wait.</string>
                                     <constraint firstItem="Sip-dc-9cA" firstAttribute="top" secondItem="x8y-NI-4iv" secondAttribute="bottom" constant="10" id="bMW-Fd-kvE"/>
                                     <constraint firstItem="x8y-NI-4iv" firstAttribute="leading" secondItem="ecS-Af-a4h" secondAttribute="leading" constant="270" id="bVU-Y8-RIr"/>
                                     <constraint firstAttribute="trailing" secondItem="vTY-9i-OMy" secondAttribute="trailing" constant="30" id="bfe-bu-cs0"/>
-                                    <constraint firstItem="Z8L-Wu-VPo" firstAttribute="top" secondItem="N9o-pe-OLq" secondAttribute="bottom" constant="8" id="dF4-IY-7e3"/>
                                     <constraint firstItem="L0a-gl-PQK" firstAttribute="top" secondItem="nAH-R2-HJE" secondAttribute="bottom" constant="14" id="eLt-y7-495"/>
                                     <constraint firstAttribute="trailing" secondItem="0Vg-Q1-g2v" secondAttribute="trailing" constant="30" id="fde-8e-tHN"/>
                                     <constraint firstItem="6tq-oQ-yZP" firstAttribute="leading" secondItem="nR3-85-zgT" secondAttribute="trailing" constant="8" id="hFh-SN-jw9"/>
@@ -930,14 +952,17 @@ Please wait.</string>
                                     <constraint firstAttribute="bottom" secondItem="8mL-iG-6yb" secondAttribute="bottom" constant="12" id="iQO-UP-8ZA"/>
                                     <constraint firstAttribute="trailing" secondItem="x8y-NI-4iv" secondAttribute="trailing" constant="270" id="iZF-L2-TYE"/>
                                     <constraint firstItem="N9o-pe-OLq" firstAttribute="leading" secondItem="ebN-Jd-7YH" secondAttribute="trailing" constant="30" id="kWo-HP-fAG"/>
+                                    <constraint firstItem="0Vg-Q1-g2v" firstAttribute="top" secondItem="N9o-pe-OLq" secondAttribute="bottom" constant="8" id="lZv-ar-yGK"/>
                                     <constraint firstAttribute="trailing" secondItem="Z8L-Wu-VPo" secondAttribute="trailing" constant="30" id="mIY-MO-cBZ"/>
+                                    <constraint firstItem="rnk-gY-Nfk" firstAttribute="top" secondItem="CBQ-Wj-OOJ" secondAttribute="bottom" constant="8" id="mOk-4e-fda"/>
+                                    <constraint firstItem="Z8L-Wu-VPo" firstAttribute="top" secondItem="0Vg-Q1-g2v" secondAttribute="bottom" constant="8" id="mSZ-ea-SvP"/>
                                     <constraint firstAttribute="trailing" secondItem="Gxd-DW-aLv" secondAttribute="trailing" constant="245" id="oxu-zX-MLj"/>
                                     <constraint firstItem="0Vg-Q1-g2v" firstAttribute="leading" secondItem="ebN-Jd-7YH" secondAttribute="trailing" constant="30" id="pV5-bh-nUQ"/>
                                     <constraint firstItem="vTY-9i-OMy" firstAttribute="top" secondItem="Z8L-Wu-VPo" secondAttribute="bottom" constant="8" id="qCK-Jw-b6v"/>
                                     <constraint firstItem="8mL-iG-6yb" firstAttribute="top" secondItem="ebN-Jd-7YH" secondAttribute="bottom" constant="8" id="qE4-oM-nNd"/>
                                     <constraint firstAttribute="trailing" secondItem="4hX-na-HlG" secondAttribute="trailing" constant="245" id="r7V-Ku-uaK"/>
-                                    <constraint firstItem="ebN-Jd-7YH" firstAttribute="top" secondItem="rnk-gY-Nfk" secondAttribute="bottom" constant="57" id="rMh-SQ-wNU"/>
                                     <constraint firstItem="8mL-iG-6yb" firstAttribute="leading" secondItem="ecS-Af-a4h" secondAttribute="leading" constant="120" id="v5f-dy-lYS"/>
+                                    <constraint firstItem="e9U-8N-z2U" firstAttribute="top" secondItem="rnk-gY-Nfk" secondAttribute="bottom" constant="8" id="xVi-Iw-xMu"/>
                                     <constraint firstItem="Sip-dc-9cA" firstAttribute="leading" secondItem="ecS-Af-a4h" secondAttribute="leading" constant="297" id="zNU-zX-0P9"/>
                                 </constraints>
                             </visualEffectView>
@@ -976,7 +1001,7 @@ Please wait.</string>
                                         </constraints>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Select and drag for more." id="Rct-OE-euA">
                                             <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -1006,6 +1031,7 @@ Please wait.</string>
                     </view>
                     <connections>
                         <outlet property="appListField" destination="al3-3l-FXZ" id="22u-Vk-WcX"/>
+                        <outlet property="injectRevealProgress" destination="CBQ-Wj-OOJ" id="Rko-wk-al8"/>
                         <outlet property="rightsLabel" destination="8mL-iG-6yb" id="xq0-ps-ll2"/>
                         <outlet property="secondLabel" destination="8Vh-Wm-Ai2" id="asB-B9-GGX"/>
                         <outlet property="setupMacProgress" destination="CM7-nc-9FJ" id="RbU-20-qM5"/>

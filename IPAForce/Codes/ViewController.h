@@ -20,6 +20,8 @@
     @property (weak) IBOutlet NSTextField *rightsLabel;
     @property (weak) IBOutlet NSTextField *appListField;
     @property (weak) IBOutlet NSTextField *secondLabel;
+    @property (weak) IBOutlet NSProgressIndicator *injectRevealProgress;
+
 
 @end
 

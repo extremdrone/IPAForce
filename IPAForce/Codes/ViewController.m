@@ -480,6 +480,7 @@
     }
     NSURL *dir = [[NSFileManager defaultManager] temporaryDirectory];
     [[NSFileManager defaultManager] removeItemAtURL:dir error:NULL];
+    getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForceCache/", 0.1);
     NSAlert *errorAlert = [[NSAlert alloc] init];
     [errorAlert setMessageText:@"Please rerun this app."];
     [errorAlert addButtonWithTitle:@"OK"];
@@ -594,6 +595,140 @@
     }
     
 }
+
+
+//  注入调试框架 Reveal
+- (IBAction)startInjectReveal:(id)sender {
+    
+    [_injectRevealProgress setHidden:NO];
+    [_injectRevealProgress setDoubleValue:10];
+    
+    // 向用户询问 App 名字 "Kimono namayiwa!"
+    NSString *bundleNameOfApp = [NSString alloc];
+    NSAlert *selectorAlert3 = [[NSAlert alloc] init];
+    [selectorAlert3 setMessageText:@"Tell me the app name!\nMake sure there is a  \\  befroe each space.\nExample: DJI\\  Go\\  4"];
+    [selectorAlert3 addButtonWithTitle:@"OK"];
+    [selectorAlert3 addButtonWithTitle:@"Cancel"];
+    NSTextField *inputName = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 350, 24)];
+    [selectorAlert3 setAccessoryView:inputName];
+    NSModalResponse ret = [selectorAlert3 runModal];
+    if (ret == NSAlertSecondButtonReturn) {
+        return;
+    }
+    
+    bundleNameOfApp = [inputName stringValue];
+    
+    // 删除字符串前后空格
+    bundleNameOfApp =  [bundleNameOfApp stringByTrimmingCharactersInSet:
+                  [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    NSAlert *selectorAlert31 = [[NSAlert alloc] init];
+    [selectorAlert31 setMessageText:@"I will put this LakrRevealServer.dylib into \n/Library/MobileSubstrate/DynamicLibraries\nIs this ok for you? May take a while."];
+    [selectorAlert31 addButtonWithTitle:@"OK"];
+    [selectorAlert31 addButtonWithTitle:@"Cancel"];
+    NSTextField *inputName2 = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 300, 24)];
+    [inputName2 setStringValue:bundleNameOfApp];
+    [inputName2 setEditable:NO];
+    [selectorAlert31 setAccessoryView:inputName2];
+    NSModalResponse ret2 = [selectorAlert31 runModal];
+    if (ret2 == NSAlertSecondButtonReturn) {
+        return;
+    }
+    
+    // 清理临时文件夹避免 sed 命令行错误
+    getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForceCache/", 0.1);
+    
+    // 将 RevealRes.zip 解压到临时文件
+    NSString *lakrRevealResZIP = [[[NSBundle mainBundle] resourcePath]
+                               stringByAppendingPathComponent:@"RevealRes.zip"];
+    NSString *thisCommand1 = [[NSString alloc] initWithFormat:@"unzip %@ -d ~/Documents/IPAForceCache/", lakrRevealResZIP];
+    getOutputOfThisCommand(thisCommand1, 1);
+    
+    // Fuck that __MACOSX/ FUCK!
+    getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForceCache/__MACOSX/", 0.1);
+    
+    // 替换 App 的 bundleID
+    NSString *thisCommand2 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/com.lakr.replace.placeholder/%@/g ~/Documents/IPAForceCache/LakrRevealServer.plist", bundleNameOfApp];
+    getOutputOfThisCommand(thisCommand2, 0.1);
+    
+    // 建立 ssh 链接
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
+                                                            encoding:NSUTF8StringEncoding
+                                                               error:NULL];
+    NSString *inputStringPass = [[NSString alloc] initWithContentsOfFile:sshPassSave.path
+                                                                encoding:NSUTF8StringEncoding
+                                                                   error:NULL];
+    int ipQuads[5];
+    const char *ipAddress = [inputString cStringUsingEncoding:NSUTF8StringEncoding];
+    sscanf(ipAddress, "%d.%d.%d.%d:%d", &ipQuads[0], &ipQuads[1], &ipQuads[2], &ipQuads[3], &ipQuads[4]);
+    NSString *iPGrabed = [[NSString alloc] initWithFormat:@"%d.%d.%d.%d", ipQuads[0], ipQuads[1], ipQuads[2], ipQuads[3]];
+    int sshPortGrabed = ipQuads[4];
+    NMSSHSession *session = [NMSSHSession connectToHost:iPGrabed port:sshPortGrabed withUsername:@"root"];
+    BOOL sshConnectedFlag = false;
+    if (session.isConnected) {
+        [session authenticateByPassword:inputStringPass];
+        if (session.isAuthorized) {
+            sshConnectedFlag = true;
+        }
+    }
+    
+    // 如果没有连接成功那么退出本实例
+    if (sshConnectedFlag != true) {
+        NSAlert *errorAlert = [[NSAlert alloc] init];
+        [errorAlert setMessageText:@"Unable to connect. Setup SSH!"];
+        [errorAlert addButtonWithTitle:@"I understand."];
+        [errorAlert runModal];
+        // 清理工作
+        [session disconnect];
+        [_injectRevealProgress setHidden:YES];
+        [_injectRevealProgress setDoubleValue:0];
+        return;
+    }
+    
+    // 准备 ssh
+    NSError *error; NSNumber *timeout = [[NSNumber alloc] initWithInt:2]; NSString *sshRet = [NSString alloc];
+    
+    // 先上传 framework 到
+    BOOL isFrameworkUploadSucceed = [session.channel uploadFile:@"~/Documents/IPAForceCache/RevealServer.framework.zip" to:@"/Library/Frameworks/"];
+    isFrameworkUploadSucceed = !isFrameworkUploadSucceed;
+    NSLog(@"[*] Upload Reveal_Framework to device returns value:%d", isFrameworkUploadSucceed);
+    sshRet = [session.channel execute:@"cd /Library/Frameworks/; unzip ./RevealServer.framework.zip" error:&error timeout:timeout];
+    sshRet = [session.channel execute:@"rm -rf /Library/Frameworks/__MACOSX/" error:&error timeout:timeout];
+    sshRet = [session.channel execute:@"rm -f /Library/Frameworks/RevealServer.framework.zip" error:&error timeout:timeout];
+    
+    // 先删除在手机上存在的框架
+    sshRet = [session.channel execute:@"rm -f /Library/MobileSubstrate/DynamicLibraries/LakrRevealServer.plist" error:&error timeout:timeout];
+    sshRet = [session.channel execute:@"rm -f /Library/MobileSubstrate/DynamicLibraries/LakrRevealServer.dylib" error:&error timeout:timeout];
+    
+    // 上传库到 /Library/MobileSubstrate/DynamicLibraries/
+    isFrameworkUploadSucceed = [session.channel uploadFile:@"~/Documents/IPAForceCache/LakrRevealServer.plist" to:@"/Library/MobileSubstrate/DynamicLibraries/"];
+    isFrameworkUploadSucceed = !isFrameworkUploadSucceed;
+    NSLog(@"[*] Upload LakrRevealServer.plist to device returns value:%d", isFrameworkUploadSucceed);
+    isFrameworkUploadSucceed = [session.channel uploadFile:@"~/Documents/IPAForceCache/LakrRevealServer.dylib" to:@"/Library/MobileSubstrate/DynamicLibraries/"];
+    isFrameworkUploadSucceed = !isFrameworkUploadSucceed;
+    NSLog(@"[*] Upload LakrRevealServer.dylib to device returns value:%d", isFrameworkUploadSucceed);
+    
+    [_injectRevealProgress setDoubleValue:80];
+    
+    // 准备注销
+    NSAlert *uAlert = [[NSAlert alloc] init];
+    [uAlert setMessageText:@"Do you wish to run a reSpring?"];
+    [uAlert addButtonWithTitle:@"OK"];
+    [uAlert addButtonWithTitle:@"Cancel"];
+    NSModalResponse responseTag1 = [uAlert runModal];
+    if (responseTag1 == NSAlertFirstButtonReturn) {
+        sshRet = [session.channel execute:@"killall SpringBoard" error:&error timeout:timeout];
+    }
+    
+    // 清理工作
+    [session disconnect];
+    [_injectRevealProgress setHidden:YES];
+    [_injectRevealProgress setDoubleValue:0];
+}
+
+
 
 
 - (IBAction)refreshAppLists:(id)sender {
