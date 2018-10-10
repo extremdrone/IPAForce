@@ -57,7 +57,9 @@ BOOL ifOpenShellWorking(NSString *whereToCheck, int portNumber) {
     NSString *script = [[NSString alloc] initWithFormat:@"#!/bin/sh\n%@\n%@\n%@\n", sshAddr, sshPort, readFromScriptFile];
     
     // 检测脚本是否存在
-    NSURL *scriptInDocPath = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"checkServerAvailable.sh"];
+    NSURL *scriptInDocPath = [[[NSFileManager defaultManager] temporaryDirectory]
+                              URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
+    scriptInDocPath = [scriptInDocPath URLByAppendingPathComponent:@"checkServerAvailable.sh" isDirectory:NO];
     if ([[NSFileManager defaultManager] fileExistsAtPath:scriptInDocPath.path]) {
         [[NSFileManager defaultManager] removeItemAtPath:scriptInDocPath.path error:NULL];
     }
@@ -83,7 +85,15 @@ NSString *getOutputOfThisCommand(NSString *command, double timeOut) {
     NSPipe *pipe = [NSPipe pipe];
     [task setStandardOutput:pipe];
     [task launch];
-    [NSThread sleepForTimeInterval:timeOut];
+    //[NSThread sleepForTimeInterval:timeOut];
+    double timeController = 0.00;
+    while ([task isRunning]) {
+        [NSThread sleepForTimeInterval:0.01];
+        timeController += 0.01;
+        if (timeController > timeOut) {
+            break;
+        }
+    }
     [task terminate];
     NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
     NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -170,8 +180,8 @@ NSString *checkSystemStatus() {
     
     // 检查 ssh 连接性
     NSString *sshCheck = @"\n- iOS root ssh connect is NOT established";
-    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
-    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce/sshAddress.txt"];
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce/sshPass.txt"];
     NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
                                                             encoding:NSUTF8StringEncoding
                                                                error:NULL];
@@ -254,8 +264,10 @@ NSString *getListOfApps() {
     }
     
     // 替换 username 和 password
-    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
-    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
+    sshAddrSave = [sshAddrSave URLByAppendingPathComponent:@"sshAddress.txt" isDirectory:NO];
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
+    sshPassSave = [sshAddrSave URLByAppendingPathComponent:@"sshPass.txt" isDirectory:NO];
     NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
                                                             encoding:NSUTF8StringEncoding
                                                                error:NULL];
@@ -272,18 +284,24 @@ NSString *getListOfApps() {
     NSString *runCmd3 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/2222/%d/g /usr/local/bin/fridaDP.py", sshPortGrabed];
     //  export SEDTMP=s/localhost/$passvar/g alpine localhost 2222
     //  sed -i '' -e $SEDTMP /usr/local/bin/fridaDP.py
-    getOutputOfThisCommand(runCmd1, 0.3);
-    getOutputOfThisCommand(runCmd2, 0.3);
-    getOutputOfThisCommand(runCmd3, 0.3);
+    getOutputOfThisCommand(runCmd1, 1);
+    getOutputOfThisCommand(runCmd2, 1);
+    getOutputOfThisCommand(runCmd3, 1);
     
     NSLog(@"[*] Ready to launch fridaDP.py -l");
     
     // 准备使用 fridaDP.py -l 并展示
-    NSString *listOfApps = getOutputOfThisCommand(@"python /usr/local/bin/fridaDP.py -l", 4);
+    NSString *listOfApps = getOutputOfThisCommand(@"python /usr/local/bin/fridaDP.py -l", 3);
     
     NSLog(@"[!] Returning applist...");
     if ([listOfApps isEqualToString:@""]) {
-        listOfApps = @"Waiting for USB device...\n";
+        listOfApps = @"\nWaiting for USB device...\n\nPlease check:\n\n     Is this device connected to usb?";
+    }
+    if ([listOfApps isEqualToString:@"Waiting for USB device...\n"]) {
+        listOfApps = @"\nWaiting for USB device...\n\nPlease check:\n\n     Is this device connected to usb?";
+    }
+    if ([listOfApps isEqualToString:@"Failed to enumerate applications: unable to connect to remote frida-server: Unable to connect (connection refused)\n"]) {
+        listOfApps = @"Failed to enumerate applications:\n\n     unable to connect to remote frida-server: \n          Unable to connect (connection refused)\n\n\nPlease check:\n\n     Is this device connected to usb?\n     Is this device jailbroken?\n     Is this device installed frida-server?\n     You may want to set up ssh then setup iOS.";
     }
     return listOfApps;
 }

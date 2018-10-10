@@ -763,13 +763,13 @@ Please wait.</string>
                                             <constraint firstAttribute="width" constant="128" id="8jZ-7K-51U"/>
                                             <constraint firstAttribute="height" constant="22" id="jI9-WW-aLk"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="roundRect" title="Refresh App List" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="c8E-uh-ETQ">
+                                        <buttonCell key="cell" type="roundRect" title="Reset App" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="c8E-uh-ETQ">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
+                                            <connections>
+                                                <action selector="resetThisApp:" target="5gI-5U-AMq" id="qjG-oG-QDE"/>
+                                            </connections>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="refreshAppLists:" target="5gI-5U-AMq" id="6gH-aI-YNT"/>
-                                        </connections>
                                     </button>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nAH-R2-HJE">
                                         <rect key="frame" x="88" y="289" width="100" height="100"/>
@@ -871,7 +871,7 @@ Please wait.</string>
                                             <constraint firstAttribute="height" constant="18" id="6Tj-Eq-Y5a"/>
                                             <constraint firstAttribute="width" constant="211" id="i8C-mL-AJr"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" title="To be or not to be lazy? (Alpha 1.1)" id="gdO-xw-WcF">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" title="To be or not to be lazy? (Alpha 2.3)" id="gdO-xw-WcF">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -904,12 +904,26 @@ Please wait.</string>
                                             <constraint firstAttribute="width" constant="128" id="7Fw-Iw-lhH"/>
                                             <constraint firstAttribute="height" constant="22" id="mTL-BE-YUH"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="roundRect" title="Reset App" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RKp-6r-USW">
+                                        <buttonCell key="cell" type="roundRect" title="Refresh App List" bezelStyle="roundedRect" alignment="center" borderStyle="border" inset="2" id="RKp-6r-USW">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="resetThisApp:" target="5gI-5U-AMq" id="Cso-il-IqY"/>
+                                            <action selector="refreshAppLists:" target="5gI-5U-AMq" id="e5W-TZ-Qfb"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2hF-ET-5Yd">
+                                        <rect key="frame" x="72" y="218" width="132" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="5Ve-c3-oCx"/>
+                                            <constraint firstAttribute="height" constant="21" id="iLT-6f-WGQ"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="Show Work Files" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SzH-3U-rme">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="showDocs:" target="5gI-5U-AMq" id="OyH-XD-pL3"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -934,10 +948,11 @@ Please wait.</string>
                                     <constraint firstItem="e9U-8N-z2U" firstAttribute="leading" secondItem="4hX-na-HlG" secondAttribute="trailing" constant="47" id="NSY-Lj-Sbg"/>
                                     <constraint firstItem="ebN-Jd-7YH" firstAttribute="top" secondItem="4hX-na-HlG" secondAttribute="bottom" constant="28" id="Ndn-Hd-AQc"/>
                                     <constraint firstItem="nR3-85-zgT" firstAttribute="top" secondItem="ecS-Af-a4h" secondAttribute="top" constant="30" id="OE8-zg-Wbo"/>
+                                    <constraint firstItem="2hF-ET-5Yd" firstAttribute="top" secondItem="L0a-gl-PQK" secondAttribute="bottom" constant="8" id="QQc-9T-7Yj"/>
                                     <constraint firstItem="rnk-gY-Nfk" firstAttribute="leading" secondItem="Gxd-DW-aLv" secondAttribute="trailing" constant="47" id="QlY-PK-Zeb"/>
                                     <constraint firstAttribute="trailing" secondItem="8mL-iG-6yb" secondAttribute="trailing" constant="120" id="Quc-qt-pZp"/>
+                                    <constraint firstItem="ebN-Jd-7YH" firstAttribute="top" secondItem="2hF-ET-5Yd" secondAttribute="bottom" constant="28" id="Rm2-gV-pmA"/>
                                     <constraint firstItem="Gxd-DW-aLv" firstAttribute="leading" secondItem="ecS-Af-a4h" secondAttribute="leading" constant="245" id="URt-A6-NMH"/>
-                                    <constraint firstItem="ebN-Jd-7YH" firstAttribute="top" secondItem="L0a-gl-PQK" secondAttribute="bottom" constant="57" id="VYb-8h-Fu4"/>
                                     <constraint firstItem="4hX-na-HlG" firstAttribute="leading" secondItem="ecS-Af-a4h" secondAttribute="leading" constant="245" id="VmT-XV-z1l"/>
                                     <constraint firstItem="x8y-NI-4iv" firstAttribute="leading" secondItem="nAH-R2-HJE" secondAttribute="trailing" constant="82" id="WkM-vc-Iax"/>
                                     <constraint firstItem="Sip-dc-9cA" firstAttribute="leading" secondItem="CM7-nc-9FJ" secondAttribute="trailing" constant="151" id="XFR-Vh-RIM"/>
@@ -951,6 +966,7 @@ Please wait.</string>
                                     <constraint firstItem="vTY-9i-OMy" firstAttribute="leading" secondItem="ebN-Jd-7YH" secondAttribute="trailing" constant="30" id="hK1-9X-Owz"/>
                                     <constraint firstAttribute="bottom" secondItem="8mL-iG-6yb" secondAttribute="bottom" constant="12" id="iQO-UP-8ZA"/>
                                     <constraint firstAttribute="trailing" secondItem="x8y-NI-4iv" secondAttribute="trailing" constant="270" id="iZF-L2-TYE"/>
+                                    <constraint firstItem="4hX-na-HlG" firstAttribute="leading" secondItem="2hF-ET-5Yd" secondAttribute="trailing" constant="47" id="jm2-e6-WS5"/>
                                     <constraint firstItem="N9o-pe-OLq" firstAttribute="leading" secondItem="ebN-Jd-7YH" secondAttribute="trailing" constant="30" id="kWo-HP-fAG"/>
                                     <constraint firstItem="0Vg-Q1-g2v" firstAttribute="top" secondItem="N9o-pe-OLq" secondAttribute="bottom" constant="8" id="lZv-ar-yGK"/>
                                     <constraint firstAttribute="trailing" secondItem="Z8L-Wu-VPo" secondAttribute="trailing" constant="30" id="mIY-MO-cBZ"/>

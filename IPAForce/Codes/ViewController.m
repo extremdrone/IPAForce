@@ -35,13 +35,16 @@
     
     // 创建存档目录
     NSURL *tempDir = [[NSFileManager defaultManager] temporaryDirectory];
-    NSURL *savesDir = [tempDir URLByAppendingPathComponent:(@"Saves") isDirectory:true];
+    NSURL *savesDir = [tempDir URLByAppendingPathComponent:(@"com.lakr.IPAForce") isDirectory:true];
     BOOL fuckThis = YES;
     if (![[NSFileManager defaultManager] fileExistsAtPath:savesDir.path isDirectory:&fuckThis]) {
-        [[NSFileManager defaultManager] createDirectoryAtPath:savesDir.path withIntermediateDirectories:YES attributes:NULL error:NULL];
+        NSString *cmdd = [[NSString alloc] initWithFormat:@"mkdir %@;", savesDir.path];
+        getOutputOfThisCommand(cmdd, 1);
     }
     
-    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
+    sshAddrSave = [sshAddrSave URLByAppendingPathComponent:@"sshAddress.txt" isDirectory:NO];
+    
     NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
                                                             encoding:NSUTF8StringEncoding
                                                                error:NULL];
@@ -50,7 +53,7 @@
         [inputString writeToURL:sshAddrSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     }
     
-    
+    getOutputOfThisCommand(@"mkdir ~/Documents/IPAForce/", 2);
     
     startiProxy();
     NSString *list = [NSString alloc];
@@ -120,12 +123,13 @@
         
         // 获取文件路径并设置准备写入
         NSURL *tempDir = [[NSFileManager defaultManager] temporaryDirectory];
+        tempDir = [tempDir URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
         NSURL *fileURL = [tempDir URLByAppendingPathComponent:(@"OneMonkey.command")];
-        NSURL *scriptURL = [tempDir URLByAppendingPathComponent:(@"Saves/setupScriptSavedForMac.txt")];
+        NSURL *scriptURL = [tempDir URLByAppendingPathComponent:(@"setupScriptSavedForMac.txt")];
         
         // 检查文件是否存在 不存在创建 存在检查是否为空 空则写入默认代理
         if (![[NSFileManager defaultManager] fileExistsAtPath:scriptURL.path]) {
-            [@"export https_proxy=http://127.0.0.1:6152;\nexport http_proxy=http://127.0.0.1:6152;\nexport all_proxy=socks5://127.0.0.1:6153" writeToURL:scriptURL atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+            [@"export https_proxy=http://127.0.0.1:6152;\nexport http_proxy=http://127.0.0.1:6152;\nexport all_proxy=socks5://127.0.0.1:6153;" writeToURL:scriptURL atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         }
 
         // 询问执行前脚本
@@ -239,8 +243,10 @@
     [_setupiOSProgress setDoubleValue:10];
     
     // 检查ssh连接性
-    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
-    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
+    sshAddrSave = [sshAddrSave URLByAppendingPathComponent:@"sshAddress.txt" isDirectory:NO];
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
+    sshPassSave = [sshAddrSave URLByAppendingPathComponent:@"sshPass.txt" isDirectory:NO];
     NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
                                                             encoding:NSUTF8StringEncoding
                                                                error:NULL];
@@ -339,7 +345,8 @@
     while (true) {
         
         // 检查 iP 是否有存档 准备数据
-        NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
+        NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
+        sshAddrSave = [sshAddrSave URLByAppendingPathComponent:@"sshAddress.txt" isDirectory:NO];
         NSString *sshAddrString = [NSString alloc];
         if (![[NSFileManager defaultManager] fileExistsAtPath:sshAddrSave.path]) {
             sshAddrString = [[NSString alloc] initWithFormat:@"192.168.6.121:22"];
@@ -454,7 +461,8 @@
     } else if (button == NSAlertSecondButtonReturn) {
         return;
     }
-    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
+    sshPassSave = [sshPassSave URLByAppendingPathComponent:@"sshPass.txt" isDirectory:NO];
     // 保存密码
     [inputString writeToURL:sshPassSave atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     
@@ -470,21 +478,33 @@
     
     // 删除本地存档
 - (IBAction)resetThisApp:(id)sender {
+    
+    // 询问删除工作文件
     NSAlert *errorAlert1 = [[NSAlert alloc] init];
-    [errorAlert1 setMessageText:@"Do you wish to clean dumped saves?\nrm -rf ~/Documents/IPAForceDumped"];
+    [errorAlert1 setMessageText:@"Do you wish to clean dumped com.lakr.IPAForce?\nrm -rf ~/Documents/IPAForce"];
     [errorAlert1 addButtonWithTitle:@"NO."];
     [errorAlert1 addButtonWithTitle:@"Yes!"];
     NSModalResponse ret = [errorAlert1 runModal];
     if (ret == NSAlertSecondButtonReturn) {
-        getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForceDumped", 0.2);
+        getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForce", 2);
     }
-    NSURL *dir = [[NSFileManager defaultManager] temporaryDirectory];
-    [[NSFileManager defaultManager] removeItemAtURL:dir error:NULL];
-    getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForceCache/", 0.1);
     NSAlert *errorAlert = [[NSAlert alloc] init];
     [errorAlert setMessageText:@"Please rerun this app."];
     [errorAlert addButtonWithTitle:@"OK"];
     [errorAlert runModal];
+    
+    // 删除本地存档
+    NSURL *tempDir = [[NSFileManager defaultManager] temporaryDirectory];
+    NSURL *savesDir = [tempDir URLByAppendingPathComponent:(@"com.lakr.IPAForce") isDirectory:true];
+    [[NSFileManager defaultManager] removeItemAtPath:savesDir.path error:nil];
+    
+    // 重新运行本 App
+    //file:///var/folders/mb/v60s0dw97h5420yx0_8ybgd00000gn/T/
+    NSString* path = [[NSBundle mainBundle] bundlePath];
+    NSString* cmd = [NSString stringWithFormat:@"open -n %@", path];
+    getOutputOfThisCommand(cmd, 1);
+    
+    // 退出本 App
     exit(0);
 }
     
@@ -503,13 +523,14 @@
     /*
     [selectorAlert addButtonWithTitle:@"Dump Header"];
      */
-    [selectorAlert addButtonWithTitle:@"Decrypted App & Get Headers"];
+    [selectorAlert addButtonWithTitle:@"Decrypt App & Get Headers"];
     NSInteger button = [selectorAlert runModal];
     
-    if (false) {
+    if (/* DISABLES CODE */ (false)) {
         // No fucking bb I like it. QAQ
+        NSLog(@"666666666666666666");
     }else if (button == NSAlertFirstButtonReturn) {
-        NSString *XcodePath = getOutputOfThisCommand(@"xcode-select -p", 1);
+        NSString *XcodePath = getOutputOfThisCommand(@"xcode-select -p", 2);
         XcodePath = [XcodePath substringToIndex:[XcodePath length] - 20];
         [[NSWorkspace sharedWorkspace] launchApplication:XcodePath];
     }else if (button == NSAlertSecondButtonReturn) {
@@ -555,9 +576,9 @@
         }
         
         // 创建存档目录
-        getOutputOfThisCommand(@"mkdir ~/Documents/IPAForceDumped", 1);
-        if (![[NSFileManager defaultManager] fileExistsAtPath:[[NSString alloc] initWithFormat:@"~/Documents/IPAForceDumped/%@/%@.ipa", nameOfApp, nameOfApp]]) {
-            getOutputOfThisCommand([[NSString alloc] initWithFormat:@"mkdir ~/Documents/IPAForceDumped/%@", nameOfApp], 1);
+        getOutputOfThisCommand(@"mkdir ~/Documents/IPAForce/DumpedApps", 2);
+        if (![[NSFileManager defaultManager] fileExistsAtPath:[[NSString alloc] initWithFormat:@"~/Documents/IPAForce/DumpedApps/%@/%@.ipa", nameOfApp, nameOfApp]]) {
+            getOutputOfThisCommand([[NSString alloc] initWithFormat:@"mkdir ~/Documents/IPAForce/DumpedApps/%@", nameOfApp], 2);
         }else{
             NSAlert *selectorAlert311 = [[NSAlert alloc] init];
             [selectorAlert311 setMessageText:@"You already have it. Replace it?"];
@@ -567,14 +588,14 @@
             if (ret == NSAlertSecondButtonReturn) {
                 return;
             }
-            getOutputOfThisCommand([[NSString alloc] initWithFormat:@"rm -rf ~/Documents/IPAForceDumped/%@", nameOfApp], 1);
+            getOutputOfThisCommand([[NSString alloc] initWithFormat:@"rm -rf ~/Documents/IPAForce/DumpedApps/%@", nameOfApp], 2);
         }
         
         // 如果存在空格那么在他前面前加上 "\"
         // Help Wanted!
         
         // 开始创建解密脚本
-        NSString *script = [[NSString alloc] initWithFormat:@"export LAKRNB=%@\ncd ~/Documents/IPAForceDumped/$LAKRNB/\npython /usr/local/bin/fridaDP.py $LAKRNB -o $LAKRNB.ipa;\n", nameOfApp];
+        NSString *script = [[NSString alloc] initWithFormat:@"export LAKRNB=%@\ncd ~/Documents/IPAForce/DumpedApps/$LAKRNB/\npython /usr/local/bin/fridaDP.py $LAKRNB -o $LAKRNB.ipa;\n", nameOfApp];
         // 加入 App 解密脚本
         /*
          cp ./$LAKRNB.ipa ./$LAKRNB.zip
@@ -584,10 +605,10 @@
         */
         // "cp ./$LAKRNB.ipa ./$LAKRNB.zip;\nunzip ./$LAKRNB.zip -d ./;\nclass-dump ./Payload/*.app -H -o ./Headers;"
         script = [[NSString alloc] initWithFormat:@"%@cp ./$LAKRNB.ipa ./$LAKRNB.zip;\nunzip ./$LAKRNB.zip -d ./;\nclass-dump ./Payload/*.app -H -o ./Headers;\nrm -f $LAKRNB.zip;", script];
-        NSString *tmpScript = [[NSString alloc] initWithFormat:@"%@/tmp.command", [[NSFileManager defaultManager] temporaryDirectory].path];
+        NSString *tmpScript = [[NSString alloc] initWithFormat:@"%@/com.lakr.IPAForce/tmp.command", [[NSFileManager defaultManager] temporaryDirectory].path];
         [script writeToFile:tmpScript atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         // 执行脚本
-        getOutputOfThisCommand([[NSString alloc] initWithFormat:@"chmod 777 %@", tmpScript], 1);
+        getOutputOfThisCommand([[NSString alloc] initWithFormat:@"chmod 777 %@", tmpScript], 2);
         [[NSWorkspace sharedWorkspace] openFile:tmpScript];
         
     }else{
@@ -606,7 +627,7 @@
     // 向用户询问 App 名字 "Kimono namayiwa!"
     NSString *bundleNameOfApp = [NSString alloc];
     NSAlert *selectorAlert3 = [[NSAlert alloc] init];
-    [selectorAlert3 setMessageText:@"Tell me the app name!\nMake sure there is a  \\  befroe each space.\nExample: DJI\\  Go\\  4"];
+    [selectorAlert3 setMessageText:@"Tell me the app bundleID!\nExample:com.apple.springboard"];
     [selectorAlert3 addButtonWithTitle:@"OK"];
     [selectorAlert3 addButtonWithTitle:@"Cancel"];
     NSTextField *inputName = [[NSTextField alloc] initWithFrame:NSMakeRect(0, 0, 350, 24)];
@@ -640,24 +661,24 @@
     }
     
     // 清理临时文件夹避免 sed 命令行错误
-    getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForceCache/", 0.1);
+    getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForce/Cache/", 2);
     
     // 将 RevealRes.zip 解压到临时文件
     NSString *lakrRevealResZIP = [[[NSBundle mainBundle] resourcePath]
                                stringByAppendingPathComponent:@"RevealRes.zip"];
-    NSString *thisCommand1 = [[NSString alloc] initWithFormat:@"unzip %@ -d ~/Documents/IPAForceCache/", lakrRevealResZIP];
+    NSString *thisCommand1 = [[NSString alloc] initWithFormat:@"unzip %@ -d ~/Documents/IPAForce/Cache/", lakrRevealResZIP];
     getOutputOfThisCommand(thisCommand1, 1);
     
     // Fuck that __MACOSX/ FUCK!
-    getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForceCache/__MACOSX/", 0.1);
+    getOutputOfThisCommand(@"rm -rf ~/Documents/IPAForce/Cache/__MACOSX/", 2);
     
     // 替换 App 的 bundleID
-    NSString *thisCommand2 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/com.lakr.replace.placeholder/%@/g ~/Documents/IPAForceCache/LakrRevealServer.plist", bundleNameOfApp];
-    getOutputOfThisCommand(thisCommand2, 0.1);
+    NSString *thisCommand2 = [[NSString alloc] initWithFormat:@"sed -i '' -e s/com.lakr.replace.placeholder/%@/g ~/Documents/IPAForce/Cache/LakrRevealServer.plist", bundleNameOfApp];
+    getOutputOfThisCommand(thisCommand2, 2);
     
     // 建立 ssh 链接
-    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshAddress.txt"];
-    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"Saves/sshPass.txt"];
+    NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce/sshAddress.txt"];
+    NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce/sshPass.txt"];
     NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
                                                             encoding:NSUTF8StringEncoding
                                                                error:NULL];
@@ -695,7 +716,7 @@
     NSError *error; NSNumber *timeout = [[NSNumber alloc] initWithInt:2]; NSString *sshRet = [NSString alloc];
     
     // 先上传 framework 到
-    BOOL isFrameworkUploadSucceed = [session.channel uploadFile:@"~/Documents/IPAForceCache/RevealServer.framework.zip" to:@"/Library/Frameworks/"];
+    BOOL isFrameworkUploadSucceed = [session.channel uploadFile:@"~/Documents/IPAForce/Cache/RevealServer.framework.zip" to:@"/Library/Frameworks/"];
     isFrameworkUploadSucceed = !isFrameworkUploadSucceed;
     NSLog(@"[*] Upload Reveal_Framework to device returns value:%d", isFrameworkUploadSucceed);
     sshRet = [session.channel execute:@"cd /Library/Frameworks/; unzip ./RevealServer.framework.zip" error:&error timeout:timeout];
@@ -707,10 +728,10 @@
     sshRet = [session.channel execute:@"rm -f /Library/MobileSubstrate/DynamicLibraries/LakrRevealServer.dylib" error:&error timeout:timeout];
     
     // 上传库到 /Library/MobileSubstrate/DynamicLibraries/
-    isFrameworkUploadSucceed = [session.channel uploadFile:@"~/Documents/IPAForceCache/LakrRevealServer.plist" to:@"/Library/MobileSubstrate/DynamicLibraries/"];
+    isFrameworkUploadSucceed = [session.channel uploadFile:@"~/Documents/IPAForce/Cache/LakrRevealServer.plist" to:@"/Library/MobileSubstrate/DynamicLibraries/"];
     isFrameworkUploadSucceed = !isFrameworkUploadSucceed;
     NSLog(@"[*] Upload LakrRevealServer.plist to device returns value:%d", isFrameworkUploadSucceed);
-    isFrameworkUploadSucceed = [session.channel uploadFile:@"~/Documents/IPAForceCache/LakrRevealServer.dylib" to:@"/Library/MobileSubstrate/DynamicLibraries/"];
+    isFrameworkUploadSucceed = [session.channel uploadFile:@"~/Documents/IPAForce/Cache/LakrRevealServer.dylib" to:@"/Library/MobileSubstrate/DynamicLibraries/"];
     isFrameworkUploadSucceed = !isFrameworkUploadSucceed;
     NSLog(@"[*] Upload LakrRevealServer.dylib to device returns value:%d", isFrameworkUploadSucceed);
     
@@ -732,6 +753,14 @@
     [_injectRevealProgress setDoubleValue:0];
 }
 
+// 准备展示工作文件
+- (IBAction)showDocs:(id)sender {
+    NSString *usersPath = getOutputOfThisCommand(@"cd ~; pwd;", 2);
+    usersPath = [usersPath substringToIndex:[usersPath length] - 1];
+    usersPath = [[NSString alloc] initWithFormat:@"%@/Documents/IPAForce", usersPath];
+    [[NSWorkspace sharedWorkspace] selectFile:nil inFileViewerRootedAtPath:usersPath];
+     
+}
 
 
 
