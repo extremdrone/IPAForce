@@ -2,7 +2,11 @@
 
 #### Description
 A project for lazy man to reverse engineering.  
+<<<<<<< HEAD
 This project was setup at 2018.9.25 and taking its develop by a student.  
+=======
+This project was setup at 2018.9.25 and taking its develop by a student  
+>>>>>>> 62b5d6d2357c6e89fb2823b2312c62814f5ca6e1
 If there are something wrong with the codes or the codes is not so beautifull, then, pr it.  
 I promise to you I'm not an ijk developer or HanYuPinYin developer, but maybe a copy and paste developer.  
 :..( I'll try my best.  
