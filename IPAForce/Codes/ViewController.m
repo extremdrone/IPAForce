@@ -461,6 +461,7 @@
     } else if (button == NSAlertSecondButtonReturn) {
         return;
     }
+    
     NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
     sshPassSave = [sshPassSave URLByAppendingPathComponent:@"sshPass.txt" isDirectory:NO];
     // 保存密码
