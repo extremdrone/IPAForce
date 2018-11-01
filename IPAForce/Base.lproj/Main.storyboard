@@ -812,7 +812,7 @@ Please wait.</string>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="startSeupSSH:" target="5gI-5U-AMq" id="sgs-cA-opT"/>
+                                            <action selector="startSetupSSH:" target="5gI-5U-AMq" id="uER-HJ-vyF"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rnk-gY-Nfk">

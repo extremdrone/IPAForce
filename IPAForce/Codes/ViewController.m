@@ -338,7 +338,7 @@
 
 }
     // 保存 ssh 密码
-- (IBAction)startSeupSSH:(id)sender {
+- (IBAction)startSetupSSH:(id)sender {
 
     NSString *grabedValue = [NSString alloc];
     NSString *iPGrabed = [NSString alloc];
@@ -357,7 +357,7 @@
                                                               error:NULL];
         }
         
-        // 执行 ip 地址重新读区 解决链接l重复读取
+        // 执行 ip 地址重新读区 解决链接重复读取
         int ipQuads[5];
         int sshPortGrabed = 0;
         const char *ipAddress = [sshAddrString cStringUsingEncoding:NSUTF8StringEncoding];
