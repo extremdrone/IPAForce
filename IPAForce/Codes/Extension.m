@@ -267,7 +267,7 @@ NSString *getListOfApps() {
     NSURL *sshAddrSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
     sshAddrSave = [sshAddrSave URLByAppendingPathComponent:@"sshAddress.txt" isDirectory:NO];
     NSURL *sshPassSave = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"com.lakr.IPAForce" isDirectory:YES];
-    sshPassSave = [sshAddrSave URLByAppendingPathComponent:@"sshPass.txt" isDirectory:NO];
+    sshPassSave = [sshPassSave URLByAppendingPathComponent:@"sshPass.txt" isDirectory:NO];
     NSString *inputString = [[NSString alloc] initWithContentsOfFile:sshAddrSave.path
                                                             encoding:NSUTF8StringEncoding
                                                                error:NULL];
